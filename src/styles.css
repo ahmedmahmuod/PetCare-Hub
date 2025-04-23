@@ -1,0 +1,51 @@
+/* Tailwind files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables Roots */
+:root {
+  /* colors */
+  --brand-color: #513973;
+  --brand-seconed-color: #fac32e;
+  --seconed-color: #ffffff;
+  --third-color: #f1f0f0;
+  --fourth-color: #7f8487;
+
+  /* fonts */
+  --font-family: "Noto Kufi Arabic", sans-serif !important;
+}
+
+/* Global */
+* {
+  font-family: var(--font-family);
+}
+
+/* Fontausome fa-solid */
+.header-icon {
+  color: var(--seconed-color);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--seconed-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.header-icon:hover {
+  color: var(--brand-seconed-color);
+}
+
+body {
+  /* padding-top: 100px; */
+  background-color: var(--seconed-color);
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

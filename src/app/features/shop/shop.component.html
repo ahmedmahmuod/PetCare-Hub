@@ -1,0 +1,60 @@
+<div class="container mx-auto py-8 px-4 sm:px-0">
+  <div class="flex flex-col lg:flex-row gap-8">
+
+    <!-- Categories Sidebar -->
+    <div class="lg:w-64 flex-shrink-0">
+      <h2 class="text-xl text-brand-color font-semibold mb-4">{{'Pages.Shop.Categories.Title' | translate}}</h2>
+      <div class="">
+        <div class="space-y-3">
+          <label *ngFor="let cat of categories" class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors">
+            <div class="relative">
+              <input type="checkbox" [checked]="selectedCategories.includes(cat)" (change)="toggleCategory(cat)" class="peer hidden">
+              <div class="w-5 h-5 border-2 border-gray-300 rounded peer-checked:bg-brand-color transition-colors">
+                <svg class="w-4 h-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+            <span class="text-fourth-color">{{ cat | titlecase }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1">
+
+      <!-- Search Bar -->
+      <div class="relative mb-8">
+        <input type="text" [(ngModel)]="searchTerm" (input)="filterProducts()" [placeholder]="('Pages.Shop.Search_Bar.Placeholder' | translate)" class="w-full h-full bg-transparent text-brand-color p-3 pr-20 outline-none border ">
+        <button class="absolute right-0 top-0 h-full px-4 bg-brand-color text-seconed-color transition-colors" (click)="filterProducts()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-10" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+    <!-- Skeleton when loading -->
+    @if (isLoading) {
+      <app-products-page-skelton />
+    } @else {
+      <!-- No Products Found -->
+      <div *ngIf="(filteredProducts$ | async)?.length === 0" class="text-center text-fourth-color text-lg py-16">
+        {{'Pages.Shop.Search_Bar.Filter_Empty' | translate}}
+      </div>
+
+      <!-- Products Grid -->
+      <div *ngIf="(paginatedProducts$ | async) as paginatedProducts">
+        <div *ngIf="paginatedProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <app-product-card *ngFor="let product of paginatedProducts" [product]="product" [calculateDiscountPercentage]="calculateDiscountPercentage"></app-product-card>
+        </div>
+
+        <!-- Pagination -->
+        <div *ngIf="totalPages() > pageSize" class="mt-8">
+          <app-pagination [totalItems]="totalPages" [itemsPerPage]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)" />
+        </div>
+      </div>
+    }
+
+    </div>
+  </div>
+</div>

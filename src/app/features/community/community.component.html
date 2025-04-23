@@ -1,0 +1,58 @@
+<div class="posts-container">
+  
+  @if (!isLoggedIn) {
+    <app-login-required/>
+  } @else {
+ <!-- Form add new post feed -->
+ <div class="post-form-card relative">
+  <app-section-spinner *ngIf="isLoadingForm" />
+    <form [formGroup]="postForm" (ngSubmit)="submitPost()" enctype="multipart/form-data">
+
+      <div class="post-visibility-toggle">
+        <label class="visibility-option" [class.active]="!postForm.get('onlyMe')?.value">
+          <input type="radio" formControlName="onlyMe" [value]="false" hidden />
+          <i class="fa-solid fa-earth-americas"></i>
+          <span>{{'Pages.Community.Form_New_Post.Privacy.Public' | translate}}</span>
+        </label>
+      
+        <label class="visibility-option" [class.active]="postForm.get('onlyMe')?.value">
+          <input type="radio" formControlName="onlyMe" [value]="true" hidden />
+          <i class="fa-solid fa-lock"></i>
+          <span>{{'Pages.Community.Form_New_Post.Privacy.Private' | translate}}</span>
+        </label>
+      </div>
+      
+      <div class="form-header">
+        <img [src]="'logos/user-profile.jpg'" alt="avatar" class="avatar" />
+        <textarea formControlName="description" [placeholder]="('Pages.Community.Form_New_Post.Placeholder' | translate)" rows="3"></textarea>
+      </div>
+  
+      <div class="form-actions">
+        <label class="upload-btn border border-brand-color rounded-full px-2 py-1">
+          <i class="fas fa-image"></i> 
+          {{'Pages.Community.Form_New_Post.Photo' | translate}}
+          <input type="file" hidden (change)="onImageSelected($event)" />
+        </label>
+  
+        <button type="submit" class="submit-btn" [disabled]="postForm.invalid">
+          <i class="fas fa-paper-plane"></i> {{'Pages.Community.Form_New_Post.Btn' | translate}}
+        </button>
+      </div>
+  
+      <div class="preview" *ngIf="selectedImage">
+        <img [src]="selectedImage" alt="Preview" />
+      </div>
+    </form>
+  </div>
+  
+  @if(isLoading) {
+    <app-post-skeleton-loader/>
+  } @else {
+      @for (post of (posts$ | async) ; track post.post._id) {
+          <app-post-card [post]="post" (likeClicked)="handleLike($event)"/>
+      }
+  }
+  }
+
+   
+</div>

@@ -1,0 +1,90 @@
+<header [ngClass]="{ 'hidden-header': !isHeaderVisible, 'visible-header': isHeaderVisible }" class="fixed top-0 left-0 w-full z-50 transition-transform duration-500 ease-in-out bg-white shadow-md">
+    <nav class="container mx-auto flex justify-between ">
+        <!-- left -->
+        <div class="nav-left nav">
+            <!-- logo -->
+            <div class="logo">
+                <img src="logos/logo.png" alt="logo">
+            </div>
+            <!-- page links -->
+            <div class="page-links hidden md:flex">
+                <ul class="flex items-center gap-x-6">
+                    <li routerLinkActive="page-header-active" routerLink="/home">{{'Header.Links.Home' | translate}}</li>
+                    <li routerLinkActive="page-header-active" routerLink="/services">{{'Header.Links.Services' | translate}}</li>
+                    <li routerLinkActive="page-header-active" routerLink="/adoption">{{'Header.Links.Adoption' | translate}}</li>
+                    <li routerLinkActive="page-header-active" routerLink="/veterinary">{{'Header.Links.Vets' | translate}}</li>
+                    <li routerLinkActive="page-header-active" routerLink="/shop">{{'Header.Links.Shop' | translate}}</li>
+                    <li routerLinkActive="page-header-active" routerLink="/blogs">{{'Header.Links.Blogs' | translate}}</li>
+                    <li routerLinkActive="page-header-active" routerLink="/community" class="new-badge-wrapper">
+                        {{'Header.Links.Community.Title' | translate}}
+                        <span class="new-badge" [ngClass]="currentLang === 'en' ? 'new-en' : 'new-ar'">{{'Header.Links.Community.Padge' | translate}}</span>
+                    </li>                    
+                </ul>
+            </div>
+        </div>
+
+        <!-- right -->
+        <div class="nav-right nav">
+            <!-- Hamburger Menu (visible on small screens) -->
+            <div class="md:hidden cursor-pointer" (click)="toggleMenu()">
+                <i class="fa-solid text-seconed-color fa-bars text-3xl"></i>
+            </div>
+
+            <!-- user login -->
+            <div *ngIf="isLoggedIn; else notLoggedIn" class="hidden md:flex gap-6">
+                <i class="header-icon fa-solid fa-heart transition duration-300"></i>
+                <i class="header-icon fa-solid fa-cart-shopping transition duration-300"></i>
+                <i class="header-icon fa-solid fa-user transition duration-300"></i>
+            </div>
+
+            <!-- user not login -->
+            <ng-template #notLoggedIn>
+                <ul class="hidden md:flex items-center gap-x-2">
+                    <li routerLink="/register" class="signup transition duration-300">{{'Header.Btns.Register' | translate}}</li>
+                    <li routerLink="/login" class="login transition duration-300">{{'Header.Btns.Login' | translate}}</li>
+                </ul>
+            </ng-template>
+        </div>
+    </nav>
+
+    <!-- Overlay and Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="fixed inset-0 bg-black bg-opacity-80 z-50" (click)="toggleMenu()"></div>
+    <div @slideAnimation *ngIf="isMenuOpen" class="mobile-menu fixed top-0 right-0 w-2/3 h-full bg-brand-color text-white shadow-lg z-50">
+        <div class="p-7">
+            <!-- Links -->
+            <div class="mobile-links mb-6">
+                <ul>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/home">{{'Header.Links.Home' | translate}}</li>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/services">{{'Header.Links.Services' | translate}}</li>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/adoption">{{'Header.Links.Adoption' | translate}}</li>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/veterinary">{{'Header.Links.Vets' | translate}}</li>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/shop">{{'Header.Links.Shop' | translate}}</li>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/blogs">{{'Header.Links.Blogs' | translate}}</li>
+                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/community" class="new-badge-wrapper">
+                        <span class="new-badge" [ngClass]="currentLang === 'en' ? 'new-en' : 'new-ar'">{{'Header.Links.Community.Padge' | translate}}</span>
+                        {{'Header.Links.Community.Title' | translate}}
+                    </li>    
+                </ul>
+            </div>
+            <!-- is login or no -->
+            <div class="flex justify-center">
+                <!-- user login -->
+                <div *ngIf="isLoggedIn; else notLoggedIn" class="flex gap-3">
+                    <i class="header-icon fa-solid fa-heart transition duration-300"></i>
+                    <i class="header-icon fa-solid fa-cart-shopping transition duration-300"></i>
+                    <i class="header-icon fa-solid fa-user transition duration-300"></i>
+                </div>
+                <!-- user not login -->
+                <ng-template #notLoggedIn>
+                    <div class="mobile-user">
+                        <ul>
+                            <li routerLink="/login"  class="signin">{{'Header.Btns.Login' | translate}}</li>
+                            <li class="text-center"><p>{{'Header.Btns.Or' | translate}}</p></li>
+                            <li routerLink="/register" class="signup">{{'Header.Btns.Register' | translate}}</li>
+                        </ul>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</header>

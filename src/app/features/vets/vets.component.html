@@ -1,0 +1,10 @@
+<!-- Hero Seciton -->
+<section class="hero-section">
+    <app-hero-section imageUrl="backgrounds/vets-hero/background-hero.png" title="Pages.Vets.Title"/>
+    <div class="cards flex justify-center gap-5">
+        <app-global-card (click)="navigateWithoutScroll(item.rout)" [isActive]="isCardActive(item.rout)" (onclick)="clickToRoute(item.rout)" *ngFor="let item of vets_cards_data" [imageUrl]="item.image" [title]="item.title" [linkStyled2]="true"/>
+    </div>
+</section>
+ 
+<!-- Router outlet -->
+<router-outlet (activate)="onOutletActivated()" (deactivate)="onOutletDeactivated()" />

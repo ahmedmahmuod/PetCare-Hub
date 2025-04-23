@@ -1,0 +1,13 @@
+<main [dir]="currentLang === 'en' ? 'ltr' : 'rtl'" class="flex flex-col min-h-screen" [ngStyle]="shouldShowLayout() ? { 'margin-top': '100px' } : {}">
+  <!-- Header -->
+  <app-header *ngIf="shouldShowLayout()"/>
+
+  <!-- Content -->
+  <div class="bg-seconed-color flex-1 pb-10">
+    <router-outlet />
+    <app-language-toggle />
+  </div>
+
+  <!-- Footer -->
+  <app-footer *ngIf="shouldShowLayout()"/>
+</main>

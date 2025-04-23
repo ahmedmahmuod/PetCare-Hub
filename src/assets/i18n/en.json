@@ -1,0 +1,427 @@
+{
+  "Header": {
+    "Links": {
+      "Home": "Home",
+      "Services": "Services",
+      "Adoption": "Adoption",
+      "Vets": "Veterinary",
+      "Shop": "Shop",
+      "Blogs": "Blogs",
+      "Community": {
+        "Title": "Community",
+        "Padge": "New"
+      } 
+    },
+    "Btns": {
+      "Login": "Login",
+      "Or": "or",
+      "Register": "Register"
+    }
+  },
+
+  "Pages": {
+    "Home": {
+      "Hero": {
+        "Title": "Find a loving local pet sitter or dog Walker",
+        "Subtitle": "Who treats your pet like family"
+      },
+      "Services": {
+        "Card_One": "Training",
+        "Card_Two": "Boarding",
+        "Card_Three": "Grooming",
+        "Card_Four": "Walking",
+        "Card_Five": "More"
+      },
+      "Static_Section": {
+        "Title": "Scooby made easy for you",
+        "Subtitle": "Search and connect with trusted pet services providers. It's easy as 1, 2, 3.",
+        "Cards": {
+          "Card_One": "Find pet Service provider",
+          "Card_Two": "Arrange a meet & greet",
+          "Card_Three": "Book your appointment"
+        }
+      }
+
+    },
+    
+    "Blogs": {
+      "Title": "Blogs",
+      "Description": "Because we love to talk about pets."
+    },
+    
+    "Services": {
+      "Title": "Find what you are looking for near you",
+      "Subtitle": "Scroll down to browse Pet Services near you",
+
+      "Filter": {
+        "Form": {
+          "Type": {
+            "Label": "What service do you want?",
+            "Options": {
+              "Selected": "All Services",
+              "Option_One": "Pet Walking",
+              "Option_Two": "Pet Sitting",
+              "Option_Three": "Pet Boarding",
+              "Option_Four": "Pet Grooming",
+              "Option_Five": "Pet Training",
+              "Option_Six": "Pet Care",
+              "Option_Seven": "Pet Hotel",
+              "Option_Eight": "Pet Taxi",
+              "Option_Nine": "Pet Friendly"
+            }
+          },
+          "Location": {
+            "Label": "Where do you need it?",
+            "Options": {
+              "Selected": "All Governorates"
+            }
+          }
+        },
+        "Btn": "Search",
+        "Filter_Empty": "There are no services matching the selected filters."
+      },
+
+      "ServiceCard": {
+        "Type": {
+          "Night": "Night",
+          "Walk": "Walk",
+          "Course": "Course",
+          "Ride": "Ride"
+        }
+      },
+
+      "Single_Service": {
+        "Booking_Section": {
+          "Form": {
+            "Price": {
+              "From": "From",
+              "Currncy": "L.E",
+              "To": "Up to",
+              "Duration": "Per Night"
+            },
+            "Inputs": {
+              "City": {
+                "Title": "City",
+                "Placeholder": "Enter your city",
+                "Error": "City is required."
+              },
+              "Duration": {
+                "Title": "Duration",
+                "Placeholder": "Select duration",
+                "Values": {
+                  "One": "Full Day",
+                  "Tow": "Half Day",
+                  "Three": "More than 1 Day"
+                },
+                "Error": "Duration is required."
+              },
+              "Date": {
+                "Title": "Date",
+                "Error": "Date is required."
+              }
+            },
+            "Btn": "Make Reservation"
+          }
+        },
+        "Tabs": {
+          "Description": "Description",
+          "Reviews": "Reviews",
+          "Reviews_Page": {
+            "Title": "Write a Review",
+            "Placeholder": "Your Review",
+            "Error": "Review must be at least 6 characters long",
+            "Btn": "Submit Review",
+            "Is_Empty": "No Reviews in this service yet!"
+          }
+        }
+      }
+    },
+
+    "Adoption": {
+      "Title": "Find your new best friend",
+      "Adoption_Cards": {
+        "Card_One": "Dogs",
+        "Card_Two": "Cats",
+        "Card_Three": "Shelters & Rescues"
+      },
+
+      "Filter": {
+        "Title": "Filter by Pet Type",
+        "Values": {
+          "All": "All Pets",
+          "Dogs": "Dogs",
+          "Cats": "Cats"
+        },
+        "Empty": "No pets match the filter."
+      },
+
+      "Card": {
+        "Dog": "Dog",
+        "Cat": "Cat",
+        "Kg": "Kg",
+        "Gender": {
+          "Male": "Male",
+          "Female": "Female"
+        }
+      },
+      
+      "Pets_For_Adoption": {
+        "Title": "Pets for Adoption",
+        "More": {
+          "Title": "More Pets availabile on Scooby",
+          "Subtitle": "Meet them"
+        }
+      },
+
+      "Dogs": {
+        "Dogs_For_Adoption": {
+          "Title": "Dogs for Adoption",
+          "More": {
+            "Title": "More Dogs availabile on Scooby",
+            "Subtitle": "Meet them"
+          }
+        },
+  
+        "Top_Collection_Of_Dogs": {
+          "Title": "Top collection of dogs",
+          "More": {
+            "Title": "More Dogs availabile on Scooby",
+            "Subtitle": "Meet them"
+          }
+        },
+        "Best_Dogs_for_kids": {
+          "Title": "Best Dogs for kids",
+          "More": {
+            "Title": "More Dogs availabile on Scooby",
+            "Subtitle": "Meet them"
+          }
+        }
+      },
+
+      "Cats": {
+        "Cats_For_Adoption": {
+          "Title": "Cats for Adoption",
+          "More": {
+            "Title": "More Cats availabile on Scooby",
+            "Subtitle": "Meet them"
+          }
+        },
+  
+        "Top_Collection_Of_Cats": {
+          "Title": "Top collection of cats",
+          "More": {
+            "Title": "More Cats availabile on Scooby",
+            "Subtitle": "Meet them"
+          }
+        },
+        "Best_Cats_for_kids": {
+          "Title": "Best Cats for kids",
+          "More": {
+            "Title": "More Cats availabile on Scooby",
+            "Subtitle": "Meet them"
+          }
+        }
+      },
+
+      "Planning_to_Adopt": {
+        "Title": "Planning to Adopt",
+        "Btn": "Learn More",
+        "Cards": {
+          "Card_One": {
+            "Title": "Checklist for new adopters",
+            "Subtitle": "Make the adoption transition as smooth as possible."
+          },
+          "Card_Two": {
+            "Title": "COVID-19 Resources",
+            "Subtitle": "Find out how you can help dogs and cats."
+          },
+          "Card_Three": {
+            "Title": "Pet adoption FAQs",
+            "Subtitle": "Answer all questions you haven’t thought of for your adoption."
+          }
+        }
+      },
+
+      "Success_Adoptions": {
+        "Title": "Successful Adoptions",
+        "Subtitle": "Slide to see some of the animals we helped rehome in Egypt."
+      },
+
+      "Shelter_Details": {
+        "Titles": {
+          "Contact": "Contact",
+          "Location": "Location",
+          "Work_Hours": "Work Hours",
+          "About": "About Us",
+          "Gallery_Shelter": "Gallery Shelter",
+          "Our_Pets": "Our Pets",
+          "Description_Reviews": "Reviews",
+          "Reviews": "Reviews"
+        }
+      }
+    },
+
+    "Vets": {
+      "Title": "We care about your Pets",
+      "Cards": {
+        "Card_One": "Doctors",
+        "Card_Two": "Clinics"
+      },
+
+      "Static_Section": {
+        "Title": "Providing our best veterinary Services",
+        "Cards": {
+          "Card_One": {
+            "Title": "Pet Vaccination",
+            "Subtitle": "Keep your pet healthy and happy get them vaccinated!"
+          },
+          "Card_Two": {
+            "Title": "Pet Veterinary",
+            "Subtitle": "Keep your pet healthy and happy with monthly checkup"
+          },
+          "Card_Three": {
+            "Title": "Pet Surgery",
+            "Subtitle": "Keep your pet healthy and happy"
+          },
+          "Btn": "Learn More"
+        },
+
+        "Our_Best_Doc": {
+          "Title": "Meet Our Best Doctors",
+          "Subtitle": "We change your life & world with our valuable expert Doctors team",
+          "Btn": "See all doctors"
+        },
+        
+        "Our_Best_Clinics": {
+          "Title": "Meet Our Best Clinics",
+          "Subtitle": "We change your life & world with valuable expert Clinics",
+          "Btn": "See all clinics"
+        }
+      },
+
+      "Doctor_Page": {
+        "Title": "Meet Our Best Doctors",
+        "Subtitle": "We change your life & world with our valuable expert Doctors team",
+        "Btn": "View Doctor",
+        "Profile": {
+          "Header": {
+            "Call_Btn": "Call Now",
+            "Reviews": "Reviews",
+            "Type": {
+              "Dog": "Dog",
+              "Cat": "Cat"
+            }
+          },
+          "About": "About Doctor",
+          "Specializations": "Specializations",
+          "Gallery": {
+            "Title": "Gallery",
+            "Empty": "No images available"
+          },
+          "Contact_Information": "Contact Information",
+          "Reviews": "Reviews"
+        }
+      }
+
+    },
+
+    "Shop": {
+      "Search_Bar": {
+        "Placeholder": "Search for products, categories, or keywords",
+        "Filter_Empty": "No products match your search or filter criteria."
+      },
+      "Categories": {
+        "Title": "Categories"
+      },
+      "Product": {
+        "Price_Unit": "L.E"
+      }
+    },
+
+    "Community": {
+      "Form_New_Post": {
+        "Placeholder": "What's on your mind?",
+        "Privacy": {
+          "Public": "Public",
+          "Private": "Private"
+        },
+        "Photo": "Add a photo",
+        "Btn": "Post"
+      },
+
+      "Post_Card": {
+        "Time_Ago": {
+          "Seconds": "Just now",
+          "Minutes": "{{value}} minutes ago",
+          "Hours": "{{value}} hours ago",
+          "Days": "{{value}} days ago",
+          "Weeks": "{{value}} weeks ago"
+        },
+        "Edited": "Edited",
+        "Likes": "Likes",
+
+        "PopUpProfile": {
+          "Following": "Following",
+          "Followers": "Followers",
+          "Pets": "Pets",
+          "Rule": {
+            "Admin": "Admin",
+            "User": "User"
+          } 
+        }
+      },
+
+      "Profile": {
+        "Contact_Information": "Contact Information",
+        "Posts": "Posts"
+      }
+    }
+
+  },
+
+  "Footer": {
+    "Links": {
+      "Title": "Quick Links",
+      "Home": "Home",
+      "Services": "Services",
+      "Vets": "Veterinary",
+      "Doctors": "Doctors",
+      "Shop": "Shop"
+    },
+    "Contacts": {
+      "Title": "Contacts",
+      "Address": "Damietta, Egypt"
+    },
+    "Social": {
+      "Title": "Let’s Get in Touch",
+      "Placeholder": "Your email address",
+      "Btn": "Connect"
+    },
+    "Copyright": {
+      "Text": "All rights reserved © 2025 for",
+      "Link": "(Developer)"
+    }
+  },
+
+  "Global": {
+    "View_Btn": "View All",
+
+    "Add_To_Cart_Btn": "Add to Cart",
+
+    "Pagination": {
+      "Prev": "Previous",
+      "Next": "Next"
+    },
+
+    "Is_Not_Authenticated": {
+      "Title": "Authentication Required",
+      "Subtitle": "Please log in to access this content. Your session may have expired or you haven't signed in yet.",
+      "Login": "Login",
+      "Register": "Create an account",
+      "Or": "or",
+      "Help": "Need assistance?",
+      "Contact_Support": "Contact Support"
+    }
+    
+  }
+}

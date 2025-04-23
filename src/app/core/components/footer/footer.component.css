@@ -1,0 +1,140 @@
+footer {
+  height: 357px;
+  width: 100%;
+  background-color: var(--brand-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.container.foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  width: 100%;
+  gap: 20px;
+}
+
+footer h3 {
+  color: var(--brand-seconed-color);
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.social-footer {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.email-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.email-container input {
+  padding: 10px;
+  border: 1px solid var(--third-color);
+  background-color: transparent;
+  color: var(--third-color);
+  outline: none;
+}
+.email-container input::placeholder {
+  color: var(--third-color);
+}
+
+.email-container button {
+  padding: 10px 20px;
+  border: 1px solid var(--third-color);
+  background-color: var(--seconed-color);
+  color: var(--brand-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.email-container button:hover {
+  background-color: var(--third-color);
+  color: var(--brand-color);
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social {
+  font-size: 28px;
+  color: var(--third-color);
+  transition: 0.3s;
+}
+
+.social:hover {
+  color: var(--seconed-color);
+}
+
+.contact-footer,
+.links-footer {
+  max-width: 250px;
+}
+
+.contact-info .email {
+  display: flex;
+  align-items: center;
+  gap: 0px 5px;
+}
+
+.contact-info span,
+.links span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--third-color);
+}
+
+@media (max-width: 768px) {
+  footer {
+    height: fit-content;
+  }
+
+  .container.foot {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .email-container input {
+    flex: 2;
+  }
+  .email-container button {
+    flex: 1;
+  }
+
+  .email-container input,
+  .email-container button {
+    width: 100%;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+footer hr {
+  margin: 20px 0;
+  opacity: 0.2;
+}
+footer .copy-right {
+  color: var(--brand-seconed-color);
+  font-size: 16px;
+  text-align: center;
+}
+footer .copy-right a {
+  color: var(--brand-seconed-color);
+  text-decoration: underline;
+}

@@ -1,0 +1,110 @@
+<app-skeleton-service-page *ngIf="loading()"/>
+<div class="p-6 m-auto container" *ngIf="serviceData">
+    <div class="service-main-content">
+      
+      <!-- Image Gallery -->
+      <div class="image-gallery">
+        <img [src]="selectedImage" [alt]="'Selected pet service image'" class="main-image" />
+        <div *ngIf="serviceData?.imagesProfile" class="thumbnail-container">
+          <img *ngFor="let image of serviceData.imagesProfile; let i = index"  [src]="image" [alt]="'Thumbnail ' + (i + 1)" class="thumbnail" [class.active]="selectedImage === image" (click)="selectImage(image)" />
+        </div>
+      </div>
+  
+      <!-- Booking Section -->
+      <div class="booking-section">
+        <h2 class="text-brand-color text-lg font-bold">{{serviceData.name}}</h2>
+        <div class="flex flex-col gap-5">
+          
+          <!-- Price Info -->
+          <div class="price-info text-brand-seconed-color flex justify-between items-center">
+            <div class="flex items-center text-sm gap-1">
+              <span>{{'Pages.Services.Single_Service.Booking_Section.Form.Price.From' | translate}}</span>
+              <span class="price">{{serviceData.from}}{{'Pages.Services.Single_Service.Booking_Section.Form.Price.Currncy' | translate}}</span>
+              <span>{{'Pages.Services.Single_Service.Booking_Section.Form.Price.To' | translate}}</span>
+              <span class="price">{{serviceData.to}}{{'Pages.Services.Single_Service.Booking_Section.Form.Price.Currncy' | translate}}</span>
+            </div>
+            <span class="bg-brand-seconed-color rounded text-xs text-brand-color font-bold p-1">{{'Pages.Services.Single_Service.Booking_Section.Form.Price.Duration' | translate}}</span>
+          </div>
+      
+          <!-- Booking Form -->
+          <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()" class="booking-form flex flex-col gap-4">
+            
+            <!-- City Field -->
+            <div class="form-group">
+              <label>{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.City.Title' | translate}}</label>
+              <select formControlName="city" class="border p-2 rounded">
+                <option value="">{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.City.Placeholder' | translate}}</option>
+                <option *ngFor="let gov of egyptGovernoratesArray" [value]="gov">{{ gov }}</option>
+              </select>
+              <p *ngIf="bookingForm.get('city')?.invalid && bookingForm.get('city')?.touched" class="text-red-500 text-sm">
+                {{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.City.Error' | translate}}
+              </p>
+            </div>
+      
+            <!-- Duration Field -->
+            <div class="form-group">
+              <label>{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Duration.Title' | translate}}</label>
+              <select formControlName="duration" class="border p-2 rounded">
+                <option value="">{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Duration.Placeholder' | translate}}</option>
+                <option value="Full Day">{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Duration.Values.One' | translate}}</option>
+                <option value="Half Day">{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Duration.Values.Tow' | translate}}</option>
+                <option value="More than 1 Day">{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Duration.Values.Three' | translate}}</option>
+              </select>
+              <p *ngIf="bookingForm.get('duration')?.invalid && bookingForm.get('duration')?.touched" class="text-red-500 text-sm">{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Duration.Error' | translate}}</p>
+            </div>
+      
+            <!-- Date Field -->
+            <div class="form-group">
+              <label>{{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Date.Title' | translate}}</label>
+              <input type="date" formControlName="date" class="border p-2 rounded" />
+              <p *ngIf="bookingForm.get('date')?.invalid && bookingForm.get('date')?.touched" class="text-red-500 text-sm">
+                {{'Pages.Services.Single_Service.Booking_Section.Form.Inputs.Date.Error' | translate}}
+              </p>
+            </div>
+      
+            <!-- Submit Button -->
+            <button type="submit" class="reservation-btn bg-brand-color text-white py-2 px-4 rounded hover:opacity-80 transition-colors duration-300" [disabled]="bookingForm.invalid">
+                {{'Pages.Services.Single_Service.Booking_Section.Form.Btn' | translate}}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Footer Service -->
+    <div class="service-info">
+      
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn" [class.active]="activeTab === 'description'" (click)="activeTab = 'description'">
+          {{'Pages.Services.Single_Service.Tabs.Description' | translate}}
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">
+          {{'Pages.Services.Single_Service.Tabs.Reviews' | translate}}
+        </button>
+      </div>
+      
+      <!-- Description Content -->
+      <div class="tab-content" *ngIf="activeTab === 'description'">
+        <div class="description-content flex flex-col gap-3">
+          <span class="text-fourth-color">{{serviceData.about}}</span>
+          
+          <!-- FAQ Section -->
+          <div class="faq-container">
+            <div class="faq-list">
+              <div *ngFor="let item of faqsArray; let i = index" class="faq-item">
+                <div class="faq-question" (click)="toggleFAQ(i)" [class.active]="activeIndex === i">
+                  <h3>{{ item.question }}</h3>
+                  <div class="arrow" [class.active]="activeIndex === i"></div>
+                </div>
+                <div class="faq-answer" [class.active]="activeIndex === i">{{ item.answer }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <app-reviews *ngIf="activeTab === 'reviews'" [reviews]="serviceData.reviewsOfService"></app-reviews>
+     
+    </div>
+  </div>

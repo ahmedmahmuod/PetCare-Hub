@@ -1,0 +1,128 @@
+.posts-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0px 20px;
+}
+
+/* Form add new post */
+.post-form-card {
+  border-radius: 0px 0px 16px 16px;
+  padding: 20px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--brand-color);
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid var(--third-color);
+  outline: none;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: transparent;
+  transition: 0.3s ease;
+  color: var(--third-color);
+}
+
+textarea:focus {
+  background-color: var(--third-color);
+  box-shadow: 0 0 0 1px var(--brand-color);
+  color: var(--brand-color);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-btn {
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--brand-color);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.submit-btn {
+  background: var(--brand-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.preview {
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 400px;
+}
+
+.preview img {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--brand-color);
+}
+
+
+/* form privacy */
+.post-visibility-toggle {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  margin-right: 6px;
+}
+
+.visibility-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: #f1f1f1;
+  color: var(--brand-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.visibility-option i {
+  font-size: 1rem;
+}
+
+.visibility-option.active {
+  background-color: var(--brand-color);
+  color: white;
+}

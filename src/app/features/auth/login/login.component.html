@@ -1,0 +1,74 @@
+<div class="login-container -mb-10">
+    <div class="left-panel">
+      <img src="backgrounds/auth-page/auth-background.png" alt="Decorative image" class="background-image">
+    </div>
+    
+    <div class="right-panel relative">
+      <div class="login-form-container">
+        <a routerLink="/" class="icon-back-btn fixed-top-left" title="Back to Home">
+          <i class="fa-solid fa-left-long"></i>
+        </a>
+        
+        <h1>Login</h1>
+        <p class="welcome-text">Welcome Back!</p>
+  
+        <div class="social-buttons">
+          <button class="social-button facebook" (click)="loginWithFacebook()">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="Facebook" class="social-icon">
+            <span>Login with Facebook</span>
+          </button>
+          
+          <button class="social-button google" (click)="loginWithGoogle()">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" class="social-icon">
+            <span>Login with Google</span>
+          </button>
+        </div>
+  
+        <div class="divider">
+          <span class="divider-line"></span>
+          <span class="divider-text">OR</span>
+          <span class="divider-line"></span>
+        </div>
+  
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+            <!-- Email -->
+            <div class="form-group">
+              <div class="input-container" [ngClass]="{ 'input-error': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }">
+                <input type="email" id="email" formControlName="email" placeholder="Enter your email" class="input-field"/>
+                <img src="https://api.iconify.design/heroicons:envelope.svg" alt="email" class="input-icon">
+              </div>
+              <div class="error-message" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+                <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
+                <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</span>
+              </div>
+            </div>
+          
+            <!-- Password -->
+            <div class="form-group">
+              <div class="input-container" [ngClass]="{ 'input-error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }">
+                <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password" class="input-field"/>
+                <img [src]="passwordVisible ? 'https://api.iconify.design/heroicons:eye-slash.svg' : 'https://api.iconify.design/heroicons:eye.svg'" alt="toggle password" class="input-icon toggle-icon" (click)="togglePasswordVisibility()">
+              </div>
+              <div class="error-message" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+                <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+              </div>
+            </div>
+          
+            <!-- Forgot Password -->
+            <div class="forgot-password">
+              <a href="#" class="forgot-link">Forgot Password?</a>
+            </div>
+          
+            <!-- Submit -->
+            <button type="submit" class="login-button" [disabled]="loginForm.invalid">Login</button>
+          
+            <!-- Sign Up -->
+            <div class="signup-option">
+              Not on Scooby yet? <a routerLink="/register" class="signup-link">Sign Up</a>
+            </div>
+          </form>
+          
+      </div>
+    </div>
+  </div>

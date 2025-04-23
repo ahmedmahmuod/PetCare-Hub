@@ -1,0 +1,33 @@
+.hero-section {
+  position: relative;
+  margin-bottom: 200px;
+}
+
+.hero-section .cards {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -72px;
+  flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 804px) {
+  .hero-section .cards {
+    bottom: -24%;
+  }
+
+  .hero-section {
+    margin-bottom: 300px;
+  }
+}
+
+@media (max-width: 535px) {
+  .hero-section .cards {
+    bottom: -55%;
+  }
+
+  .hero-section {
+    margin-bottom: 450px;
+  }
+}

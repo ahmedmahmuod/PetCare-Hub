@@ -1,0 +1,266 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.left-panel {
+  flex: 1;
+  position: relative;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--brand-color);
+}
+
+.welcome-text {
+  font-size: 1rem;
+  color: var(--fourth-color);
+  margin-bottom: 2rem;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--third-color);
+  color: var(--fourth-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.social-button:hover {
+  background-color: var(--third-color);
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--third-color);
+}
+
+.divider-text {
+  padding: 0 1rem;
+  color: var(--fourth-color);
+  font-size: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  padding-right: 2.5rem;
+  border: 1px solid var(--third-color);
+  border-radius: 1.5rem;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background-color: transparent;
+  color: var(--brand-color);
+}
+
+.input-field::placeholder {
+  color: var(--fourth-color);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 1px #5d4a8c20;
+}
+
+.input-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-icon {
+  cursor: pointer;
+}
+
+.forgot-password {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-link {
+  color: var(--brand-color);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.login-button {
+  background-color: var(--brand-color);
+  color: var(--seconed-color);
+  border: none;
+  border-radius: 9999px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.login-button:hover {
+  opacity: 0.9;
+}
+
+.signup-option {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--fourth-color);
+}
+
+.signup-link {
+  color: var(--brand-color);
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+.input-error .input-field {
+  border-color: #e53e3e;
+  background-color: #fff5f5;
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-panel {
+    height: 200px;
+  }
+
+  .right-panel {
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .login-form-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+  }
+
+  .login-button {
+    width: 100%;
+  }
+}
+
+.icon-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--third-color);
+  color: var(--brand-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: 0.3s, color 0.3s;
+
+}
+
+.icon-back-btn:hover {
+  background-color: var(--brand-color);
+  color: var(--brand-seconed-color);
+}
+
+.fixed-top-left {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    .fixed-top-left {
+      margin-bottom: 2rem;
+    }
+  }
+}

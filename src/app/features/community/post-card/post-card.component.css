@@ -1,0 +1,376 @@
+.post-card {
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.user-avatar-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.user-avatar-wrapper::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: var(--brand-color);
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.user-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  position: relative;
+  z-index: 1;
+}
+
+.user-popup {
+  position: absolute;
+  background: var(--brand-color);
+  border-radius: 12px;
+  padding: 16px;
+  width: 300px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+
+.popup-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--brand-seconed-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-popup h4 {
+  text-align: center;
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--brand-seconed-color);
+  font-weight: bold;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--brand-color);
+  letter-spacing: 0.3px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.user-name:hover {
+  color: var(--brand-seconed-color);
+}
+
+.post-content {
+  margin: 0 -20px;
+}
+
+.post-description {
+  margin: 0 20px 16px;
+  line-height: 1.6;
+  color: var(--fourth-color);
+  font-size: 0.95rem;
+  white-space: pre-line;
+}
+
+.post-image-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.image-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; 
+  overflow: hidden;
+}
+
+.post-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .image-aspect-ratio {
+    padding-top: 75%; 
+  }
+}
+
+/* Like Button Styles */
+/* Base Like Button Styles */
+.post-actions {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  color: #555;
+}
+
+.like-icon-container {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.like-icon {
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.like-text-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.likes-count {
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.like-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e74c3c;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  transition: max-width 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* Liked State Styles */
+.like-button.liked {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.08);
+}
+
+.like-button.liked .like-icon {
+  transform: scale(1.1);
+}
+
+.like-button.liked .like-text {
+  max-width: 5rem;
+  opacity: 1;
+}
+
+.like-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(231, 76, 60, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  z-index: 1;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 0.4; }
+  100% { transform: scale(0.8); opacity: 0.8; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .like-button {
+    padding: 0.4rem 0.8rem;
+    gap: 0.4rem;
+  }
+  
+  .like-icon {
+    font-size: 1.1rem;
+  }
+  
+  .likes-count {
+    font-size: 0.875rem;
+  }
+  
+  .like-text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .like-button {
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .like-icon-container {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .like-text {
+    display: none; 
+  }
+}
+
+/* Hover Effects (Desktop only) */
+@media (hover: hover) {
+  .like-button:hover {
+    background-color: rgba(231, 76, 60, 0.08);
+  }
+  
+  .like-button:hover .like-icon {
+    transform: scale(1.1);
+  }
+  
+  .like-button.liked:hover .like-icon {
+    transform: scale(1.2);
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .post-card {
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .post-content {
+    margin: 0 -16px;
+  }
+
+  .post-description {
+    margin: 0 16px 12px;
+    font-size: 0.9rem;
+  }
+
+  .user-avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .user-name {
+    font-size: 1rem;
+  }
+
+  .post-image-container {
+    min-height: 150px;
+  }
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: var(--fourth-color);
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.edited-label {
+  /* font-style: italic; */
+  color: var(--brand-color);
+  margin-right: 4px;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+
+.post-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between; /* 👈 دي مهمة */
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+/* privecy icon */
+.post-privacy-icon {
+  font-size: 1rem;
+  color: var(--fourth-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--third-color);
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.post-privacy-icon.public {
+  color: var(--brand-color);
+}
+
+.post-privacy-icon.private {
+  color: var(--brand-color);
+}

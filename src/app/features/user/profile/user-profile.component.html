@@ -1,0 +1,74 @@
+@if (isLoggedIn) {
+  <div class="profile-container sm:p-0 p-5 container mx-auto py-8 mt-14">
+    @if (isLoading) {
+      <app-user-profile-skeleton/>
+    } @else {
+      <div class="profile-header">
+        <img [src]="userData.profileImage || 'logos/user-profile.jpg'" [alt]="userData.name" class="profile-image" />
+    
+        <div class="profile-info">
+          <div class="flex items-center gap-3">
+            <h1 class="profile-name">{{ userData.name }}</h1>
+            <div class="profile-role">{{ userData.role === 'user' ? ('Pages.Community.Post_Card.PopUpProfile.Rule.User' | translate)  : ('Pages.Community.Post_Card.PopUpProfile.Rule.Admin' | translate) }}</div>
+          </div>
+    
+          <div class="stats-bar">
+            <div class="stat-item">
+              <span class="stat-value">{{ followersCount }}</span>
+              <span class="stat-label">{{'Pages.Community.Post_Card.PopUpProfile.Followers' | translate}}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ followingCount }}</span>
+              <span class="stat-label">{{'Pages.Community.Post_Card.PopUpProfile.Following' | translate}}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ petsCount }}</span>
+              <span class="stat-label">{{'Pages.Community.Post_Card.PopUpProfile.Pets' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  
+    <div class="profile-content">
+      <div class="sidebar">
+        <div class="info-section">
+          <div class="section-header">
+            <h3 class="section-title">{{'Pages.Community.Profile.Contact_Information' | translate}}</h3>
+          </div>
+          <div class="section-content">
+            <div class="info-list">
+              <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{ userData.email }}</span>
+              </div>
+              @if (userData.phoneNumber) {
+                <div class="info-item">
+                  <i class="fas fa-phone"></i>
+                  <span>{{ userData.phoneNumber }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="main-content">
+        <div class="section-header">
+          <h3 class="section-title">{{'Pages.Community.Profile.Posts' | translate}}</h3>
+        </div>    
+        @if(isLoading) {
+          <app-post-skeleton-loader/>
+        } @else {
+            @for (post of userPosts ; track post.post._id) {
+                <app-post-card [post]="post" (likeClicked)="handleLike($event)"/>
+            }
+        }
+      </div>
+    </div>
+  </div>
+
+} @else {
+  <app-login-required/>
+}
+

@@ -1,0 +1,13 @@
+<section class="container mx-auto">
+    <app-page-title [description]="'Pages.Vets.Doctor_Page.Subtitle'" [title]="'Pages.Vets.Doctor_Page.Title'" />
+
+    @if(isLoading) {
+        <div class="doctor-grid">
+            <app-vets-card-skeleton *ngFor="let item of [1,1,1,1,1,1,1,1,1]"/>
+        </div>
+    } @else {
+        <div class="doctor-grid">
+            <app-vets-card buttonText="Pages.Vets.Doctor_Page.Btn" [specialized]="member.specialized_in" [router]="'/veterinary/doctors/'+ member.id" [darkMode]="false" [borderDark]="false" *ngFor="let member of (doctors$ | async)" [imageUrl]="member.doctorImage" [name]="member.name" [role]="member.review"/>
+        </div>
+    }
+</section>

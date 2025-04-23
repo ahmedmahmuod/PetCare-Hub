@@ -1,0 +1,20 @@
+<div class="mt-12">
+    <app-page-title [title]="title | translate"></app-page-title>
+    <div class="container mx-auto">
+      <app-pet-filter (filterChange)="onFilterChange($event)"></app-pet-filter>     
+  
+      @if (loading()) {
+        <app-adoption-skeleton />
+      } @else {
+        @if ((paginatedPets$ | async)?.length === 0) {
+          <h1 class="text-brand-color text-center text-4xl m-4">
+            {{ 'Pages.Adoption.Filter.Empty' | translate }}
+          </h1>
+        } @else {
+          <app-card-adoption [items]="(paginatedPets$ | async) ?? []"></app-card-adoption>
+          <app-pagination [totalItems]="totalPages" [itemsPerPage]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"/>
+        }
+      }
+    </div>
+  </div>
+  

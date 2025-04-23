@@ -1,0 +1,23 @@
+<!-- Planning to Vets section -->
+<section class="container mx-auto mt-20">
+    <app-page-title title="Pages.Vets.Static_Section.Title"/>
+    <app-card-list [cards]="providing_data"/>
+</section>
+
+<!-- Meet Our Doctors Team Section -->
+<section class="bg-brand-color mt-10">
+    <div class="py-10 flex flex-col items-center">
+        <app-page-title class="my-10" [titleDark]="true" [title]="'Pages.Vets.Static_Section.Our_Best_Doc.Title'" [description]="'Pages.Vets.Static_Section.Our_Best_Doc.Subtitle'"/>
+        <app-vets-section [teamMembers]="doctorsMembers" />
+        <app-global-button [routerLink]="'/veterinary/doctors'" [buttonStyle]="'light-bg'" [text]="'Pages.Vets.Static_Section.Our_Best_Doc.Btn'" />
+    </div>
+ </section>
+
+<!-- Meet Our clinics Team Section -->
+<section>
+    <div class="pt-10 flex flex-col items-center">
+        <app-page-title class="" [desDark]="true" [titleDark]="false" [title]="'Pages.Vets.Static_Section.Our_Best_Clinics.Title'" [description]="'Pages.Vets.Static_Section.Our_Best_Clinics.Subtitle'"/>
+        <app-vets-section [teamMembers]="clinicsMembers"  [borderDark]="false"/>
+        <app-global-button [routerLink]="'/veterinary/clinics'" [buttonStyle]="'dark-bg'" [text]="'Pages.Vets.Static_Section.Our_Best_Clinics.Btn'" />
+    </div>
+</section>

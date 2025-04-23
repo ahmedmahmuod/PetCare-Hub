@@ -1,0 +1,292 @@
+.register-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.left-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-panel {
+  flex: 1;
+  position: relative;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.register-form-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--brand-color);
+}
+
+.welcome-text {
+  font-size: 1rem;
+  color: var(--fourth-color);
+  margin-bottom: 2rem;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--third-color);
+  color: var(--fourth-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.social-button:hover {
+  background-color: var(--third-color);
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--third-color);
+}
+
+.divider-text {
+  padding: 0 1rem;
+  color: var(--fourth-color);
+  font-size: 0.9rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  padding-right: 2.5rem;
+  border: 1px solid var(--third-color);
+  border-radius: 1.5rem;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background-color: transparent;
+  color: var(--brand-color);
+}
+
+.input-field::placeholder {
+  color: var(--fourth-color);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 1px #5d4a8c20;
+}
+
+.input-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-icon {
+  cursor: pointer;
+}
+
+.role-selection {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.role-option {
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.role-radio {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  border: 2px solid var(--third-color);
+  border-radius: 1rem;
+  transition: all 0.2s;
+  background-color: white;
+}
+
+.role-radio:checked + .role-card {
+  border-color: var(--brand-color);
+  background-color: #5d4a8c10;
+}
+
+.role-icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 0.75rem;
+  color: var(--brand-color);
+}
+
+.role-label {
+  color: var(--brand-color);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.role-description {
+  font-size: 0.8rem;
+  color: var(--fourth-color);
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
+.register-button {
+  background-color: var(--brand-color);
+  color: var(--seconed-color);
+  border: none;
+  border-radius: 9999px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.register-button:hover {
+  opacity: 0.9;
+}
+
+.register-button:disabled {
+  background-color: var(--third-color);
+  cursor: not-allowed;
+}
+
+.login-option {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--fourth-color);
+}
+
+.login-link {
+  color: var(--brand-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.input-error .input-field {
+  border-color: #e53e3e;
+  background-color: #fff5f5;
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    flex-direction: column-reverse;
+    height: auto;
+  }
+
+  .right-panel {
+    height: 200px;
+  }
+
+  .left-panel {
+    padding: 2rem 1.5rem;
+    justify-content: flex-start;
+  }
+
+  .register-form-container {
+    max-width: 100%;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+  }
+
+  .role-selection {
+    flex-direction: column;
+  }
+
+  .role-option {
+    width: 100%;
+  }
+
+  .role-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .role-icon {
+    margin-bottom: 0;
+  }
+
+  .login-option {
+    font-size: 0.85rem;
+  }
+}

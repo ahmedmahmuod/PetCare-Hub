@@ -1,0 +1,50 @@
+<!-- Hero Section -->
+<section class="hero-section">
+    <!-- Hero -->
+    <app-hero-section imageUrl="backgrounds/adoption-hero/adoption-hero.png" [title]="('Pages.Adoption.Title' | translate)" />
+
+    <!-- Cards (Dog - Cat - Shelters) Sections -->
+    <div class="cards flex justify-center gap-5">
+        <app-global-card  [isActive]="isCardActive(item.rout)" [routerLink]="item.rout" *ngFor="let item of adoptions_data" [imageUrl]="item.image" [title]="item.title" [linkStyled2]="true"/>
+    </div>
+</section>
+
+<!-- Router outlet -->
+<router-outlet (activate)="onOutletActivated()" (deactivate)="onOutletDeactivated()" />
+
+<!-- Pets For Adoption -->
+<section *ngIf="!isOutletActive" class="container mx-auto">
+    <app-page-title [title]="('Pages.Adoption.Pets_For_Adoption.Title' | translate)"/>
+    <app-adoption-section [isStore]="true" type="getallpets" [moreText]="('Pages.Adoption.Pets_For_Adoption.More.Title' | translate)" [moreSubtext]="('Pages.Adoption.Pets_For_Adoption.More.Subtitle' | translate)"/>
+</section>
+
+<!-- Planning to Adopt -->
+<section class="container mx-auto mt-20">
+    <app-page-title [title]="('Pages.Adoption.Planning_to_Adopt.Title' | translate)"/>
+    <app-card-list [cards]="planning"/>
+</section>
+
+<!-- Successful Adoption -->
+<section class="bg-brand-color my-10 py-10">
+    <app-page-title class="m-10" [desDark]="true" [titleDark]="true" [description]="('Pages.Adoption.Success_Adoptions.Subtitle' | translate)" [title]="('Pages.Adoption.Success_Adoptions.Title' | translate)"/>
+    <app-slider [items]="[1,1,1,1,1,1]">
+        <ng-template #itemTemplate let-item>
+             <app-card-adoption class="flex" [items]="(pets$ | async) ?? []" displayMode="slider"/>
+        </ng-template>
+
+        <app-global-button routerLink="/adoption/successfullyAdaped" slider-footer [text]="'Global.View_Btn'" buttonStyle="light-bg"/>
+    </app-slider>
+</section>
+
+
+<!-- Blogs Section -->
+<section class="my-10">
+    <app-page-title [title]="('Pages.Blogs.Title' | translate)" [description]="('Pages.Blogs.Description' | translate)"class="mb-12"/>
+    <app-slider [items]="[1,1,1,1,1,1]">
+        <ng-template #itemTemplate let-pet>
+            <app-blog-cards [isInSlider]="true"/>
+        </ng-template>
+
+        <app-global-button slider-footer [routerLink]="'/blogs'" [text]="'Global.View_Btn'" buttonStyle="dark-bg"/>
+    </app-slider>
+</section>

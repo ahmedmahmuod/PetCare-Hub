@@ -1,0 +1,13 @@
+<section class="container mx-auto">
+    <app-page-title [description]="'We change your life & world with our valuable expert Clinics'" [title]="'Meet Our Best Clinics'" />
+
+    @if(loading) {
+        <div class="doctor-grid">
+            <app-vets-card-skeleton *ngFor="let item of [1,1,1,1,1,1]"/>
+        </div>
+    } @else {
+        <div class="doctor-grid">
+            <app-vets-card [buttonText]="'View Clinic'" [router]="'/veterinary/clinics/'+ member._id" [darkMode]="false" [borderDark]="false" *ngFor="let member of (clinics$ | async)" [imageUrl]="member.vetImage || ''" [name]="member.vetName" [role]="member.desc || ''"/>
+        </div>
+    }
+</section>

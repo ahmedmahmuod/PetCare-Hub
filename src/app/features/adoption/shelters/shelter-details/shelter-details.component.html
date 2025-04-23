@@ -1,0 +1,96 @@
+<app-shelter-details-skeleton *ngIf="!shelter$"/>
+<div class="shelter-details" *ngIf="shelter$ | async as shelter">
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <img [src]="shelter.shelterImage" [alt]="shelter.shelterName" class="hero-image">
+      <div class="hero-content">
+        <h1>{{ shelter.shelterName }}</h1>
+        <div class="hero-rating">
+          <div class="stars" dir="ltr">
+            <span class="filled-stars" [style.width.%]="(shelter.rate / 5) * 100">★★★★★</span>
+            <span class="empty-stars">★★★★★</span>
+          </div>
+          <span class="rate-number">{{ shelter.rate }} ({{ shelter.numberOfRates }} {{'Pages.Adoption.Shelter_Details.Titles.Reviews' | translate }})</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container">
+      <!-- Info Card -->
+      <div class="info-card">
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h3>{{'Pages.Adoption.Shelter_Details.Titles.Location' | translate}}</h3>
+              <p>{{ shelter.locations.address }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h3>{{'Pages.Adoption.Shelter_Details.Titles.Contact' | translate}}</h3>
+              <p>{{ shelter.shelterNumber }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h3>{{'Pages.Adoption.Shelter_Details.Titles.Work_Hours' | translate}}</h3>
+              <p>{{ shelter.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <section class="about-section">
+        <h2>{{'Pages.Adoption.Shelter_Details.Titles.About' | translate}}</h2>
+        <p>{{ shelter.about }}</p>
+      </section>
+
+      <!-- Gallery Section -->
+      <section class="gallery-section">
+        <h2>{{'Pages.Adoption.Shelter_Details.Titles.Gallery_Shelter' | translate}}</h2>
+        <div class="gallery-masonry">
+          <div *ngFor="let image of shelter.shelterImages; let i = index" class="gallery-item" [class.gallery-item-large]="i % 3 === 0">
+            <div class="image-wrapper">
+              <img [src]="image" [alt]="shelter.shelterName" class="gallery-image" (click)="openImage(image)">
+              <div class="image-overlay">
+                <button class="view-button" (click)="openImage(image)" aria-label="View Image">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>{{'Pages.Adoption.Shelter_Details.Titles.Our_Pets' | translate}}</h2>
+        <app-slider [items]="[1,1,1,1,1,1,1,1,1,1,1,1]">
+            <ng-template #itemTemplate let-pet>
+                <app-card-adoption class="m-0" displayMode="slider" [items]="(originalShelterPets$ | async)"/>
+            </ng-template>
+        </app-slider>
+     </section>
+
+      <section>
+        <h2>{{'Pages.Adoption.Shelter_Details.Titles.Description_Reviews' | translate}}</h2>
+        <app-reviews *ngIf="activeTab === 'reviews'" [reviews]="shelter.reviewsOfShelter" [isLoggedIn]="true"></app-reviews>
+      </section>
+
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal" *ngIf="selectedImage" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-button" (click)="closeModal()" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+        <img [src]="selectedImage" [alt]="shelter.shelterName" class="modal-image">
+      </div>
+    </div>
+  </div>
