@@ -1,28 +1,16 @@
 <div class="register-container -mb-10">
-  <div class="left-panel">
-    <div class="register-form-container">
+  <div class="left-panel relative">
+    
+    <a routerLink="/" class="icon-back-btn fixed-top-left" title="Back to Home">
+      <i class="fa-solid fa-left-long"></i>
+    </a>
+    <div class="register-form-container">     
       <h1>Create Account</h1>
       <p class="welcome-text">Join our community today!</p>
 
-      <div class="social-buttons">
-        <button class="social-button facebook" (click)="registerWithFacebook()">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="Facebook" class="social-icon">
-          <span>Register with Facebook</span>
-        </button>
-        
-        <button class="social-button google" (click)="registerWithGoogle()">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" class="social-icon">
-          <span>Register with Google</span>
-        </button>
-      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form relative">
+        <app-section-spinner *ngIf="isLoading"/>
 
-      <div class="divider">
-        <span class="divider-line"></span>
-        <span class="divider-text">OR</span>
-        <span class="divider-line"></span>
-      </div>
-
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
         <!-- Name -->
         <div class="form-group">
           <div class="input-container" [ngClass]="{ 'input-error': registerForm.get('name')?.invalid && registerForm.get('name')?.touched }">
@@ -59,33 +47,14 @@
           </div>
         </div>
 
-        <!-- Role Selection -->
-        <div class="form-group role-selection">
-          <label class="role-option">
-            <input type="radio" formControlName="role" value="user" class="role-radio">
-            <div class="role-card">
-              <img src="https://api.iconify.design/heroicons:user-circle.svg" alt="user" class="role-icon">
-              <span class="role-label">User</span>
-              <span class="role-description">Access standard features</span>
-            </div>
-          </label>
-          
-          <label class="role-option">
-            <input type="radio" formControlName="role" value="admin" class="role-radio">
-            <div class="role-card">
-              <img src="https://api.iconify.design/heroicons:shield-check.svg" alt="admin" class="role-icon">
-              <span class="role-label">Admin</span>
-              <span class="role-description">Full system access</span>
-            </div>
-          </label>
-        </div>
-
         <!-- Submit -->
-        <button type="submit" class="register-button" [disabled]="registerForm.invalid">Create Account</button>
+        <button type="submit" class="register-button" [disabled]="registerForm.invalid">
+            Create Account
+        </button>
 
         <!-- Login Option -->
         <div class="login-option">
-          Already have an account? <a routerLink="/login" class="login-link">Login</a>
+          Already have an account? <a routerLink="/auth/login" class="login-link">Login</a>
         </div>
       </form>
     </div>

@@ -1,0 +1,30 @@
+import { Injectable } from '@angular/core';
+import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { TokenService } from '../../../shared/services/token-managment/token-management.service';
+import { combineLatest, map, Observable, take } from 'rxjs';
+
+@Injectable({ providedIn: 'root' })
+export class AuthRoleGuard implements CanActivate {
+
+  constructor(private tokenService: TokenService, private router: Router) {}
+
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    const expectedRole = route.data['expectedRole'] as 'user' | 'admin' | null;
+  
+    return combineLatest([ this.tokenService.isLoggedIn$, this.tokenService.role$ ]).pipe(take(1), map(([isLoggedIn, currentRole]) => {
+        if (!isLoggedIn) {
+          this.router.navigate(['/auth/login']);
+          return false;
+        }
+  
+        if (expectedRole && currentRole !== expectedRole) {
+          this.router.navigate(['/']);
+          return false;
+        }
+  
+        return true;
+      })
+    );
+  }
+  
+}

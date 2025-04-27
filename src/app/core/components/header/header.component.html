@@ -1,5 +1,5 @@
 <header [ngClass]="{ 'hidden-header': !isHeaderVisible, 'visible-header': isHeaderVisible }" class="fixed top-0 left-0 w-full z-50 transition-transform duration-500 ease-in-out bg-white shadow-md">
-    <nav class="container mx-auto flex justify-between ">
+    <nav class="container relative mx-auto flex justify-between items-center">
         <!-- left -->
         <div class="nav-left nav">
             <!-- logo -->
@@ -23,6 +23,58 @@
             </div>
         </div>
 
+        <!-- user login -->
+        <div *ngIf="(isLoggedIn | async);" class="gap-3 md:hidden flex">
+            <i class="header-icon fa-solid fa-heart transition duration-300"></i>
+            <i class="header-icon fa-solid fa-cart-shopping transition duration-300"></i>     
+            <i (click)="toggleDropdown($event)" class="header-icon fa-solid fa-user transition duration-300"></i>
+
+            <div #dropdownMenu class="dropdown-menu" *ngIf="isOpen" [@dropdownAnimation]>
+                <div [routerLink]="'community/profile/'+ user._id" class="user-info" *ngIf="userData$ | async as user">
+                    <div class="user-avatar large">
+                        <img [src]="user.profileImage" alt="User avatar" class="rounded-full">
+                    </div>
+                    <div class="user-details">
+                        <h3 class="user-name">{{ user.name }}</h3>
+                        <p class="user-email">{{ user.email }}</p>
+                    </div>
+                </div>
+                
+                <ng-container *ngIf="(isRole$ | async) as role">
+                  <ul class="menu-list">
+                    <li class="menu-item">
+                      <a routerLink="/profile/account-details" class="menu-link">
+                        <i class="fa-solid fa-user"></i>
+                        <span>My Account</span>
+                      </a>
+                    </li>
+                
+                    @if (role === 'user') {
+                      <li class="menu-item">
+                        <a routerLink="/profile/dashboard" class="menu-link">
+                          <i class="fa-solid fa-gauge"></i>                          
+                          <span>My Dashboard</span>
+                        </a>
+                      </li>
+                    } @else {
+                      <li class="menu-item">
+                        <a routerLink="/admin/dashboard" class="menu-link">
+                          <i class="fa-solid fa-gauge"></i>                          
+                          <span>View Dashboard</span>
+                        </a>
+                      </li>
+                    }
+                    <li class="menu-item">
+                      <a (click)="logout()" class="menu-link logout">
+                        <i class="fa-solid fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                      </a>
+                    </li>
+                  </ul>
+                </ng-container>       
+            </div>
+        </div>
+
         <!-- right -->
         <div class="nav-right nav">
             <!-- Hamburger Menu (visible on small screens) -->
@@ -31,60 +83,94 @@
             </div>
 
             <!-- user login -->
-            <div *ngIf="isLoggedIn; else notLoggedIn" class="hidden md:flex gap-6">
+            <div *ngIf="(isLoggedIn | async); else notLoggedIn" class="hidden md:flex gap-6 relative">
                 <i class="header-icon fa-solid fa-heart transition duration-300"></i>
                 <i class="header-icon fa-solid fa-cart-shopping transition duration-300"></i>
-                <i class="header-icon fa-solid fa-user transition duration-300"></i>
-            </div>
+                <i (click)="toggleDropdown($event)" class="header-icon fa-solid fa-user transition duration-300"></i>
+
+                <div #dropdownMenu class="dropdown-menu" *ngIf="isOpen" [@dropdownAnimation]>
+                    <div [routerLink]="'community/profile/'+ user._id" class="user-info" *ngIf="userData$ | async as user">
+                        <div class="user-avatar large">
+                            <img [src]="user.profileImage" alt="User avatar" class="rounded-full">
+                        </div>
+                        <div class="user-details">
+                            <h3 class="user-name">{{ user.name }}</h3>
+                            <p class="user-email">{{ user.email }}</p>
+                        </div>
+                    </div>
+                    
+                    <ng-container *ngIf="(isRole$ | async) as role">
+                      <ul class="menu-list">
+                        <li class="menu-item">
+                          <a [routerLink]="role === 'admin' ? '/admin/account-details' : '/profile/account-details'" class="menu-link">
+                            <i class="fa-solid fa-user"></i>
+                            <span>My Account</span>
+                          </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                          <a [routerLink]="role === 'admin' ? '/admin/dashboard' : '/profile/dashboard'" class="menu-link">
+                            <i class="fa-solid" [ngClass]="role === 'admin' ? 'fa-gauge' : 'fa-gear'"></i>
+                            <span>{{ role === 'admin' ? 'View Dashboard' : 'My Dashboard' }}</span>
+                          </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                          <a (click)="logout()" class="menu-link logout">
+                            <i class="fa-solid fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </ng-container>
+                    
+                </div>
+            </div>            
+        
 
             <!-- user not login -->
             <ng-template #notLoggedIn>
                 <ul class="hidden md:flex items-center gap-x-2">
-                    <li routerLink="/register" class="signup transition duration-300">{{'Header.Btns.Register' | translate}}</li>
-                    <li routerLink="/login" class="login transition duration-300">{{'Header.Btns.Login' | translate}}</li>
+                    <li routerLink="/auth/register" class="signup transition duration-300">{{'Header.Btns.Register' | translate}}</li>
+                    <li routerLink="/auth/login" class="login transition duration-300">{{'Header.Btns.Login' | translate}}</li>
                 </ul>
             </ng-template>
+
         </div>
     </nav>
+</header>
 
-    <!-- Overlay and Mobile Menu -->
-    <div *ngIf="isMenuOpen" class="fixed inset-0 bg-black bg-opacity-80 z-50" (click)="toggleMenu()"></div>
-    <div @slideAnimation *ngIf="isMenuOpen" class="mobile-menu fixed top-0 right-0 w-2/3 h-full bg-brand-color text-white shadow-lg z-50">
-        <div class="p-7">
-            <!-- Links -->
-            <div class="mobile-links mb-6">
+<!-- Overlay and Mobile Menu -->
+<div *ngIf="isMenuOpen" class="fixed inset-0 bg-black bg-opacity-80 z-50" (click)="toggleMenu()"></div>
+<div @slideAnimation *ngIf="isMenuOpen" class="fixed top-0 right-0 w-2/3 h-full bg-brand-color text-white shadow-lg z-50">
+    <div class="p-7">
+        <!-- Links -->
+        <div class="mobile-links mb-6">
+            <ul>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/home">{{'Header.Links.Home' | translate}}</li>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/services">{{'Header.Links.Services' | translate}}</li>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/adoption">{{'Header.Links.Adoption' | translate}}</li>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/veterinary">{{'Header.Links.Vets' | translate}}</li>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/shop">{{'Header.Links.Shop' | translate}}</li>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/blogs">{{'Header.Links.Blogs' | translate}}</li>
+                <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/community" class="new-badge-wrapper">
+                    <span class="new-badge" [ngClass]="currentLang === 'en' ? 'new-en' : 'new-ar'">{{'Header.Links.Community.Padge' | translate}}</span>
+                    {{'Header.Links.Community.Title' | translate}}
+                </li>    
+            </ul>
+        </div>
+        <!-- is login or no -->
+        <div class="flex justify-center">
+        <!-- user not login -->
+            <div class="mobile-user" *ngIf="!(isLoggedIn | async)">
                 <ul>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/home">{{'Header.Links.Home' | translate}}</li>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/services">{{'Header.Links.Services' | translate}}</li>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/adoption">{{'Header.Links.Adoption' | translate}}</li>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/veterinary">{{'Header.Links.Vets' | translate}}</li>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/shop">{{'Header.Links.Shop' | translate}}</li>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/blogs">{{'Header.Links.Blogs' | translate}}</li>
-                    <li (click)="toggleMenu()" routerLinkActive="page-header-active" routerLink="/community" class="new-badge-wrapper">
-                        <span class="new-badge" [ngClass]="currentLang === 'en' ? 'new-en' : 'new-ar'">{{'Header.Links.Community.Padge' | translate}}</span>
-                        {{'Header.Links.Community.Title' | translate}}
-                    </li>    
+                    <li routerLink="/auth/login"  class="signin">{{'Header.Btns.Login' | translate}}</li>
+                    <li class="text-center"><p>{{'Header.Btns.Or' | translate}}</p></li>
+                    <li routerLink="/auth/register" class="signup">{{'Header.Btns.Register' | translate}}</li>
                 </ul>
-            </div>
-            <!-- is login or no -->
-            <div class="flex justify-center">
-                <!-- user login -->
-                <div *ngIf="isLoggedIn; else notLoggedIn" class="flex gap-3">
-                    <i class="header-icon fa-solid fa-heart transition duration-300"></i>
-                    <i class="header-icon fa-solid fa-cart-shopping transition duration-300"></i>
-                    <i class="header-icon fa-solid fa-user transition duration-300"></i>
-                </div>
-                <!-- user not login -->
-                <ng-template #notLoggedIn>
-                    <div class="mobile-user">
-                        <ul>
-                            <li routerLink="/login"  class="signin">{{'Header.Btns.Login' | translate}}</li>
-                            <li class="text-center"><p>{{'Header.Btns.Or' | translate}}</p></li>
-                            <li routerLink="/register" class="signup">{{'Header.Btns.Register' | translate}}</li>
-                        </ul>
-                    </div>
-                </ng-template>
             </div>
         </div>
     </div>
-</header>
+</div>
+
+

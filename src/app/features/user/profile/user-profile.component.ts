@@ -10,6 +10,7 @@ import { PostCardComponent } from "../../community/post-card/post-card.component
 import { UserProfileSkeletonComponent } from "../../../shared/components/skeletons/user-profile/user-profile-skelton.component";
 import { TranslateModule } from '@ngx-translate/core';
 import { LoginRequiredComponent } from "../../../shared/components/not-login/login-required.component";
+import { TokenService } from '../../../shared/services/token-managment/token-management.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,6 +24,7 @@ export class UserProfileComponent implements OnInit{
   private route = inject(ActivatedRoute);
   private usersService = inject(UsersService);
   private postsService = inject(PostsService);
+  private tokenService = inject(TokenService);
   
   // Global Variables
   userId: string = '';
@@ -30,7 +32,7 @@ export class UserProfileComponent implements OnInit{
   userPosts: ProcessedPost[] = [];
   isLoading: boolean = false;
 
-  isLoggedIn: boolean = false;
+  isLoggedIn = this.tokenService.isLoggedIn$;
 
   // Form Date
   formatDate(date: string): string {

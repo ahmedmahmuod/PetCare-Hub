@@ -5,7 +5,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 // Routes
 import { routes } from './app.routes';
 import { provideRouter } from '@angular/router';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Translate
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -19,6 +19,8 @@ import { blogsReducer } from './stores/blogs-store/blogs.reducer';
 import { BlogsEffects } from './stores/blogs-store/blogs.effects';
 import { petsReducer } from './stores/pets-store/pets.reducer';
 import { PetsEffects } from './stores/pets-store/pets.effects';
+import { MessageService } from 'primeng/api';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,12 +37,15 @@ export const appConfig: ApplicationConfig = {
       BlogsEffects,
       PetsEffects
     ]),
+    
+    MessageService,
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
     provideZoneChangeDetection({ eventCoalescing: true }),
 
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 
     provideTranslateService(), 
     TranslateStore,

@@ -1,23 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { TokenService } from '../../services/token-managment/token-management.service';
+import { SectionSpinnerComponent } from "../spinner/spinner-loading.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, SectionSpinnerComponent, RouterLink ],
   template: `
     <div class="reviews-container">
       <!-- Reviews List -->
-      <div class="reviews-list" *ngIf="reviews.length > 0">
+      <div class="reviews-list relative" *ngIf="reviews.length > 0">
+      <app-section-spinner *ngIf="isLoading"/>
         <div *ngFor="let review of reviews" class="review-item">
-          <img [src]="review.user?.profileImage || 'assets/images/default-avatar.png'" 
-               alt="User" 
-               class="review-avatar" />
+          <img [src]="review.user?.profileImage || 'assets/images/default-avatar.png'" alt="User" class="review-avatar" />
           <div class="review-content">
             <div class="review-header">
-              <span class="review-author">{{ review.user?.name || review.name }}</span>
+              <span class="review-author cursor-pointer" [routerLink]="'/community/profile/' + review.user?.id ">{{ review.user?.name || review.name }}</span>
               <span class="review-date">{{ review.createdAt | date }}</span>
             </div>
             <div class="review-stars">
@@ -34,17 +36,14 @@ import { TranslateModule } from '@ngx-translate/core';
       </div>
 
       <!-- Review Form (if user is logged in) -->
-      <form *ngIf="isLoggedIn" [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form">
+      <form *ngIf="isLoggedIn | async" [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form relative">
+        <app-section-spinner *ngIf="isLoading"/>
         <h3>{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Title' | translate }}</h3>
         
         <!-- Rating -->
         <div class="rating-input">
           <div class="stars-selector">
-            <span *ngFor="let star of [1,2,3,4,5]" 
-                  (click)="setRating(star)" 
-                  (mouseenter)="hoverRating = star" 
-                  (mouseleave)="hoverRating = 0" 
-                  [class.active]="star <= (hoverRating || reviewForm.value.rating)">
+            <span *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)" (mouseenter)="hoverRating = star" (mouseleave)="hoverRating = 0" [class.active]="star <= (hoverRating || reviewForm.value.rating)">
               ★
             </span>
           </div>
@@ -52,11 +51,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
         <!-- Review Text -->
         <div class="form-group">
-          <textarea formControlName="text" 
-                    [placeholder]="'Pages.Services.Single_Service.Tabs.Reviews_Page.Placeholder' | translate" 
-                    class="review-textarea"></textarea>
-          <small *ngIf="reviewForm.get('text')?.invalid && reviewForm.get('text')?.touched" 
-                 class="error-message">
+          <textarea formControlName="text" [placeholder]="'Pages.Services.Single_Service.Tabs.Reviews_Page.Placeholder' | translate" class="review-textarea"></textarea>
+          <small *ngIf="reviewForm.get('text')?.invalid && reviewForm.get('text')?.touched" class="error-message">
             {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Error' | translate }}
           </small>
         </div>
@@ -114,8 +110,14 @@ import { TranslateModule } from '@ngx-translate/core';
 
     .review-author {
       font-weight: 600;
-      color: #333;
+      color: var(--brand-color);
       font-size: 0.95rem;
+
+    }
+
+    .review-author:hover {
+      text-decoration: underline;
+      color: var(--brand-seconed-color);    
     }
 
     .review-date {
@@ -277,11 +279,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ReviewsComponent {
   @Input() reviews: any[] = [];
-  @Input() isLoggedIn: boolean = false;
+  @Input() isLoading: boolean = false;
   @Output() reviewSubmitted = new EventEmitter<any>();
 
+  private tokenService = inject(TokenService);
   hoverRating = 0;
   reviewForm!: FormGroup;
+  isLoggedIn = this.tokenService.isLoggedIn$;
 
   constructor(private fb: FormBuilder) {
     this.reviewForm = this.fb.group({

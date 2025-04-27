@@ -27,11 +27,11 @@ import { TranslateModule } from "@ngx-translate/core";
         
         <!-- Action Buttons -->
         <div class="space-y-4 mb-8">
-          <a routerLink="/login" 
+          <a routerLink="/auth/login" 
              class="block w-full bg-brand-seconed-color hover:opacity-90 text-brand-color text-center py-3 px-6 rounded transition duration-200 font-medium tracking-wide">
              {{'Global.Is_Not_Authenticated.Login' | translate}}
           </a>
-          <a routerLink="/register" 
+          <a routerLink="/auth/register" 
              class="block w-full bg-third-color text-brand-color text-center py-2.5 px-6 rounded transition duration-200 font-medium tracking-wide hover:opacity-90">
              {{'Global.Is_Not_Authenticated.Register' | translate}}
           </a>

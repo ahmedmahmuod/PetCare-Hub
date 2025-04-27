@@ -1,6 +1,6 @@
 <div class="posts-container">
   
-  @if (!isLoggedIn) {
+  @if ((isLoggedIn | async) === false) {
     <app-login-required/>
   } @else {
  <!-- Form add new post feed -->
@@ -23,8 +23,8 @@
       </div>
       
       <div class="form-header">
-        <img [src]="'logos/user-profile.jpg'" alt="avatar" class="avatar" />
-        <textarea formControlName="description" [placeholder]="('Pages.Community.Form_New_Post.Placeholder' | translate)" rows="3"></textarea>
+        <img [src]="(userData$ | async)?.profileImage || 'logos/user-profile.jpg'" alt="avatar" class="avatar" />
+        <textarea formControlName="description" [placeholder]="('Pages.Community.Form_New_Post.Placeholder' | translate) + (userData$ | async)?.name" rows="3"></textarea>
       </div>
   
       <div class="form-actions">
@@ -53,6 +53,4 @@
       }
   }
   }
-
-   
 </div>

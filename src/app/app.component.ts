@@ -6,10 +6,14 @@ import { LanguageToggleComponent } from "./shared/components/buttons/langBtn.com
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HeaderComponent } from "./core/components/header/header.component";
 import { FooterComponent } from "./core/components/footer/footer.component";
+import { ToastModule } from 'primeng/toast';
+import { TokenService } from './shared/services/token-managment/token-management.service';
+import { UsersService } from './core/services/user/users.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [LanguageToggleComponent, HeaderComponent, FooterComponent, RouterOutlet, CommonModule],
+  imports: [LanguageToggleComponent, HeaderComponent, FooterComponent, RouterOutlet, CommonModule, ToastModule],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -17,6 +21,8 @@ import { FooterComponent } from "./core/components/footer/footer.component";
 export class AppComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
   private languageService = inject(LanguageService);
+  private tokenService = inject(TokenService);
+  private usersService = inject(UsersService);
   
   currentLang: string = 'en';
   dir: 'ltr' | 'rtl' = 'ltr';
@@ -30,7 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   shouldShowLayout(): boolean {
-    return !['/login', '/register'].includes(this.currentRoute);
+    return !['/auth/login', '/auth/register','/auth/forget-password'].includes(this.currentRoute);
   }
 
   ngOnInit() {
@@ -53,5 +59,14 @@ export class AppComponent implements OnInit {
       }
     });
 
+    if (this.tokenService.getToken()) {
+      this.usersService.getMeUserData().pipe(
+        catchError(() => {
+          this.tokenService.logout();
+          return of(null);
+        })
+      ).subscribe();
+    }
   }
+
 }

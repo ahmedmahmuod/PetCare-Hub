@@ -38,26 +38,22 @@ export class PostsService {
     
     // [Get] Get all posts with auth token 
     getPosts(): Observable<ProcessedPost[]> {
-        const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjIxOTI0NWRjOWMwYWEwMjI5NzJkMSIsImlhdCI6MTc0NDkwMTI0NiwiZXhwIjoxNzQ1NzY1MjQ2fQ.mPicKXq83zK_1FaObkao5y4vQXqOKtP73Vhn6_9ChaE` };
-        return this.http.get<ApiResponse>(environment.apiUrl + 'community/getAllPosts', { headers }).pipe(map((res) => res.processedPosts), tap(posts => this.postsSubject.next(posts)))
+        return this.http.get<ApiResponse>(environment.apiUrl + 'community/getAllPosts').pipe(map((res) => res.processedPosts), tap(posts => this.postsSubject.next(posts)))
     }
 
     // [Get] Get all user posts 
     getUserPosts(userId: string): Observable<ProcessedPost[]> {
-        const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjIxOTI0NWRjOWMwYWEwMjI5NzJkMSIsImlhdCI6MTc0NDkwMTI0NiwiZXhwIjoxNzQ1NzY1MjQ2fQ.mPicKXq83zK_1FaObkao5y4vQXqOKtP73Vhn6_9ChaE` };
-        return this.http.get<ApiResponse>(environment.apiUrl + 'community/userMoments/' + userId , { headers }).pipe(map((res) => res.processedPosts))
+        return this.http.get<ApiResponse>(environment.apiUrl + 'community/userMoments/' + userId).pipe(map((res) => res.processedPosts))
     }
 
     // [Post] Add new post
     addPost(post: FormData): Observable<any> {
-      const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjIxOTI0NWRjOWMwYWEwMjI5NzJkMSIsImlhdCI6MTc0NDkwMTI0NiwiZXhwIjoxNzQ1NzY1MjQ2fQ.mPicKXq83zK_1FaObkao5y4vQXqOKtP73Vhn6_9ChaE` };
-      return this.http.post<any>(environment.apiUrl + 'community/addPost', post , {headers});
+      return this.http.post<any>(environment.apiUrl + 'community/addPost', post);
     }
     
     // [Post] Add like and remove like Toggle
     addLikeRemovePost(postId: string): Observable<any> {
-      const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjIxOTI0NWRjOWMwYWEwMjI5NzJkMSIsImlhdCI6MTc0NDkwMTI0NiwiZXhwIjoxNzQ1NzY1MjQ2fQ.mPicKXq83zK_1FaObkao5y4vQXqOKtP73Vhn6_9ChaE` };
       const params = new HttpParams().set('postId', postId);
-      return this.http.patch<any>(environment.apiUrl + `community/likeAndDisLike`, {} , {headers, params});
+      return this.http.patch<any>(environment.apiUrl + `community/likeAndDisLike`, {} , {params});
     }
 }

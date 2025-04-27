@@ -10,6 +10,8 @@ import { ShelterSkeletonComponent } from "../../../../shared/components/skeleton
 import { AdoptionCardComponent } from "../../adoption-section/adoption-card.compontnet";
 import { Pet } from '../../../../core/models/pets/pet.model';
 import { SliderComponent } from "../../../../shared/components/slider/slicder.component";
+import { ReviewsService } from '../../../../core/services/reviews/reviews.service';
+import { ToastService } from '../../../../shared/services/toast-notification/tost-notification.service';
 
 @Component({
   selector: 'app-shelter-details',
@@ -21,6 +23,8 @@ import { SliderComponent } from "../../../../shared/components/slider/slicder.co
 export class ShelterDetailsComponent implements OnInit {
   private sheltersService = inject(SheltersService);
   private route = inject(ActivatedRoute);
+  private reviewsService = inject(ReviewsService);
+  private toastService = inject(ToastService);
 
   shleterId: string  = '';
   activeTab = 'reviews';
@@ -30,6 +34,7 @@ export class ShelterDetailsComponent implements OnInit {
   shelter$!: Observable<ShelterModel>;
   originalShelterPets$: Observable<Pet[]> = of([]);
   filteredShelterPets$: Observable<Pet[]> = of([]);
+  isLoading: boolean = false;
 
   // Image Modal
   openImage(imageUrl: string) {
@@ -54,12 +59,26 @@ export class ShelterDetailsComponent implements OnInit {
     })
   }
 
-  onFilterChange(filterType: 'all' | 'dog' | 'cat') {
-    this.currentFilter = filterType;
-    this.filteredShelterPets$ = this.originalShelterPets$.pipe(map (pets => {
-        if (!pets) return [];
-        return filterType === 'all' ? pets : pets.filter(pet => pet?.type?.toLowerCase() === filterType);
-      })
-    );
+
+  // add review function
+  addSubmetReview(review: any) {    
+    this.isLoading = true;
+    this.reviewsService.addShelterReview(review.text, review.rating, this.shleterId).subscribe({
+      next: (res) => {
+        this.sheltersService.getShelterById(this.shleterId).subscribe({
+          next: (data) => {
+            this.shelter$ = of(data);
+            this.isLoading = false;
+            this.toastService.success('Success!', 'Your rating has been added successfully..');
+          }
+        })
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    });
   }
+
+
 }

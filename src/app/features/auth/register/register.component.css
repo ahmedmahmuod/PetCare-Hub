@@ -40,56 +40,6 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.social-buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.social-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid var(--third-color);
-  color: var(--fourth-color);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.social-button:hover {
-  background-color: var(--third-color);
-}
-
-.social-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 0.75rem;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 1.5rem 0;
-}
-
-.divider-line {
-  flex: 1;
-  height: 1px;
-  background-color: var(--third-color);
-}
-
-.divider-text {
-  padding: 0 1rem;
-  color: var(--fourth-color);
-  font-size: 0.9rem;
-}
-
 .register-form {
   display: flex;
   flex-direction: column;
@@ -137,60 +87,6 @@ h1 {
 
 .toggle-icon {
   cursor: pointer;
-}
-
-.role-selection {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.role-option {
-  flex: 1;
-  position: relative;
-  cursor: pointer;
-}
-
-.role-radio {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.role-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.25rem;
-  border: 2px solid var(--third-color);
-  border-radius: 1rem;
-  transition: all 0.2s;
-  background-color: white;
-}
-
-.role-radio:checked + .role-card {
-  border-color: var(--brand-color);
-  background-color: #5d4a8c10;
-}
-
-.role-icon {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 0.75rem;
-  color: var(--brand-color);
-}
-
-.role-label {
-  color: var(--brand-color);
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.role-description {
-  font-size: 0.8rem;
-  color: var(--fourth-color);
-  text-align: center;
-  margin-top: 0.25rem;
 }
 
 .register-button {
@@ -254,39 +150,34 @@ h1 {
   }
 
   .left-panel {
-    padding: 2rem 1.5rem;
+    padding: 5rem 1.5rem;
     justify-content: flex-start;
   }
 
   .register-form-container {
     max-width: 100%;
   }
+}
 
-  .social-buttons {
-    flex-direction: column;
-  }
+.icon-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--third-color);
+  color: var(--brand-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: 0.3s, color 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 1rem;
+}
 
-  .role-selection {
-    flex-direction: column;
-  }
-
-  .role-option {
-    width: 100%;
-  }
-
-  .role-card {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 1rem;
-    align-items: center;
-    padding: 1rem;
-  }
-
-  .role-icon {
-    margin-bottom: 0;
-  }
-
-  .login-option {
-    font-size: 0.85rem;
-  }
+.icon-back-btn:hover {
+  background-color: var(--brand-color);
+  color: var(--brand-seconed-color);
 }

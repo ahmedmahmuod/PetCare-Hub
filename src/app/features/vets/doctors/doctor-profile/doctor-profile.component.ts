@@ -7,6 +7,8 @@ import { Observable, of } from 'rxjs';
 import { DoctorModel } from '../../../../core/models/veterinary/veterinary.model';
 import { DoctorProfileSkeletonComponent } from "../../../../shared/components/skeletons/doctor-profile/doc-profile-skelton.component";
 import { TranslateModule } from '@ngx-translate/core';
+import { ReviewsService } from '../../../../core/services/reviews/reviews.service';
+import { ToastService } from '../../../../shared/services/toast-notification/tost-notification.service';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -132,7 +134,7 @@ import { TranslateModule } from '@ngx-translate/core';
           <!-- Reviews -->
           <div class="p-6 shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
               <h2 class="text-2xl font-bold mb-4 text-brand-color">{{'Pages.Vets.Doctor_Page.Profile.Reviews' | translate}}</h2>
-              <app-reviews [reviews]="doctor.reviewsOfDoctor" />
+              <app-reviews [reviews]="doctor.reviewsOfDoctor" [isLoading]="isLoading" (reviewSubmitted)="addSubmetReview($event)"/>
           </div>
         </div>
       </div>
@@ -150,7 +152,8 @@ export class DoctorProfileComponent implements OnInit {
   // Privets
   private vetService = inject(VetsService);
   private route = inject(ActivatedRoute);
-
+  private reviewsService = inject(ReviewsService);
+  private toastService = inject(ToastService);
   // Variables
   doctor$!: Observable<DoctorModel>;
   isLoading: boolean = false;
@@ -173,6 +176,25 @@ export class DoctorProfileComponent implements OnInit {
 
   closeModal() {
     this.selectedImage = null;
+  }
+
+  // add review function
+  addSubmetReview(review: any) {    
+    this.isLoading = true;
+    this.reviewsService.addDoctorReview(review.text, review.rating, this.doctorId).subscribe({
+      next: (res) => {
+        this.vetService.getDoctor(this.doctorId).subscribe((res) => {
+          this.doctor$ = of(res);
+          this.isLoading = false;
+          this.toastService.success('Success!', 'Your rating has been added successfully..');
+        })  
+
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    });
   }
 
 }

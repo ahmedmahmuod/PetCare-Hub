@@ -10,6 +10,8 @@ import { ServiceProfileModel } from '../../../core/models/service/service.model'
 import { SkeletonServiceComponent } from "../../../shared/components/skeletons/service-page/skeleton-service-page.component";
 import { ReviewsComponent } from "../../../shared/components/reviews/reviews.component";
 import { ActivatedRoute } from '@angular/router';
+import { ReviewsService } from '../../../core/services/reviews/reviews.service';
+import { ToastService } from '../../../shared/services/toast-notification/tost-notification.service';
 @Component({
   selector: 'app-single-service',
   standalone: true,
@@ -22,6 +24,8 @@ export class SingleServiceComponent implements OnInit {
   private serviceServices = inject(ServicesService);
   private langServices = inject(LanguageService);
   private route = inject (ActivatedRoute)
+  private reviewsService = inject(ReviewsService);
+  private toastService = inject(ToastService);
 
   // another variables
   serviceId!: string;
@@ -34,6 +38,7 @@ export class SingleServiceComponent implements OnInit {
   bookingForm!: FormGroup;
   hoverRating = 0;
   loading = signal<boolean>(false);
+  isLoading: boolean = false;
 
   // ngOninit
   ngOnInit(): void {
@@ -104,5 +109,24 @@ export class SingleServiceComponent implements OnInit {
     });
   }
 
+  // add review function
+  addSubmetReview(review: any) {    
+    this.isLoading = true;
+    this.reviewsService.addServiceReview(review.text, review.rating, this.serviceId).subscribe({
+      next: (res) => {
+        this.serviceServices.getSingleService(this.serviceId).subscribe({
+          next: (data) => {
+            this.serviceData = data;
+            this.isLoading = false;
+            this.toastService.success('Success!', 'Your rating has been added successfully..');
+          }
+        })
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    });
+  }
 
 }

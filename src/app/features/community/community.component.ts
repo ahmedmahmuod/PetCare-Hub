@@ -8,6 +8,8 @@ import { PostSkeletonLoaderComponent } from "../../shared/components/skeletons/p
 import { take } from 'rxjs';
 import { LoginRequiredComponent } from "../../shared/components/not-login/login-required.component";
 import { TranslateModule } from '@ngx-translate/core';
+import { TokenService } from '../../shared/services/token-managment/token-management.service';
+import { UsersService } from '../../core/services/user/users.service';
 
 @Component({
   selector: 'app-community', 
@@ -19,14 +21,17 @@ import { TranslateModule } from '@ngx-translate/core';
 export class CommunityComponent implements OnInit {
   // Privets
   private postsService = inject(PostsService);
+  private tokenService = inject(TokenService);
+  private usersService = inject(UsersService);
 
   posts$ = this.postsService.posts$;
   postForm!: FormGroup;
   selectedImage: string | null = null;
   isLoading: boolean = false;
   isLoadingForm: boolean = false;
+  isLoggedIn = this.tokenService.isLoggedIn$;
 
-  isLoggedIn: boolean = false;
+  userData$ = this.usersService.user$;
 
   constructor(private fb: FormBuilder) {}
 
@@ -43,6 +48,7 @@ export class CommunityComponent implements OnInit {
         this.getAllpostsFunc();
       }
     });
+
   }
   
   getAllpostsFunc() {

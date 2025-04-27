@@ -1,4 +1,4 @@
-@if (isLoggedIn) {
+@if (isLoggedIn | async) {
   <div class="profile-container sm:p-0 p-5 container mx-auto py-8 mt-14">
     @if (isLoading) {
       <app-user-profile-skeleton/>

@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
     <div class="cards-container" [class.slider-mode]="displayMode === 'slider'">
       <div class="card" *ngFor="let item of items">
         <div class="card-inner">
-          <img [src]="item.petImage" [alt]="item.name" class="pet-image" loading="lazy"/>
+          <img [src]="item.petImage || 'logos/pet-placeholder.png'" [alt]="item.name" class="pet-image" loading="lazy"/>
           <div class="overlay">
             <div *ngIf="isFavoritable" class="favorite-button">
               <app-favorite-icon [isActive]="isFavorite" (favoriteChange)="onFavoriteChange($event)"/>

@@ -79,7 +79,7 @@
 
       <section>
         <h2>{{'Pages.Adoption.Shelter_Details.Titles.Description_Reviews' | translate}}</h2>
-        <app-reviews *ngIf="activeTab === 'reviews'" [reviews]="shelter.reviewsOfShelter" [isLoggedIn]="true"></app-reviews>
+          <app-reviews *ngIf="activeTab === 'reviews'" [reviews]="shelter.reviewsOfShelter" [isLoading]="isLoading" (reviewSubmitted)="addSubmetReview($event)"></app-reviews>
       </section>
 
     </div>
