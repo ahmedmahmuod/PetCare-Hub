@@ -3,17 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment.prod';
 import { AuthResponse, SignInModel, SignUpModel } from '../../../models/user/auth/auth.model';
-import { TokenService } from '../../../../shared/services/token-managment/token-management.service';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private tokenService = inject(TokenService);
-  private router = inject(Router);
-  
+
   // Sign up (Register) a new user
   signUp(userData: SignInModel): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(environment.apiUrl + 'users/signup', userData);

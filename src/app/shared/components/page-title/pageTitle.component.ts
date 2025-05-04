@@ -63,7 +63,7 @@ import { TranslateModule } from '@ngx-translate/core';
     }
 
     h1 {
-      font-size: clamp(1.75rem, 6vw, 3rem);
+      font-size: clamp(1.75rem, 5vw, 3rem);
       font-weight: 800;
       color: var(--brand-color);
       margin: 0;
@@ -158,7 +158,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
     @media (max-width: 480px) {
       .page-title-container {
-        padding: 1.25rem 0.75rem;
+        padding: 0.25rem 0.75rem;
       }
 
       .description-wrapper {

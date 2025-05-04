@@ -1,20 +1,23 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CartService } from '../../../core/services/cart/cart.service';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
   private readonly TOKEN_KEY = 'token';
-  private readonly ROLE_KEY = 'role';
+  private cartService = inject(CartService);
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  private roleSubject = new BehaviorSubject<string | null>(this.getRole());
+  private roleSubject = new BehaviorSubject<string | null>(null);
   public role$ = this.roleSubject.asObservable();
+
+  private roleLoadedSubject = new BehaviorSubject<boolean>(false);
+  public roleLoaded$ = this.roleLoadedSubject.asObservable();
 
   setToken(token: string, role: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);
-    localStorage.setItem(this.ROLE_KEY, role);
     this.isLoggedInSubject.next(true);
     this.roleSubject.next(role);
   }
@@ -23,8 +26,13 @@ export class TokenService {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
+  setRole(role: any): void {
+    this.roleSubject.next(role);
+    this.roleLoadedSubject.next(true);
+  }
+
   getRole(): string | null {
-    return localStorage.getItem(this.ROLE_KEY);
+    return this.roleSubject.value;
   }
 
   isAdmin(): boolean {
@@ -38,8 +46,8 @@ export class TokenService {
   removeToken(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this.isLoggedInSubject.next(false);
-    localStorage.removeItem(this.ROLE_KEY);
     this.roleSubject.next(null);
+    this.cartService.clearCoupon();
   }
 
   hasToken(): boolean {
@@ -48,7 +56,7 @@ export class TokenService {
 
   clearStorage(): void {
     localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.ROLE_KEY);
+    this.roleLoadedSubject.next(false);
   }
 
   logout(): void {

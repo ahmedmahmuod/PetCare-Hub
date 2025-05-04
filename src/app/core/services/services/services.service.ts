@@ -44,4 +44,10 @@ export class ServicesService {
       map((response) => response.shuffledServices || [])
     );
   }
+
+  
+  // Add service request
+  addServiceRequest(requestData: any): Observable<any> {
+    return this.http.post<any>(environment.apiUrl + `request/addRequest`, {requestData});
+  } 
 }

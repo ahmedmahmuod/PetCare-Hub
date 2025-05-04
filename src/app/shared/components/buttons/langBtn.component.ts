@@ -43,8 +43,8 @@ import { CommonModule } from '@angular/common';
       display: flex;
       align-items: center;
       gap: 8px;
-      background: var(--brand-color);
-      border: 1.5px solid #e2e8f0;
+      background: var(--brand-seconed-color);
+      border: 1.5px solid var(--third-color);
       padding: 10px;
       cursor: pointer;
       font-size: 16px;
@@ -60,13 +60,13 @@ import { CommonModule } from '@angular/common';
       justify-content: center;
       width: 30px;
       height: 30px;
-      background: var(--brand-seconed-color);
+      background: var(--brand-color);
       border-radius: 50%;
-      color: var(--brand-color);
+      color: var(--seconed-color);
       font-weight: 600;
     }
     .toggle-btn.ar { flex-direction: row-reverse; }
-    .toggle-btn.ar .toggle-circle { background: var(--brand-seconed-color); }
+    .toggle-btn.ar .toggle-circle { background: var(--brand-color); }
   `]
 })
 export class LanguageToggleComponent {

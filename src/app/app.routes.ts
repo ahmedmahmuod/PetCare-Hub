@@ -36,7 +36,7 @@ export const routes: Routes = [
   { path: 'community/profile/:profileId', loadComponent: () => import('./features/user/profile/user-profile.component').then(m => m.UserProfileComponent) },
 
   { 
-    path: 'auth', 
+    path: 'auth', canActivate: [AuthRoleGuard], data: { expectedRole: null },
     children: [
       { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent) },
       { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent) },
@@ -52,12 +52,21 @@ export const routes: Routes = [
   ]},
     
     // admin profile routes
-    { path: 'admin', canActivate: [AuthRoleGuard], data: { expectedRole: 'admin' },
-      children: [
-        { path: 'account-details', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/my-account/my-account.component').then(m => m.MyAccountComponent) },
-        { path: 'dashboard', canActivate: [AuthRoleGuard],  loadComponent: () => import('./features/auth/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
+  { path: 'admin', canActivate: [AuthRoleGuard], data: { expectedRole: 'admin' },
+    children: [
+      { path: 'account-details', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/my-account/my-account.component').then(m => m.MyAccountComponent) },
+      { path: 'dashboard', canActivate: [AuthRoleGuard],  loadComponent: () => import('./features/auth/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
   ]},
   
+  // Cart routes
+  { path: 'cart', canActivate: [AuthRoleGuard], data: { expectedRole: 'user'},
+    children: [
+      { path: '', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/cart/cart.component').then(m => m.CartComponent) },
+      // { path: 'checkout', loadComponent: () => import('./features/auth/user/user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent) },
+  ]},
+  
+  // Favorites routes
+  { path: 'favorates', canActivate: [AuthRoleGuard], data: { expectedRole: 'user'}, loadComponent: () => import('./features/favorates/favorates.component').then(m => m.FavoritesComponent)},
 
   // fallback route (wait to replace with custom 404)
   { path: '**', redirectTo: 'home', pathMatch: 'full'}

@@ -1,22 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FavoriteIconComponent } from '../../../shared/components/buttons/fav-btn.component';
 import { Pet } from '../../../core/models/pets/pet.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-card-adoption',
   standalone: true,
-  imports: [CommonModule, FavoriteIconComponent, TranslateModule],
+  imports: [CommonModule, TranslateModule],
   template: `
     <div class="cards-container" [class.slider-mode]="displayMode === 'slider'">
       <div class="card" *ngFor="let item of items">
         <div class="card-inner">
           <img [src]="item.petImage || 'logos/pet-placeholder.png'" [alt]="item.name" class="pet-image" loading="lazy"/>
           <div class="overlay">
-            <div *ngIf="isFavoritable" class="favorite-button">
-              <app-favorite-icon [isActive]="isFavorite" (favoriteChange)="onFavoriteChange($event)"/>
-            </div>
+          <span></span>
             <div class="content">
               <h3>
                 {{ item.weight }} {{ 'Pages.Adoption.Card.Kg' | translate }}
@@ -109,7 +106,7 @@ import { TranslateModule } from '@ngx-translate/core';
         flex-direction: column;
         justify-content: space-between;
         padding: 1rem;
-        transition: background 0.3s ease;
+        transition: 0.3s ease;
       }
 
       .card-inner:hover .overlay {

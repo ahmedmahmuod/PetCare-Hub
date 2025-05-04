@@ -45,17 +45,19 @@ import { of } from 'rxjs';
 export class HeaderComponent implements OnInit{
   @ViewChild('userMenu') userMenu!: OverlayPanel;
   @ViewChild('dropdownMenu') dropdownMenu!: ElementRef;
+
   private tokenService = inject(TokenService);
   private languageService = inject(LanguageService);
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
-
+  
   currentLang: string = 'en';
   isMenuOpen = false;
   isLoggedIn = this.tokenService.isLoggedIn$;
   isRole$ = this.tokenService.role$;
   userData$ = this.usersService.user$;
   isOpen = false;
+  isRoleLoaded$ = this.tokenService.roleLoaded$;
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

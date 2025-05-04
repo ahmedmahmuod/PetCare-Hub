@@ -127,7 +127,7 @@ interface SearchData {
         }
 
         .hero-title {
-            font-size: 2.25rem;
+            font-size: 3rem;
             line-height: 1.5;            
             font-weight: 700;
             margin-bottom: 1rem;
@@ -142,7 +142,7 @@ interface SearchData {
 
         @media (min-width: 768px) {
             .hero-title {
-                font-size: 3.75rem;
+                font-size: 3rem;
             }
         }
 

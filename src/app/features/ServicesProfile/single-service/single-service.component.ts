@@ -12,10 +12,13 @@ import { ReviewsComponent } from "../../../shared/components/reviews/reviews.com
 import { ActivatedRoute } from '@angular/router';
 import { ReviewsService } from '../../../core/services/reviews/reviews.service';
 import { ToastService } from '../../../shared/services/toast-notification/tost-notification.service';
+import { SectionSpinnerComponent } from "../../../shared/components/spinner/spinner-loading.component";
+import { TokenService } from '../../../shared/services/token-managment/token-management.service';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-single-service',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, TranslateModule, SkeletonServiceComponent, ReviewsComponent],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, TranslateModule, SkeletonServiceComponent, ReviewsComponent, SectionSpinnerComponent],
   templateUrl: './single-service.component.html',
   styleUrl: './single-service.component.css',
 })
@@ -26,6 +29,7 @@ export class SingleServiceComponent implements OnInit {
   private route = inject (ActivatedRoute)
   private reviewsService = inject(ReviewsService);
   private toastService = inject(ToastService);
+  private tokenService = inject(TokenService);
 
   // another variables
   serviceId!: string;
@@ -72,12 +76,26 @@ export class SingleServiceComponent implements OnInit {
 
   }
 
+  paymentMethods = [
+    {
+      value: 'visa',
+      label: 'Card',
+      icon: 'assets/images/payment/visa.svg'
+    },
+    {
+      value: 'cash',
+      label: 'Cash',
+      icon: 'assets/images/payment/cash.svg'
+    }
+  ];
+
   constructor(private fb: FormBuilder) {
     // Initialize Booking Form with validation
     this.bookingForm = this.fb.group({
       city: ['', Validators.required],
       duration: ['', Validators.required],
       date: ['', Validators.required],
+      paymentMethod: ['', Validators.required]
     });
 
   }
@@ -92,22 +110,49 @@ export class SingleServiceComponent implements OnInit {
     this.activeIndex = this.activeIndex === index ? -1 : index;
   }
 
-  // Handle booking form submission
+  // Submet of form service request 
   submitBooking(): void {
-    if (this.bookingForm.invalid) {
-      this.bookingForm.markAllAsTouched(); // Mark fields as touched to show errors
-      alert('Please fill all required fields correctly.');
-      return;
-    }
-    console.log('Booking Submitted:', this.bookingForm.value);
-
-    // Reset form while keeping the default values
-    this.bookingForm.reset({
-      city: '',
-      duration: '',
-      date: '',
+    this.tokenService.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
+      if (!isLoggedIn) {
+        this.toastService.error('Login Required', 'Please log in first to continue.');
+        return;
+      }
+  
+      this.tokenService.role$.pipe(take(1)).subscribe((role) => {
+        if (role !== 'user') {
+          this.toastService.info('Access Denied', 'Admins do not have access to this feature.');
+          return;
+        }
+  
+        // Proceed with booking request for user role
+        const requestData = {
+          ...this.bookingForm.value,
+          serviceType: this.serviceData.name,
+        };
+  
+        this.isLoading = true;
+        this.serviceServices.addServiceRequest(requestData).subscribe({
+          next: () => {
+            this.toastService.success('Success!', 'Your request has been submitted successfully.');
+            this.isLoading = false;
+          },
+          error: (err) => {
+            this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+            this.isLoading = false;
+          }
+        });
+  
+        // Reset form with default values
+        this.bookingForm.reset({
+          city: '',
+          duration: '',
+          date: '',
+          paymentMethod: '',
+        });
+      });
     });
   }
+  
 
   // add review function
   addSubmetReview(review: any) {    
@@ -124,7 +169,7 @@ export class SingleServiceComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+        this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
       },
     });
   }

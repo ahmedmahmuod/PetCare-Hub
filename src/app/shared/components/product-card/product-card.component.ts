@@ -1,22 +1,28 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FavoriteIconComponent } from "../buttons/fav-btn.component";
 import { AddToCartButtonComponent } from "../buttons/add-to-cart-btn.component";
 import { Product } from '../../../core/models/products/product.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { SectionSpinnerComponent } from "../spinner/spinner-loading.component";
+import { FavoratesService } from '../../../core/services/favorates/favorates.service';
+import { ToastService } from '../../services/toast-notification/tost-notification.service';
+import { TokenService } from '../../services/token-managment/token-management.service';
+import { CartService } from '../../../core/services/cart/cart.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, FavoriteIconComponent, AddToCartButtonComponent, TranslateModule ],
+  imports: [CommonModule, FavoriteIconComponent, AddToCartButtonComponent, TranslateModule, SectionSpinnerComponent],
   template: `
     <div class="group rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-xl transition-shadow duration-300 relative overflow-hidden">
-
+    <app-section-spinner class="z-50" *ngIf="isLoading()"/>
       <!-- Favorite Button -->
-      <div dir="ltr" class="absolute top-5 right-5 transform translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" aria-label="Add to favorites">
-        <app-favorite-icon *ngIf="!isWishlist" />
+      <div *ngIf="(isRole$ | async) as role;" dir="ltr" class="absolute top-5 right-5 transform translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" aria-label="Add to favorites">
+        <app-favorite-icon (favoriteChange)="addFav($event)" *ngIf="!isWishlist && role === 'user'" />
         
-        <button *ngIf="isWishlist" class="text-red-600 text-xl cursor-pointer">
+        <button (click)="deleteFromFav(product)" *ngIf="isWishlist" class="text-red-600 text-xl cursor-pointer">
             <i class="fa-solid fa-trash"></i>
         </button>
       </div>
@@ -45,7 +51,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
       <!-- Add to Cart Button -->
       <div class="absolute bottom-0 left-0 right-0 px-4 pb-4 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-        <app-add-to-cart-button/>
+        <app-add-to-cart-button (addTo)="addToCart()" />
       </div>
     </div>
   `,
@@ -59,9 +65,79 @@ import { TranslateModule } from '@ngx-translate/core';
   `]
 })
 export class ProductCardComponent {
+  private favService = inject(FavoratesService);
+  private toastService = inject(ToastService);
+  private tokenService = inject(TokenService);
+  private cartService = inject(CartService);
+
   @Input() product!: Product;
   @Input() calculateDiscountPercentage!: (original: number, discounted: number) => number;
   @Input() isWishlist: boolean = false;
   
+  isRole$ = this.tokenService.role$;
   isLoggedIn = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
+
+  addToCart() {
+    
+    let isRole: string | null = null;
+    this.isRole$.pipe(take(1)).subscribe((role) => {
+      isRole = role;
+    })    
+    
+    if (isRole === 'user') {
+      this.isLoading.set(true);
+      this.cartService.removeItemCart(this.product._id).subscribe({
+        next: () => {
+          this.toastService.success('Success', 'The product has been successfully added to your cart.');
+          this.isLoading.set(false);
+        }
+      });  
+    } else if (isRole === 'admin') {
+      this.toastService.info('Info', 'Admins do not have access to this feature.');
+      
+    } else if (isRole === null) {
+      this.toastService.error('Error!', 'You must log in first.');
+    }
+  }
+  
+
+  deleteFromFav(item: Product) {
+    this.isLoading.set(true);
+  
+    this.favService.addAndDeleteFav(item._id).subscribe({
+      next: (res) => {
+        this.favService.fetchFavorites().subscribe(() => {
+          this.toastService.success('Removed!', 'Product removed from favorites.');
+          this.isLoading.set(false);
+        });
+      },
+      error: () => {
+        this.toastService.error('Error!', 'Something went wrong.');
+        this.isLoading.set(false);
+      }
+    });
+  }
+
+  addFav(isActive: boolean) {
+    this.isLoading.set(true);
+    if (isActive) {
+      this.favService.addAndDeleteFav(this.product._id).subscribe({
+        next: (res) => {
+          this.favService.fetchFavorites().subscribe(() => {
+            this.toastService.success('Added!', 'Product added to favorites.');
+            this.isLoading.set(false);
+          });
+        },
+        error: () => {
+          this.toastService.error('Error!', 'You must log in first.');
+          this.isLoading.set(false);
+        }
+      });
+    } else {
+      this.deleteFromFav(this.product);
+    }    
+  }
+  
+
 }

@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -42,8 +41,6 @@ import { CommonModule } from '@angular/common';
 export class FavoriteIconComponent {
   @Input() isActive = false;
   @Output() favoriteChange = new EventEmitter<boolean>();
-
-  constructor(@Inject(DOCUMENT) private document: Document) {}
 
   toggleFavorite() {
     this.isActive = !this.isActive;
