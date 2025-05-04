@@ -62,7 +62,7 @@ export const routes: Routes = [
   { path: 'cart', canActivate: [AuthRoleGuard], data: { expectedRole: 'user'},
     children: [
       { path: '', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/cart/cart.component').then(m => m.CartComponent) },
-      // { path: 'checkout', loadComponent: () => import('./features/auth/user/user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent) },
+      { path: 'checkout/:cartId', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/cart/checkout/checkout.component').then(m => m.CheckoutComponent) },
   ]},
   
   // Favorites routes

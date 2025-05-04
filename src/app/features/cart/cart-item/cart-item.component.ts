@@ -168,7 +168,6 @@ export class CartItemComponent {
   }
   
   // Delete the product from cart
-  
   deleteItemFromCart() {
     this.isLoading = true;
     this.removeItem.emit();

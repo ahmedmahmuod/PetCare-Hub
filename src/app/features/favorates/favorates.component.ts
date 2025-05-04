@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FavoratesService } from '../../core/services/favorates/favorates.service';
 import { ProductCardComponent } from "../../shared/components/product-card/product-card.component";
 import { ProductsPageSkeltonComponent } from "../../shared/components/skeletons/products-page/products-page-skelton.component";
-import { PageTitleComponent } from "../../shared/components/page-title/pageTitle.component";
 import { TranslateModule } from '@ngx-translate/core';
 import { take } from 'rxjs';
 
@@ -11,7 +10,7 @@ import { take } from 'rxjs';
   selector: 'app-favorites',
   templateUrl: './favorates.component.html',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent, ProductsPageSkeltonComponent, PageTitleComponent, TranslateModule],
+  imports: [CommonModule, ProductCardComponent, ProductsPageSkeltonComponent, TranslateModule],
 })
 export class FavoritesComponent implements OnInit {
   private favService = inject(FavoratesService);

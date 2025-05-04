@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CartResponse, CartData, CartItem } from '../../models/cart/cart.model';
 import { environment } from '../../../../environments/environment.prod';
+import { ShippingAddress } from '../../../features/cart/checkout/checkout.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { environment } from '../../../../environments/environment.prod';
 export class CartService {
   private http = inject(HttpClient);
 
-  private cartState$ = new BehaviorSubject<CartData | null>(null);
+   cartState$ = new BehaviorSubject<CartData | null>(null);
   private appliedCoupon: string | null = localStorage.getItem('appliedCoupon');
 
   cart$ = this.cartState$.asObservable();
@@ -37,12 +38,6 @@ export class CartService {
     return this.http.get<CartResponse>(environment.apiUrl + `cart/getcart`).pipe(
       tap((res) => {
         this.cartState$.next(res.data);
-
-        // Reapply coupon after refresh
-        const code = this.getCoupon();
-        if (code) {
-          this.applyCoupon(code).subscribe(); // safe to call because patch will update total only
-        }
       }),
       map(res => res.data)
     );
@@ -63,36 +58,29 @@ export class CartService {
     this.fetchCart().subscribe();
   }
 
-  // Quantity update with reapply coupon if needed
+  // Quantity update
   changeQuantity(productId: string, action: 'plusquantity' | 'minusquantity'): Observable<any> {
     return this.http.patch<any>(`${environment.apiUrl}cart/${action}?productId=${productId}`, null).pipe(
       tap(() => {
-        const code = this.getCoupon();
-        if (code) {
-          this.applyCoupon(code).subscribe();
-        } else {
-          this.refreshCart();
-        }
+        this.refreshCart();
       })
     );
   }
   
-  // Quantity update with reapply coupon if needed
+  // Remove item from cart
   removeItemCart(productId: string): Observable<any> {
     return this.http.patch<any>(`${environment.apiUrl}cart/addproduct?productId=${productId}`, null).pipe(
       tap(() => {
-        const code = this.getCoupon();
-        if (code) {
-          this.applyCoupon(code).subscribe();
-        } else {
-          this.refreshCart();
-        }
+        this.refreshCart();
       })
     );
   }
-  
 
-  
+  createCashOrder(orderDetails: ShippingAddress, cartId: string | null): Observable<any> {
+    const url = `${environment.apiUrl}order/cashorder?cartId=${cartId}`;
+    return this.http.post<any>(url, orderDetails);
+  }
+
   // Getters
   getCartItems(): CartItem[] {
     return this.cartState$.getValue()?.cartItems || [];
@@ -109,4 +97,4 @@ export class CartService {
   getTotalAfterDiscount(): number {
     return this.cartState$.getValue()?.totalPriceAfterDiscount || 0;
   }
-}
+} 

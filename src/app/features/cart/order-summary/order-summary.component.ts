@@ -1,7 +1,8 @@
 import { SectionSpinnerComponent } from './../../../shared/components/spinner/spinner-loading.component';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',
@@ -60,13 +61,14 @@ import { FormsModule } from '@angular/forms';
         </div>
         <app-section-spinner *ngIf="isLoading"/>
         
-        <button class="checkout-btn">CHECKOUT</button>
-      </div>
+        <button class="checkout-btn" [disabled]="itemCount === 0 || isLoading" (click)="onCheckout()">
+        {{ itemCount === 0 ? 'Cart is Empty' : 'CHECKOUT' }}
+      </button>      
+    </div>
   `,
   styles: [`
     .order-summary {
       position: relative;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif;
     }
 
     h2 {
@@ -321,9 +323,6 @@ import { FormsModule } from '@angular/forms';
     }
 
     @media (max-width: 480px) {
-      .coupon-section-container {
-        flex-direction: column;
-      }
 
       .secret-coupon-box {
         width: 100%;
@@ -346,10 +345,13 @@ import { FormsModule } from '@angular/forms';
   `]
 })
 export class OrderSummaryComponent {
+  private router = inject(Router)
+
   @Input() subtotal = 0;
   @Input() shipping = 'FREE';
   @Input() total = 0;
   @Input() itemCount = 0;
+  @Input() cartId: string = '';
 
   @Output() couponCode = new EventEmitter<string>();
   @Input() isLoading: boolean = false;
@@ -380,5 +382,10 @@ export class OrderSummaryComponent {
         this.isCouponRevealed = false;
       }, 1000);
     });
+  }
+
+  onCheckout() {
+    this.router.navigate(['cart/checkout', this.cartId]);
+    
   }
 }
