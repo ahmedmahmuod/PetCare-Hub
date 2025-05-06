@@ -771,6 +771,44 @@
             }
           }
         }
+      },
+
+      "My_Edit_Acc_Page": {
+        "Title": "My account info",
+        "Description": "Update your account information",
+        "Form": {
+          "Name": {
+            "Placeholder": "Your full name",
+            "Error": "Name is required"
+          },
+          "Phone": {
+            "Placeholder": "Your phone number",
+            "Error": "Phone number is required"
+          },
+          "Passwords": {
+            "Current_Placeholder": "Current Password",
+            "New_Placeholder": "New Password",
+            "Error": "Both password fields are required"
+          },
+          "Btn": "Save changes"
+        },
+
+        "Toasts": {
+          "Successful": {
+            "Title": "Success",
+            "Message": "Account information updated successfully!"
+          },
+
+          "Errors": {
+            "Title": "Error",
+            "Message": "Failed to update profile"
+          },
+          
+          "Info": {
+            "Title": "Warning",
+            "Message": "Please fill all required fields correctly"
+          }
+        }
       }
     
     }

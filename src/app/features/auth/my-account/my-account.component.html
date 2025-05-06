@@ -1,1 +1,53 @@
-<p>my-account works!</p>
+<div class="profile-edit-wrapper relative">
+    <app-section-spinner *ngIf="isLoading"/>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-edit-form">
+      <div class="profile-header-row">
+        <div class="avatar-container">
+          <img [src]="imagePreview" alt="Profile" class="avatar-img" />
+          <label class="avatar-edit-btn" title="Change photo">
+            <label for="fileInput" class="visually-hidden"></label>
+            <input id="fileInput" type="file" (change)="onImagePicked($event)" hidden/>
+            <i class="fa-solid fa-pencil"></i>
+          </label>
+          <button type="button" class="avatar-delete-btn" (click)="removeImage()" title="Remove photo">
+            <i class="fa-regular fa-trash-can"></i>          
+        </button>
+        </div>
+        <div class="profile-title">
+          <h2>{{'Pages.Auth.My_Edit_Acc_Page.Title' | translate}}</h2>
+          <p>{{'Pages.Auth.My_Edit_Acc_Page.Description' | translate}}</p>
+        </div>
+      </div>
+  
+      <div class="profile-fields">
+        <div class="form-group">
+          <input id="name" type="text" formControlName="name" [placeholder]="('Pages.Auth.My_Edit_Acc_Page.Form.Name.Placeholder' | translate)" />
+          <div class="error" *ngIf="profileForm.get('name')?.invalid && (profileForm.get('name')?.dirty || profileForm.get('name')?.touched)">
+            <span *ngIf="profileForm.get('name')?.errors?.['required']">{{'Pages.Auth.My_Edit_Acc_Page.Form.Name.Error' | translate}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <input class="!text-fourth-color !bg-third-color cursor-not-allowed" id="email" type="email" formControlName="email" [placeholder]="('Pages.Auth.My_Edit_Acc_Page.Form.Phone.Placeholder' | translate)" />
+        </div>
+        <div class="form-group">
+          <input id="phoneNumber" type="text" formControlName="phoneNumber" [placeholder]="('Pages.Auth.My_Edit_Acc_Page.Form.Phone.Placeholder' | translate)" />
+          <div class="error" *ngIf="profileForm.get('phoneNumber')?.invalid && (profileForm.get('phoneNumber')?.dirty || profileForm.get('phoneNumber')?.touched)">
+            <span *ngIf="profileForm.get('phoneNumber')?.errors?.['required']">{{'Pages.Auth.My_Edit_Acc_Page.Form.Phone.Error' | translate}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <input id="passwordCurrent" type="password" formControlName="passwordCurrent" [placeholder]="('Pages.Auth.My_Edit_Acc_Page.Form.Passwords.Current_Placeholder' | translate)" />
+          <div class="error" *ngIf="profileForm.hasError('missingPasswordFields')">
+            <span>{{'Pages.Auth.My_Edit_Acc_Page.Form.Passwords.Error' | translate}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <input id="password" type="password" formControlName="password" [placeholder]="('Pages.Auth.My_Edit_Acc_Page.Form.Passwords.New_Placeholder' | translate)" />
+        </div>
+      </div>
+  
+      <div class="profile-actions">
+        <button type="submit" [disabled]="!isFormValid()">{{'Pages.Auth.My_Edit_Acc_Page.Form.Btn' | translate}}</button>
+      </div>
+    </form>
+  </div>

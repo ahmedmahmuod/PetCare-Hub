@@ -128,7 +128,4 @@ export class HeaderComponent implements OnInit{
     })
     this.isOpen = false;
   }
-  
-
-
 }

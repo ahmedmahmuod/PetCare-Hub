@@ -135,7 +135,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
         this.startResendCountdown();
       },
       error: (error) => {
-        this.toastService.error(this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Error'), this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Details'));
+        this.toastService.error(this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Email.Error'), this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Email.Details'));
         this.loading = false;
       }
     });

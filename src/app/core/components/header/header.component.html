@@ -32,7 +32,7 @@
             <div #dropdownMenu class="dropdown-menu" *ngIf="isOpen" [@dropdownAnimation]>
                 <div [routerLink]="'community/profile/'+ user._id" class="user-info" *ngIf="userData$ | async as user">
                     <div class="user-avatar large">
-                        <img [src]="user.profileImage" alt="User avatar" class="rounded-full">
+                        <img [src]="user.profileImage || 'logos/user-profile.jpg'" alt="User avatar" class="rounded-full">
                     </div>
                     <div class="user-details">
                         <h3 class="user-name">{{ user.name }}</h3>
@@ -91,7 +91,7 @@
                 <div #dropdownMenu class="dropdown-menu" *ngIf="isOpen" [@dropdownAnimation]>
                     <div [routerLink]="'community/profile/'+ user._id" class="user-info" *ngIf="userData$ | async as user">
                         <div class="user-avatar large">
-                            <img [src]="user.profileImage" alt="User avatar" class="rounded-full">
+                          <img [src]="user.profileImage || 'logos/user-profile.jpg'" alt="User avatar" class="rounded-full">
                         </div>
                         <div class="user-details">
                             <h3 class="user-name">{{ user.name }}</h3>

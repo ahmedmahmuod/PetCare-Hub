@@ -84,7 +84,6 @@ export class CommunityComponent implements OnInit {
     
     this.postsService.addPost(formData).subscribe({
       next: (res) => {
-        console.log('Post created ✅', res);
         this.getAllpostsFunc();
         this.isLoadingForm = false;
         this.postForm.reset();

@@ -30,3 +30,12 @@ export interface UserDataResponse {
     data: UserData;
   };
 }
+
+export interface UpdateProfileDto {
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+  profileImage?: File;
+  passwordCurrent?: string;
+  password?: string;
+}
