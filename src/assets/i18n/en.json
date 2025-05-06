@@ -16,6 +16,14 @@
       "Login": "Login",
       "Or": "or",
       "Register": "Register"
+    },
+    "DropDown": {
+      "MyAcc": "My Account",
+      "Dashboard": {
+        "User": "My Dashboard",
+        "Admin": "View Dashboard"
+      },
+      "Logout": "Logout"
     }
   },
 
@@ -295,7 +303,8 @@
         "Our_Best_Clinics": {
           "Title": "Meet Our Best Clinics",
           "Subtitle": "We change your life & world with valuable expert Clinics",
-          "Btn": "See all clinics"
+          "Btn": "See all clinics",
+          "Seconed_Btn": "View Clinic"
         }
       },
 
@@ -375,8 +384,396 @@
         "Contact_Information": "Contact Information",
         "Posts": "Posts"
       }
-    }
+    },
 
+    "Auth": {
+      "Login_Page": {
+        "Title": "Login",
+        "Sub_Title": "Welcome Back!",
+        "Form": {
+          "Email": {
+            "Placeholder": "Enter your email",
+            "Error": {
+              "Invalid": "Invalid email format.",
+              "Required": "Email is required"
+            }
+          },
+          "Password": {
+            "Placeholder": "Enter your password",
+            "Error": {
+              "Invalid": "Password must be at least 6 characters.",
+              "Required": "Password is required"
+            }
+          },
+          "Forgot_Password": "Forgot Password?",
+          "Btns": {
+            "Login": "Login",
+            "Back_To_Home": "Back to Home"
+          },
+          "Footer": {
+            "Text": "Not on Pet-Care yet? ",
+            "Link": "Sign up"
+          }
+        },
+        "If_Success": {
+          "Title": "Good!",
+          "Details": "You have successfully logged in."
+        },
+        "If_Error": {
+          "Title": "Error!",
+          "Details": "Invalid email or password."
+        }
+      },
+
+      "Forget_Pass_Page": {
+        "Step_One": {
+          "Title": "Reset Password",
+          "Sub_Title": "Enter your email to receive a verification code",
+          "Form": {
+            "Email": {
+              "Placeholder": "Enter your email",
+              "Error": "Please enter a valid email",
+              "Required": "Email is required"
+            },
+
+            "Btns": {
+              "Send_Code": "Send Code",
+              "Sending": "Sending..."
+            }
+          }
+        },
+
+        "Step_Two": {
+          "Title": "Enter Code",
+          "Sub_Title": "Enter the 6-digit code sent to your email",
+          "Form": {
+            "Error": {
+              "Invalid": "Please enter all 6 digits"
+            },
+
+            "Btns": {
+              "Verify": "Verify Code",
+              "Verifing": "Verifying..."
+            }
+
+          },
+          "Resend": {
+            "Text": "Resend code in ",
+            "Time": "s ",
+            "Action": "Resend Code"
+          }
+        },
+
+        "Step_Three": {
+          "Title": "New Password",
+          "Sub_Title": "Create a strong password for your account",
+          "Form": {
+            "Password": {
+              "New_Pass": {
+                "Placeholder": "Enter new password",
+                "Required": "Password is required",
+                "Error": "Password must be at least 8 characters long"
+              },
+              "Confirm_Pass": {
+                "Placeholder": "Confirm new password",
+                "Required": "Please confirm your password",
+                "Error": "Passwords must match"
+              },
+              "Btns": {
+                "Update": "Update Password",
+                "Updating": "Updating..."
+              }
+            },
+
+            "Password_Strength": {
+              "Weak": "Weak",
+              "Medium": "Medium",
+              "Strong": "Strong",
+              "Very_Strong": "Very Strong"
+            }
+          },
+
+          "Resend": {
+            "Text": "Resend code in ",
+            "Time": "s",
+            "Action": "Resend Code"
+          }
+        },
+
+        "Update_Successfuly": {
+          "Title": "Password Updated!",
+          "Sub_Title": "Your password has been successfully reset. You will be redirected to login in",
+          "Sub_Title_Two": "seconds."
+        },
+
+        "Steps": {
+          "Step_One": "Email",
+          "Step_Two": "Verify",
+          "Step_Three": "Reset"
+        },
+
+        "Errors": {
+          "Email": {
+            "Error": "Oops!",
+            "Details": "We couldn't find an account with that email address. Please try again."
+          },
+
+          "Code": {
+            "Error": "Oops!",
+            "Details": "Reset code invalid or expired"
+          }
+        }
+      },
+
+      "Register": {
+        "Title": "Create Account",
+        "Sub_Title": "Join our community today!",
+        "Form": {
+          "Name": {
+            "Placeholder": "Enter your full name",
+            "Required": "Name is required",
+            "Error": "Name must be at least 3 characters."
+          },
+          "Email": {
+            "Placeholder": "Enter your email",
+            "Required": "Email is required",
+            "Error": "Invalid email format."
+          },
+          "Password": {
+            "Placeholder": "Create a password",
+            "Required": "Password is required",
+            "Error": "Password must be at least 8 characters."
+          },
+          "Btns": {
+            "Create_Acc": "Create Account"
+          },
+          "Have_Acc": {
+            "Meassage": "Already have an account?",
+            "Link": "Login"
+          }
+        },
+
+        "Toasts": {
+          "Successful": {
+            "Title": "Good!",
+            "Message": "Your account has been created successfully."
+          },
+          "Errors": {
+            "Title": "Error",
+            "Message": "Email is Already Exist"
+          }
+        }
+      },
+
+      "Favorate_Page": {
+        "Title": "Favorites",
+        "Items": "Items",
+        "If_Empty": "No Products in Your Favorite page!",
+        "Toast": {
+          "Added": {
+            "Success": {
+              "Title": "Added!",
+              "Details": "The product added to your favorites."
+            },
+            "Error": {
+              "Title": "Error",
+              "Details": "You must log in first."
+            }
+          },
+          "Removed": {
+            "Success" : {
+              "Title": "Removed!",
+              "Details": "Product removed from favorites."
+            },
+            "Error" : {
+              "Title": "Error",
+              "Details": "Something went wrong."
+            }
+          }
+        }
+      },
+
+      "Cart_Page": {
+        "Title": "Cart",
+        "Items": "Items",
+        "If_Empty": {
+          "Title": "Your Cart is Empty",
+          "Message": "Looks like you haven't added any items to your cart yet."
+        },
+
+        "Cart_Item": {
+          "Currncy": "L.E",
+          "Discount": "OFF"
+        },
+
+        "Cart_Summary": {
+          "Title": "Cart Summary",
+          "Coupon": {
+            "Input": {
+              "Placeholder": "Coupon code",
+              "Btn": "Apply"
+            },
+            "Dialog": {
+              "Title": "Special Offer!",
+              "Discount": "OFF",
+              "Copy": {
+                "Title": "Copy code",
+                "Copied": "Copied to clipboard."
+              }
+            }
+          },
+
+          "Prices": {
+            "Subtotal": "Subtotal",
+            "Items": "Items",
+            "Currncy": "L.E",
+            "Total": "Total",
+            "Inclusive": "Inclusive of VAT",
+            "Shipping_Fee": "Shipping Fee",
+            "Shipping": "FREE"
+          },
+
+          "Btn": "CHECKOUT",
+          "Is_No_Items": "Cart is Empty"
+        },
+
+        "Toast": {
+          "Success": {
+            "Add_To_Cart": {
+              "Title": "Success",
+              "Message": "The product has been successfully added to your cart."
+            },
+
+            "Apply_Coupon": {
+              "Title": "Coupon Applied Successfully",
+              "Message": "Your discount has been applied."
+            }
+          },
+
+          "Errors": {
+            "Cant_Load": {
+              "Title": "Error",
+              "Message": "Failed to load cart. Please try again later."
+            },
+
+            "Adding": {
+              "Admin": {
+                "Title": "Info",
+                "Message": "Admins do not have access to this feature."
+              },
+              "Not_Loggid": {
+                "Title": "Error!",
+                "Message": "You must log in first."
+              }
+            },
+
+            "Updating": {
+              "Title": "Error",
+              "Message": "An error occurred while updating the product!"
+            },
+
+            "Removing": {
+              "Title": "Error",
+              "Message": "An error occurred while removing the product!"
+            },
+
+            "Apply_Coupon": {
+              "Title": "Error!",
+              "Message": "Coupon is invalid or expired."
+            }
+          }
+        }
+      },
+
+      "Check_Out_Page": {
+        "Title": "Checkout",
+        "Items": "items in cart",
+        "Shipping_Info": {
+          "Title": "Shipping Information",
+          "Form": {
+            "Phone": {
+              "Placeholder": "Phone number",
+              "Errors": {
+                "Invalid": "Valid phone number required"
+              }
+            },
+            "City": {
+              "Placeholder": "City",
+              "Errors": {
+                "Invalid": "Required"
+              }
+            },
+            "Postal_Code": {
+              "Placeholder": "Postal code",
+              "Errors": {
+                "Invalid": "Required"
+              }
+            },
+            "Notes": {
+              "Placeholder": "Additional delivery notes (optional)"
+            }
+          },
+
+          "Order_Summary": {
+            "Title": "Order Summary",
+            "Prices": {
+              "Total": "Total",
+              "Subtotal": "Subtotal",
+              "Items": "Items",
+              "Currncy": "L.E",
+              "Shipping_Fee":"Shipping Fee",
+              "Shipping": "FREE",
+              "Inclusive":"Inclusive of VAT",
+              "Pay": {
+                "Cash": {
+                  "Title": "Cash on delivery",
+                  "Description": "Pay with cash upon delivery."
+                },
+                "Card": {
+                  "Title": "Pay Online",
+                  "Description": "Coming Soon."
+                }
+              }
+            },
+
+            "Btn": "Place Order"
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Updating": {
+                "Title": "Error",
+                "Message": "An error occurred while updating the product!"
+              },
+              "Removing": {
+                "Title": "Error",
+                "Message": "An error occurred while deleting the product!"
+              },
+
+              "Place_Order": {
+                "Title": "Error",
+                "Message": "Failed to place order. Please try again."
+              }
+            },
+
+            "Info": {
+              "Place_Order": {
+                "Title": "Empty Cart",
+                "Message": "Your cart is empty. Please add products to your cart before placing an order"
+              }
+            },
+
+            "Successful": {
+              "Place_Order": {
+                "Title": "Order Placed",
+                "Message": "Your order has been placed successfully!"
+              }
+            }
+          }
+        }
+      }
+    
+    }
   },
 
   "Footer": {
@@ -412,6 +809,8 @@
       "Prev": "Previous",
       "Next": "Next"
     },
+
+    "Loading": "Loading...",
 
     "Is_Not_Authenticated": {
       "Title": "Authentication Required",

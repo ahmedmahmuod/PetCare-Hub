@@ -7,11 +7,12 @@ import { CartItem } from '../../core/models/cart/cart.model';
 import { CartSkeletonComponent } from "../../shared/components/skeletons/cart-page/cart-skelton.component";
 import { take } from 'rxjs';
 import { ToastService } from '../../shared/services/toast-notification/tost-notification.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, CartItemComponent, OrderSummaryComponent, CartSkeletonComponent],
+  imports: [CommonModule, CartItemComponent, OrderSummaryComponent, CartSkeletonComponent, TranslateModule],
   template: `
     <div class="cart-page container mx-auto mt-12">
       @if (isLoading ){
@@ -19,8 +20,8 @@ import { ToastService } from '../../shared/services/toast-notification/tost-noti
       } @else {
         <div *ngIf="cartService.cart$ | async as cart">
           <h1 class="mb-8 sm:mx-0 mx-4">
-            <span class="text-3xl font-bold text-brand-color">Cart </span>
-            <span class="text-xl font-medium text-fourth-color">({{cart.cartItems.length}} items)</span>
+            <span class="text-3xl font-bold text-brand-color">{{'Pages.Auth.Cart_Page.Title' | translate}} </span>
+            <span class="text-xl font-medium text-fourth-color">({{cart.cartItems.length}} {{'Pages.Auth.Cart_Page.Items' | translate}})</span>
           </h1>
           <div class="cart-content">
             <!-- Left: Cart Items or Empty Message -->
@@ -34,15 +35,15 @@ import { ToastService } from '../../shared/services/toast-notification/tost-noti
                   <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                   </svg>
-                  <h3>Your cart is empty</h3>
-                  <p>Looks like you haven't added any items to your cart yet.</p>
+                  <h3>{{'Pages.Auth.Cart_Page.If_Empty.Title' | translate}}</h3>
+                  <p>{{'Pages.Auth.Cart_Page.If_Empty.Message' | translate}}</p>
                 </div>
               </ng-template>
             </div>
 
             <!-- Right: Always show summary -->
             <div class="cart-summary">
-              <app-order-summary [cartId]="cart._id" [isLoading]="isCouponLoading" (couponCode)="applyCoupon($event)" [subtotal]="calculateSubtotal(cart.cartItems)" [itemCount]="getTotalItems(cart.cartItems)" [shipping]="'FREE'"[total]="cart.totalPriceAfterDiscount || calculateSubtotal(cart.cartItems)"/>
+              <app-order-summary [cartId]="cart._id" [isLoading]="isCouponLoading" (couponCode)="applyCoupon($event)" [subtotal]="calculateSubtotal(cart.cartItems)" [itemCount]="getTotalItems(cart.cartItems)" [total]="cart.totalPriceAfterDiscount || calculateSubtotal(cart.cartItems)"/>
             </div>
           </div>
         </div>
@@ -289,13 +290,13 @@ import { ToastService } from '../../shared/services/toast-notification/tost-noti
 export class CartComponent implements OnInit {
   private toastService = inject(ToastService);
   public cartService = inject(CartService);
+  public translate = inject(TranslateService);
 
   isLoading = false;
   isCouponLoading = false;
 
   ngOnInit(): void {
     this.isLoading = true;
-
     this.cartService.cart$.pipe(take(1)).subscribe({
       next: (cart) => {
         if (!cart) {
@@ -335,7 +336,7 @@ export class CartComponent implements OnInit {
           totalPriceAfterDiscount: 0,
           __v: 0
         });
-        this.toastService.error('Error', 'Failed to load cart. Please try again later.');
+        this.toastService.error(this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Cant_Load.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Cant_Load.Message'));
       }
     });
   }
@@ -353,7 +354,7 @@ export class CartComponent implements OnInit {
     this.cartService.changeQuantity(item._id, newQuantity.action).subscribe({
       next: () => {},
       error: () => {
-        this.toastService.error('Error!', 'An error occurred while updating the product!');
+        this.toastService.error(this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Updating.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Updating.Message'));
       }
     });
   }
@@ -361,7 +362,7 @@ export class CartComponent implements OnInit {
   removeItem(item: CartItem) {
     this.cartService.removeItemCart(item.product._id).subscribe({
       error: () => {
-        this.toastService.error('Error!', 'An error occurred while deleting the product!');
+        this.toastService.error(this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Removing.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Removing.Message'));
       }
     });
   }
@@ -370,11 +371,11 @@ export class CartComponent implements OnInit {
     this.isCouponLoading = true;
     this.cartService.applyCoupon(code).subscribe({
       next: () => {
-        this.toastService.success('Success!', 'Coupon applied successfully.');
+        this.toastService.success(this.translate.instant('Pages.Auth.Cart_Page.Toast.Success.Apply_Coupon.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Success.Apply_Coupon.Message'));
         this.isCouponLoading = false;
       },
       error: () => {
-        this.toastService.error('Error!', 'Coupon is invalid or expired.');
+        this.toastService.error(this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Apply_Coupon.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Apply_Coupon.Message'));
         this.isCouponLoading = false;
       }
     });

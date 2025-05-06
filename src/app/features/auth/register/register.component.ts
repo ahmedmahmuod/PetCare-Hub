@@ -6,11 +6,12 @@ import { ToastService } from '../../../shared/services/toast-notification/tost-n
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../../core/services/auth/logs/user-loging.service';
 import { SectionSpinnerComponent } from "../../../shared/components/spinner/spinner-loading.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, ToastModule, SectionSpinnerComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ToastModule, SectionSpinnerComponent, TranslateModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   
@@ -19,6 +20,7 @@ export class RegisterComponent {
   // Privates 
   private authService = inject(AuthService)
   private router = inject(Router);
+  private translate = inject(TranslateService);
 
   // Global Variables
   registerForm: FormGroup;
@@ -40,7 +42,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.authService.signUp(this.registerForm.value).subscribe({
         next: (response) => {
-          this.toastService.success('Good!', 'Account created successfully!');
+          this.toastService.success(this.translate.instant('Pages.Auth.Register.Toasts.Successful.Title'), this.translate.instant('Pages.Auth.Register.Toasts.Successful.Message'));
           this.registerForm.reset();
           this.registerForm.markAsPristine();
           this.registerForm.markAsUntouched();
@@ -51,7 +53,7 @@ export class RegisterComponent {
         },
         error: (error) => {
           console.log(error);
-          this.toastService.error('Error!', error.error?.message || 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Auth.Register.Toasts.Errors.Title'), this.translate.instant('Pages.Auth.Register.Toasts.Errors.Message') || 'An unexpected error occurred. Please try again.');
         }
       }).add(() => {
         this.isLoading = false; // Stop loading spinner in all cases

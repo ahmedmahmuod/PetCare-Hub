@@ -7,6 +7,7 @@ import { CartItemComponent } from "../cart-item/cart-item.component";
 import { ToastService } from '../../../shared/services/toast-notification/tost-notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SectionSpinnerComponent } from "../../../shared/components/spinner/spinner-loading.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface ShippingAddress {
   details?: string;
@@ -18,7 +19,7 @@ export interface ShippingAddress {
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, CartItemComponent, SectionSpinnerComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, CartItemComponent, SectionSpinnerComponent, TranslateModule],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
@@ -27,6 +28,7 @@ export class CheckoutComponent implements OnInit {
   public cartService = inject(CartService);
   private router = inject(Router)
   private route = inject(ActivatedRoute)
+  private translate = inject(TranslateService);
 
   checkoutForm: FormGroup;
   cartItems: CartItem[] = [];
@@ -71,7 +73,7 @@ export class CheckoutComponent implements OnInit {
   updateQuantity(newQuantity: any, item: CartItem) {
     this.cartService.changeQuantity(item._id, newQuantity.action).subscribe({
       error: () => {
-        this.toastService.error('Error!', 'An error occurred while updating the product!');
+        this.toastService.error(this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Errors.Updating.Title'), this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Errors.Updating.Message'));
       }
     });
   }
@@ -79,7 +81,7 @@ export class CheckoutComponent implements OnInit {
   removeItem(item: CartItem) {
     this.cartService.removeItemCart(item.product._id).subscribe({
       error: () => {
-        this.toastService.error('Error!', 'An error occurred while deleting the product!');
+        this.toastService.error(this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Errors.Removing.Title'), this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Errors.Removing.Message'));
       }
     });
   }
@@ -88,7 +90,7 @@ export class CheckoutComponent implements OnInit {
   placeOrder(): void {
     // Check if cart is empty
     if (this.cartItems.length < 1) {
-      this.toastService.info('Empty Cart', 'Your cart is empty. Please add items before checkout.');
+      this.toastService.info(this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Info.Place_Order.Title'), this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Info.Place_Order.Message'));
       this.router.navigate(['cart']);
       return;
     }
@@ -105,7 +107,7 @@ export class CheckoutComponent implements OnInit {
     this.cartService.createCashOrder(this.checkoutForm.value, this.cartId).subscribe({
       next: (res) => {        
         // Show success message
-        this.toastService.success('Order Placed', 'Your order has been placed successfully!');
+        this.toastService.success(this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Successful.Place_Order.Title'), this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Successful.Place_Order.Message'));
         this.cartService.clearCoupon();
         this.cartService.cartState$.next({
           _id: '',
@@ -131,7 +133,7 @@ export class CheckoutComponent implements OnInit {
         } else if (err.status === 500) {
           this.toastService.error('Server Error', 'Something went wrong. Please try again later.');
         } else {
-          this.toastService.error('Error', 'Failed to place order. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Errors.Place_Order.Title'), this.translate.instant('Pages.Auth.Check_Out_Page.Shipping_Info.Toasts.Errors.Place_Order.Message'));
         }
       }
     });

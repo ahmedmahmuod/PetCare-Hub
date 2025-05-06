@@ -357,6 +357,7 @@ header {
   cursor: pointer;
   border-top: 1px solid #f8fafc24;
   background: var(--brand-color);
+  gap: 5px;
 }
 
 .menu-list .logout {

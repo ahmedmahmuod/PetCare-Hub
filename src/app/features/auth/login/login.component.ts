@@ -7,11 +7,12 @@ import { SectionSpinnerComponent } from "../../../shared/components/spinner/spin
 import { ToastModule } from 'primeng/toast';
 import { ToastService } from '../../../shared/services/toast-notification/tost-notification.service';
 import { TokenService } from '../../../shared/services/token-managment/token-management.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, SectionSpinnerComponent, ToastModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, SectionSpinnerComponent, ToastModule, TranslateModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -21,6 +22,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private toastService = inject(ToastService);
   private router = inject(Router);
+  private translate = inject(TranslateService);
 
   // Publics
   loginForm: FormGroup;
@@ -42,7 +44,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.signIn(this.loginForm.value).subscribe({
         next: (response) => {
-          this.toastService.success('Good!', 'You have successfully logged in.');
+          this.toastService.success(this.translate.instant('Pages.Auth.Login_Page.If_Success.Title'), this.translate.instant('Pages.Auth.Login_Page.If_Success.Details'));
           this.loginForm.reset();
           this.loginForm.markAsPristine();
           this.loginForm.markAsUntouched();
@@ -54,7 +56,7 @@ export class LoginComponent {
         },
         error: (error) => {
           console.log(error);
-          this.toastService.error('Error!', error.error?.message || 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Auth.Login_Page.If_Error.Title'), this.translate.instant('Pages.Auth.Login_Page.If_Error.Details') || 'An unexpected error occurred. Please try again.');
         }
       }).add(() => {
         this.isLoading = false; // Stop loading spinner in all cases

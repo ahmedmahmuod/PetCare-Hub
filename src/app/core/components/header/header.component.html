@@ -45,7 +45,7 @@
                     <li class="menu-item">
                       <a routerLink="/profile/account-details" class="menu-link">
                         <i class="fa-solid fa-user"></i>
-                        <span>My Account</span>
+                        <span>{{'Header.DropDown.MyAcc' | translate}}</span>
                       </a>
                     </li>
                 
@@ -53,21 +53,21 @@
                       <li class="menu-item">
                         <a routerLink="/profile/dashboard" class="menu-link">
                           <i class="fa-solid fa-gauge"></i>                          
-                          <span>My Dashboard</span>
+                          <span>{{'Header.DropDown.Dashboard.User' | translate}}</span>
                         </a>
                       </li>
                     } @else {
                       <li class="menu-item">
                         <a routerLink="/admin/dashboard" class="menu-link">
                           <i class="fa-solid fa-gauge"></i>                          
-                          <span>View Dashboard</span>
+                          <span>{{'Header.DropDown.Dashboard.Admin' | translate}}</span>
                         </a>
                       </li>
                     }
                     <li class="menu-item">
                       <a (click)="logout()" class="menu-link logout">
                         <i class="fa-solid fa-sign-out-alt"></i>
-                        <span>Logout</span>
+                        <span>{{'Header.DropDown.Logout' | translate}}</span>
                       </a>
                     </li>
                   </ul>
@@ -104,21 +104,21 @@
                         <li class="menu-item">
                           <a [routerLink]="role === 'admin' ? '/admin/account-details' : '/profile/account-details'" class="menu-link">
                             <i class="fa-solid fa-user"></i>
-                            <span>My Account</span>
+                            <span>{{'Header.DropDown.MyAcc' | translate}}</span>
                           </a>
                         </li>
                     
                         <li class="menu-item">
                           <a [routerLink]="role === 'admin' ? '/admin/dashboard' : '/profile/dashboard'" class="menu-link">
                             <i class="fa-solid fa-gauge"></i>                          
-                            <span>{{ role === 'admin' ? 'View Dashboard' : 'My Dashboard' }}</span>
+                            <span>{{ role === 'admin' ? ('Header.DropDown.Dashboard.Admin' | translate) : ('Header.DropDown.Dashboard.User' | translate)  }}</span>
                           </a>
                         </li>
                     
                         <li class="menu-item">
                           <a (click)="logout()" class="menu-link logout">
                             <i class="fa-solid fa-sign-out-alt"></i>
-                            <span>Logout</span>
+                            <span>{{'Header.DropDown.Logout' | translate}}</span>
                           </a>
                         </li>
                       </ul>

@@ -4,13 +4,13 @@
     </div>
     
     <div class="right-panel relative">
-      <a routerLink="/" class="icon-back-btn fixed-top-left" title="Back to Home">
+      <a routerLink="/" class="icon-back-btn fixed-top-left" [title]="('Pages.Auth.Login_Page.Form.Btns.Back_To_Home' | translate)">
         <i class="fa-solid fa-left-long"></i>
       </a>
 
       <div class="login-form-container">
-        <h1>Login</h1>
-        <p class="welcome-text">Welcome Back!</p>
+        <h1>{{'Pages.Auth.Login_Page.Title' | translate}}</h1>
+        <p class="welcome-text">{{'Pages.Auth.Login_Page.Sub_Title' | translate}}</p>
   
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
           <app-section-spinner *ngIf="isLoading"/>
@@ -18,38 +18,38 @@
             <!-- Email -->
             <div class="form-group">
               <div class="input-container" [ngClass]="{ 'input-error': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }">
-                <input type="email" id="email" formControlName="email" placeholder="Enter your email" class="input-field"/>
+                <input type="email" id="email" formControlName="email" [placeholder]="('Pages.Auth.Login_Page.Form.Email.Placeholder' | translate)" class="input-field"/>
                 <img src="https://api.iconify.design/heroicons:envelope.svg" alt="email" class="input-icon">
               </div>
               <div class="error-message" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
-                <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
-                <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</span>
+                <span *ngIf="loginForm.get('email')?.errors?.['required']">{{'Pages.Auth.Login_Page.Form.Email.Error.Required' | translate}}</span>
+                <span *ngIf="loginForm.get('email')?.errors?.['email']">{{'Pages.Auth.Login_Page.Form.Email.Error.Invalid' | translate}}</span>
               </div>
             </div>
           
             <!-- Password -->
             <div class="form-group">
               <div class="input-container" [ngClass]="{ 'input-error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }">
-                <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password" class="input-field"/>
+                <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" [placeholder]="('Pages.Auth.Login_Page.Form.Password.Placeholder' | translate)" class="input-field"/>
                 <img [src]="passwordVisible ? 'https://api.iconify.design/heroicons:eye-slash.svg' : 'https://api.iconify.design/heroicons:eye.svg'" alt="toggle password" class="input-icon toggle-icon" (click)="togglePasswordVisibility()">
               </div>
               <div class="error-message" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-                <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
-                <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+                <span *ngIf="loginForm.get('password')?.errors?.['required']">{{'Pages.Auth.Login_Page.Form.Password.Error.Required' | translate}}</span>
+                <span *ngIf="loginForm.get('password')?.errors?.['minlength']">{{'Pages.Auth.Login_Page.Form.Password.Error.Invalid' | translate}}</span>
               </div>
             </div>
           
             <!-- Forgot Password -->
             <div class="forgot-password">
-              <a routerLink="/auth/forget-password" class="forgot-link">Forgot Password?</a>
+              <a routerLink="/auth/forget-password" class="forgot-link">{{'Pages.Auth.Login_Page.Form.Forgot_Password' | translate}}</a>
             </div>
           
             <!-- Submit -->
-            <button type="submit" class="login-button" [disabled]="loginForm.invalid">Login</button>
+            <button type="submit" class="login-button" [disabled]="loginForm.invalid">{{'Pages.Auth.Login_Page.Form.Btns.Login' | translate}}</button>
           
             <!-- Sign Up -->
             <div class="signup-option">
-              Not on Scooby yet? <a routerLink="/auth/register" class="signup-link">Sign Up</a>
+              {{'Pages.Auth.Login_Page.Form.Footer.Text' | translate}}<a routerLink="/auth/register" class="signup-link">{{'Pages.Auth.Login_Page.Form.Footer.Link' | translate}}</a>
             </div>
           </form>
           

@@ -2,21 +2,22 @@ import { SectionSpinnerComponent } from './../../../shared/components/spinner/sp
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [CommonModule, FormsModule, SectionSpinnerComponent],
+  imports: [CommonModule, FormsModule, SectionSpinnerComponent, TranslateModule],
   template: `
       <div class="order-summary">
-        <h2>Order Summary</h2>
+        <h2>{{'Pages.Auth.Cart_Page.Cart_Summary.Title' | translate}}</h2>
 
         <!-- Coupon input + button + secret coupon box -->
         <div class="coupon-section-container">
           <div class="coupon-section">
-            <input type="text" #couponeCode placeholder="Coupon code"/>
-            <button (click)="applyCoupon(couponeCode.value)" class="apply-btn">Apply</button>
+            <input type="text" #couponeCode [placeholder]="('Pages.Auth.Cart_Page.Cart_Summary.Coupon.Input.Placeholder' | translate)"/>
+            <button (click)="applyCoupon(couponeCode.value)" class="apply-btn">{{'Pages.Auth.Cart_Page.Cart_Summary.Coupon.Input.Btn' | translate}}</button>
           </div>
           
           <div class="secret-coupon-container" [class.revealed]="isCouponRevealed">
@@ -31,11 +32,11 @@ import { Router, RouterLink } from '@angular/router';
           <div class="modal-content" (click)="$event.stopPropagation()">
             <button class="close-btn" (click)="closeCoupon()">×</button>
             <div class="modal-body">
-              <div class="discount-badge">Special Offer!</div>
-              <div class="discount-text">40% OFF</div>
+              <div class="discount-badge">{{'Pages.Auth.Cart_Page.Cart_Summary.Coupon.Dialog.Title' | translate}}</div>
+              <div class="discount-text">40% {{'Pages.Auth.Cart_Page.Cart_Summary.Coupon.Dialog.Discount' | translate}}</div>
               <div class="coupon-code">{{ discountCode }}</div>
               <button class="copy-btn" (click)="copyCoupon()" [class.copied]="isCouponCopied">
-                {{ isCouponCopied ? 'Copied!' : 'Copy Code' }}
+                {{ isCouponCopied ? ('Pages.Auth.Cart_Page.Cart_Summary.Coupon.Dialog.Copy.Copied' | translate) : ('Pages.Auth.Cart_Page.Cart_Summary.Coupon.Dialog.Copy.Title' | translate) }}
               </button>
             </div>
           </div>
@@ -44,25 +45,25 @@ import { Router, RouterLink } from '@angular/router';
         <!-- Summary details -->
         <div class="summary-details relative">
           <div class="summary-row">
-            <span>Subtotal ({{ itemCount }} items)</span>
-            <span>EGP {{ subtotal.toFixed(2) }}</span>
+            <span>{{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Subtotal' | translate}} ({{ itemCount }} {{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Items' | translate}})</span>
+            <span>{{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Currncy' | translate}} {{ itemCount }} {{ subtotal.toFixed(2) | number }}</span>
           </div>
           <div class="summary-row">
-            <span>Shipping Fee</span>
-            <span class="free-shipping">FREE</span>
+            <span>{{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Shipping_Fee' | translate}}</span>
+            <span class="free-shipping">{{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Shipping' | translate}}</span>
           </div>
           <div class="summary-row total">
-            <span>Total</span>
+            <span>{{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Total' | translate}}</span>
             <span class="total-amount">
-              <small>(Inclusive of VAT)</small>
-              EGP {{ total.toFixed(2) }}
+              <small>({{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Inclusive' | translate}})</small>
+              {{'Pages.Auth.Cart_Page.Cart_Summary.Prices.Currncy' | translate}} {{ total.toFixed(2) | number }}
             </span>
           </div>
         </div>
         <app-section-spinner *ngIf="isLoading"/>
         
         <button class="checkout-btn" [disabled]="itemCount === 0 || isLoading" (click)="onCheckout()">
-        {{ itemCount === 0 ? 'Cart is Empty' : 'CHECKOUT' }}
+        {{ itemCount === 0 ? ('Pages.Auth.Cart_Page.Cart_Summary.Is_No_Items' | translate) : ('Pages.Auth.Cart_Page.Cart_Summary.Btn' | translate) }}
       </button>      
     </div>
   `,
@@ -310,7 +311,7 @@ import { Router, RouterLink } from '@angular/router';
       color: var(--seconed-color);
       border: none;
       padding: 12px;
-      border-radius: 4px;
+      border-radius: 25px;
       margin-top: 24px;
       font-weight: 500;
       cursor: pointer;

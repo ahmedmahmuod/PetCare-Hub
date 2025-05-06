@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../../core/services/auth/logs/user-loging.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/services/toast-notification/tost-notification.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-password-reset',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css'],
 })
@@ -30,6 +31,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
 
   private router = inject(Router);
   private toastService = inject(ToastService);
+  private translate = inject(TranslateService);
 
   emailForm: FormGroup;
   verificationForm: FormGroup;
@@ -133,7 +135,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
         this.startResendCountdown();
       },
       error: (error) => {
-        this.toastService.error('Error!', 'Email address not found. Please try again.');
+        this.toastService.error(this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Error'), this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Details'));
         this.loading = false;
       }
     });
@@ -155,7 +157,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
         this.saveState();
       },
       error: (error) => {        
-        this.toastService.error('Error!', error.error?.message || 'Invalid verification code. Please try again.');
+        this.toastService.error(this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Code.Error'),  this.translate.instant('Pages.Auth.Forget_Pass_Page.Errors.Code.Details') || 'Invalid verification code. Please try again.');
         this.loading = false;
       }
     });
@@ -278,7 +280,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     localStorage.removeItem(this.CODE_KEY);
     localStorage.removeItem(this.USERID_KEY);
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   checkPasswordStrength() {
@@ -301,20 +303,20 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
       case 0:
       case 1:
         this.passwordStrength = 'strength-weak';
-        this.passwordStrengthText = 'Weak';
+        this.passwordStrengthText = this.translate.instant('Pages.Auth.Forget_Pass_Page.Step_Three.Form.Password_Strength.Weak');
         break;
       case 2:
         this.passwordStrength = 'strength-medium';
-        this.passwordStrengthText = 'Medium';
+        this.passwordStrengthText = this.translate.instant('Pages.Auth.Forget_Pass_Page.Step_Three.Form.Password_Strength.Medium');
         break;
       case 3:
       case 4:
         this.passwordStrength = 'strength-strong';
-        this.passwordStrengthText = 'Strong';
+        this.passwordStrengthText = this.translate.instant('Pages.Auth.Forget_Pass_Page.Step_Three.Form.Password_Strength.Strong');
         break;
       case 5:
         this.passwordStrength = 'strength-very-strong';
-        this.passwordStrengthText = 'Very Strong';
+        this.passwordStrengthText = this.translate.instant('Pages.Auth.Forget_Pass_Page.Step_Three.Form.Password_Strength.Very_Strong');
         break;
     }
   }

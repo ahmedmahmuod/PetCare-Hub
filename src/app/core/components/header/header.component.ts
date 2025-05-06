@@ -8,7 +8,6 @@ import { TokenService } from '../../../shared/services/token-managment/token-man
 import { AuthService } from '../../services/auth/logs/user-loging.service';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { UsersService } from '../../services/user/users.service';
-import { UserData } from '../../models/user/details/user-details.model';
 import { of } from 'rxjs';
 
 @Component({

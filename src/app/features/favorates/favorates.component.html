@@ -1,14 +1,14 @@
 <div class="container mx-auto my-12 h-screen">  
     <ng-container *ngIf="favorites$ | async as favorites">
       <h1 class="mb-8 sm:mx-0 mx-4">
-        <span class="text-3xl font-bold text-brand-color">Favorites </span>
-        <span class="text-xl font-medium text-fourth-color">({{favorites.length}} items)</span>
+        <span class="text-3xl font-bold text-brand-color">{{'Pages.Auth.Favorate_Page.Title' | translate}} </span>
+        <span class="text-xl font-medium text-fourth-color">({{favorites.length}} {{'Pages.Auth.Favorate_Page.Items' | translate}})</span>
       </h1>
       
       <ng-container *ngIf="favorites.length === 0 && !isLoading; else loadingOrProducts">
         <!-- No products -->
         <div class="text-center text-fourth-color text-lg py-16">
-          <h1>No Products in Your Favorite page!</h1>
+          <h1>{{'Pages.Auth.Favorate_Page.If_Empty' | translate}}</h1>
         </div>
       </ng-container>
       

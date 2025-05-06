@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FavoriteIconComponent } from "../buttons/fav-btn.component";
 import { AddToCartButtonComponent } from "../buttons/add-to-cart-btn.component";
 import { Product } from '../../../core/models/products/product.model';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SectionSpinnerComponent } from "../spinner/spinner-loading.component";
 import { FavoratesService } from '../../../core/services/favorates/favorates.service';
 import { ToastService } from '../../services/toast-notification/tost-notification.service';
@@ -21,7 +21,6 @@ import { take } from 'rxjs';
       <!-- Favorite Button -->
       <div *ngIf="(isRole$ | async) as role;" dir="ltr" class="absolute top-5 right-5 transform translate-x-5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" aria-label="Add to favorites">
         <app-favorite-icon (favoriteChange)="addFav($event)" *ngIf="!isWishlist && role === 'user'" />
-        
         <button (click)="deleteFromFav(product)" *ngIf="isWishlist" class="text-red-600 text-xl cursor-pointer">
             <i class="fa-solid fa-trash"></i>
         </button>
@@ -69,6 +68,7 @@ export class ProductCardComponent {
   private toastService = inject(ToastService);
   private tokenService = inject(TokenService);
   private cartService = inject(CartService);
+  private translate = inject(TranslateService);
 
   @Input() product!: Product;
   @Input() calculateDiscountPercentage!: (original: number, discounted: number) => number;
@@ -79,7 +79,6 @@ export class ProductCardComponent {
   isLoading = signal<boolean>(false);
 
   addToCart() {
-    
     let isRole: string | null = null;
     this.isRole$.pipe(take(1)).subscribe((role) => {
       isRole = role;
@@ -89,31 +88,30 @@ export class ProductCardComponent {
       this.isLoading.set(true);
       this.cartService.removeItemCart(this.product._id).subscribe({
         next: () => {
-          this.toastService.success('Success', 'The product has been successfully added to your cart.');
+          this.toastService.success(this.translate.instant('Pages.Auth.Cart_Page.Toast.Success.Add_To_Cart.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Success.Add_To_Cart.Message'));
           this.isLoading.set(false);
         }
       });  
     } else if (isRole === 'admin') {
-      this.toastService.info('Info', 'Admins do not have access to this feature.');
+      this.toastService.info(this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Adding.Admin.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Adding.Admin.Message'));
       
     } else if (isRole === null) {
-      this.toastService.error('Error!', 'You must log in first.');
+      this.toastService.error(this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Adding.Not_Loggid.Title'), this.translate.instant('Pages.Auth.Cart_Page.Toast.Errors.Adding.Not_Loggid.Message'));
     }
   }
   
 
   deleteFromFav(item: Product) {
     this.isLoading.set(true);
-  
     this.favService.addAndDeleteFav(item._id).subscribe({
       next: (res) => {
         this.favService.fetchFavorites().subscribe(() => {
-          this.toastService.success('Removed!', 'Product removed from favorites.');
+          this.toastService.success(this.translate.instant('Pages.Auth.Favorate_Page.Toast.Removed.Success.Title'), this.translate.instant('Pages.Auth.Favorate_Page.Toast.Removed.Success.Details'));
           this.isLoading.set(false);
         });
       },
       error: () => {
-        this.toastService.error('Error!', 'Something went wrong.');
+        this.toastService.error(this.translate.instant('Pages.Auth.Favorate_Page.Toast.Removed.Error.Title'), this.translate.instant('Pages.Auth.Favorate_Page.Toast.Removed.Error.Details'));
         this.isLoading.set(false);
       }
     });
@@ -125,12 +123,12 @@ export class ProductCardComponent {
       this.favService.addAndDeleteFav(this.product._id).subscribe({
         next: (res) => {
           this.favService.fetchFavorites().subscribe(() => {
-            this.toastService.success('Added!', 'Product added to favorites.');
+            this.toastService.success(this.translate.instant('Pages.Auth.Favorate_Page.Toast.Added.Success.Title'), this.translate.instant('Pages.Auth.Favorate_Page.Toast.Added.Success.Details'));
             this.isLoading.set(false);
           });
         },
         error: () => {
-          this.toastService.error('Error!', 'You must log in first.');
+          this.toastService.error(this.translate.instant('Pages.Auth.Favorate_Page.Toast.Added.Error.Title'), this.translate.instant('Pages.Auth.Favorate_Page.Toast.Added.Error.Details'));
           this.isLoading.set(false);
         }
       });

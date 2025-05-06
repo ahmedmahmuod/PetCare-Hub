@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product } from '../../../core/models/products/product.model';
 import { CartItem } from '../../../core/models/cart/cart.model';
 import { SectionSpinnerComponent } from "../../../shared/components/spinner/spinner-loading.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cart-item',
   standalone: true,
-  imports: [CommonModule, SectionSpinnerComponent],
+  imports: [CommonModule, SectionSpinnerComponent, TranslateModule],
   template: `
     <div class="cart-item relative">
       <div class="item-image">
@@ -22,10 +22,10 @@ import { SectionSpinnerComponent } from "../../../shared/components/spinner/spin
           </button>
         </div>
         <div class="price-section">
-          <div class="current-price">EGP {{ item.price }}</div>
+          <div class="current-price">{{'Pages.Auth.Cart_Page.Cart_Item.Currncy' | translate}} {{ item.price }}</div>
           @if (item.product.discount) {
-            <div class="original-price">EGP {{ item.product.price }}</div>
-            <div class="discount-badge">{{ item.product.discount }}% OFF</div>
+            <div class="original-price">{{'Pages.Auth.Cart_Page.Cart_Item.Currncy' | translate}} {{ item.product.price }}</div>
+            <div class="discount-badge">{{ item.product.discount }}% {{'Pages.Auth.Cart_Page.Cart_Summary.Coupon.Dialog.Discount' | translate}}</div>
           }
         </div>
         <div class="quantity-controls">

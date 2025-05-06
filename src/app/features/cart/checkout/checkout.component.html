@@ -1,40 +1,40 @@
 <div class="container mx-auto mt-12 min-h-screen">
     <h1 class="mb-4 sm:mx-0 mx-4">
-      <span class="text-3xl font-bold text-brand-color">Checkout </span>
-      <span class="text-xl font-medium text-fourth-color">({{cartService.getCartItemCount()}} items in cart)</span>
+      <span class="text-3xl font-bold text-brand-color">{{'Pages.Auth.Check_Out_Page.Title' | translate}} </span>
+      <span class="text-xl font-medium text-fourth-color">({{cartService.getCartItemCount()}} {{'Pages.Auth.Check_Out_Page.Items' | translate}})</span>
     </h1>
   
     <div class="checkout-layout">
       <!-- Shipping Info -->
       <div class="billing-details">
-        <h2>Shipping Info</h2>
+        <h2>{{'Pages.Auth.Check_Out_Page.Shipping_Info.Title' | translate}}</h2>
         <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
           <div class="form-group">
-            <input type="text" id="phone" formControlName="phone" placeholder="Phone number" [ngClass]="{'invalid': f['phone'].touched && f['phone'].invalid}">
-            <div class="error-message" *ngIf="f['phone'].touched && f['phone'].invalid">Valid phone number required</div>
+            <input type="text" id="phone" formControlName="phone" [placeholder]="('Pages.Auth.Check_Out_Page.Shipping_Info.Form.Phone.Placeholder' | translate)" [ngClass]="{'invalid': f['phone'].touched && f['phone'].invalid}">
+            <div class="error-message" *ngIf="f['phone'].touched && f['phone'].invalid">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Form.Phone.Errors.Invalid' | translate}}</div>
           </div>
   
           <div class="form-row">
             <div class="form-group">
-              <input type="text" id="city" formControlName="city" placeholder="City" [ngClass]="{'invalid': f['city'].touched && f['city'].invalid}">
-              <div class="error-message" *ngIf="f['city'].touched && f['city'].invalid">Required</div>
+              <input type="text" id="city" formControlName="city" [placeholder]="('Pages.Auth.Check_Out_Page.Shipping_Info.Form.City.Placeholder' | translate)" [ngClass]="{'invalid': f['city'].touched && f['city'].invalid}">
+              <div class="error-message" *ngIf="f['city'].touched && f['city'].invalid">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Form.City.Errors.Invalid' | translate}}</div>
             </div>
   
             <div class="form-group">
-              <input type="text" id="postalcode" formControlName="postalcode" placeholder="Postal code" [ngClass]="{'invalid': f['postalcode'].touched && f['postalcode'].invalid}">
-              <div class="error-message" *ngIf="f['postalcode'].touched && f['postalcode'].invalid">Required</div>
+              <input type="text" id="postalcode" formControlName="postalcode" [placeholder]="('Pages.Auth.Check_Out_Page.Shipping_Info.Form.Postal_Code.Placeholder' | translate)" [ngClass]="{'invalid': f['postalcode'].touched && f['postalcode'].invalid}">
+              <div class="error-message" *ngIf="f['postalcode'].touched && f['postalcode'].invalid">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Form.Postal_Code.Errors.Invalid' | translate}}</div>
             </div>
           </div>
   
           <div class="form-group">
-            <textarea id="details" formControlName="details" placeholder="Additional delivery notes (optional)" rows="4"></textarea>
+            <textarea id="details" formControlName="details" [placeholder]="('Pages.Auth.Check_Out_Page.Shipping_Info.Form.Notes.Placeholder' | translate)" rows="4"></textarea>
           </div>
         </form>
       </div>
   
       <!-- Order Summary Section -->
       <div class="order-summary relative">
-        <h2>Order Summary</h2>
+        <h2>{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Title' | translate}}</h2>
         <app-section-spinner *ngIf="isLoading"/>
         <div class="cart-items mb-5">
           <ng-container *ngIf="cartService.cart$ | async as cart">
@@ -44,16 +44,16 @@
   
         <div class="summary-calculations">
           <div class="summary-row">
-            <span>Subtotal ({{cartService.getCartItemCount()}} items)</span>
-            <span class="amount">EGP {{subtotal.toFixed(2)}}</span>
+            <span>{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Subtotal' | translate}} ({{cartService.getCartItemCount()}} {{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Items' | translate}})</span>
+            <span class="amount">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Currncy' | translate}} {{subtotal.toFixed(2) | number}}</span>
           </div>
           <div class="summary-row">
-            <span>Shipping Fee</span>
-            <span class="shipping-free">FREE</span>
+            <span>{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Shipping_Fee' | translate}}</span>
+            <span class="shipping-free">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Shipping' | translate}}</span>
           </div>
           <div class="summary-row total-row">
-            <span>Total <span class="vat-text">(Inclusive of VAT)</span></span>
-            <span class="total-amount">EGP {{total.toFixed(2)}}</span>
+            <span>{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Total' | translate}} <span class="vat-text">({{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Inclusive' | translate}})</span></span>
+            <span class="total-amount">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Currncy' | translate}} {{total.toFixed(2) | number}}</span>
           </div>
         </div>
   
@@ -61,20 +61,20 @@
           <div class="payment-option">
             <label>
               <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="cod">
-              <span class="payment-label">Cash on delivery</span>
-              <span class="payment-description" *ngIf="paymentMethod === 'cod'">Pay with cash upon delivery.</span>
+              <span class="payment-label">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Pay.Cash.Title' | translate}}</span>
+              <span class="payment-description" *ngIf="paymentMethod === 'cod'">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Pay.Cash.Description' | translate}}</span>
             </label>
           </div>
   
           <div class="payment-option">
             <label>
               <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="online" disabled>
-              <span class="payment-label">Pay Online <span class="coming-soon-badge">Coming Soon</span></span>
+              <span class="payment-label">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Pay.Card.Title' | translate}} <span class="coming-soon-badge">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Prices.Pay.Card.Description' | translate}}</span></span>
             </label>
           </div>
         </div>
   
-        <button type="button" class="place-order-button" (click)="placeOrder()">Place Order</button>
+        <button type="button" class="place-order-button" (click)="placeOrder()">{{'Pages.Auth.Check_Out_Page.Shipping_Info.Order_Summary.Btn' | translate}}</button>
       </div>
     </div>
   </div> 

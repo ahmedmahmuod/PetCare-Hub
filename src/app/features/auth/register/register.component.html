@@ -5,8 +5,8 @@
       <i class="fa-solid fa-left-long"></i>
     </a>
     <div class="register-form-container">     
-      <h1>Create Account</h1>
-      <p class="welcome-text">Join our community today!</p>
+      <h1>{{'Pages.Auth.Register.Title' | translate}}</h1>
+      <p class="welcome-text">{{'Pages.Auth.Register.Sub_Title' | translate}}</p>
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form relative">
         <app-section-spinner *ngIf="isLoading"/>
@@ -14,47 +14,47 @@
         <!-- Name -->
         <div class="form-group">
           <div class="input-container" [ngClass]="{ 'input-error': registerForm.get('name')?.invalid && registerForm.get('name')?.touched }">
-            <input type="text" id="name" formControlName="name" placeholder="Enter your full name" class="input-field"/>
+            <input type="text" id="name" formControlName="name" [placeholder]="('Pages.Auth.Register.Form.Name.Placeholder' | translate)" class="input-field"/>
             <img src="https://api.iconify.design/heroicons:user.svg" alt="user" class="input-icon">
           </div>
           <div class="error-message" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
-            <span *ngIf="registerForm.get('name')?.errors?.['required']">Name is required.</span>
-            <span *ngIf="registerForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters.</span>
+            <span *ngIf="registerForm.get('name')?.errors?.['required']">{{'Pages.Auth.Register.Form.Name.Required' | translate}}</span>
+            <span *ngIf="registerForm.get('name')?.errors?.['minlength']">{{'Pages.Auth.Register.Form.Name.Error' | translate}}</span>
           </div>
         </div>
 
         <!-- Email -->
         <div class="form-group">
           <div class="input-container" [ngClass]="{ 'input-error': registerForm.get('email')?.invalid && registerForm.get('email')?.touched }">
-            <input type="email" id="email" formControlName="email" placeholder="Enter your email" class="input-field"/>
+            <input type="email" id="email" formControlName="email" [placeholder]="('Pages.Auth.Register.Form.Email.Placeholder' | translate)" class="input-field"/>
             <img src="https://api.iconify.design/heroicons:envelope.svg" alt="email" class="input-icon">
           </div>
           <div class="error-message" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
-            <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</span>
-            <span *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">{{'Pages.Auth.Register.Form.Email.Required' | translate}}</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">{{'Pages.Auth.Register.Form.Email.Error' | translate}}</span>
           </div>
         </div>
 
         <!-- Password -->
         <div class="form-group">
           <div class="input-container" [ngClass]="{ 'input-error': registerForm.get('password')?.invalid && registerForm.get('password')?.touched }">
-            <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" placeholder="Create a password" class="input-field"/>
+            <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" [placeholder]="('Pages.Auth.Register.Form.Password.Placeholder' | translate)" class="input-field"/>
             <img [src]="passwordVisible ? 'https://api.iconify.design/heroicons:eye-slash.svg' : 'https://api.iconify.design/heroicons:eye.svg'" alt="toggle password" class="input-icon toggle-icon" (click)="togglePasswordVisibility()">
           </div>
           <div class="error-message" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
-            <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</span>
-            <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters.</span>
+            <span *ngIf="registerForm.get('password')?.errors?.['required']">{{'Pages.Auth.Register.Form.Password.Required' | translate}}</span>
+            <span *ngIf="registerForm.get('password')?.errors?.['minlength']">{{'Pages.Auth.Register.Form.Password.Error' | translate}}</span>
           </div>
         </div>
 
         <!-- Submit -->
         <button type="submit" class="register-button" [disabled]="registerForm.invalid">
-            Create Account
+          {{'Pages.Auth.Register.Form.Btns.Create_Acc' | translate}}
         </button>
 
         <!-- Login Option -->
         <div class="login-option">
-          Already have an account? <a routerLink="/auth/login" class="login-link">Login</a>
+          {{'Pages.Auth.Register.Form.Have_Acc.Meassage' | translate}} <a routerLink="/auth/login" class="login-link">{{'Pages.Auth.Register.Form.Have_Acc.Link' | translate}}</a>
         </div>
       </form>
     </div>

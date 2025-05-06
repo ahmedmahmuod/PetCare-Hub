@@ -1,5 +1,5 @@
 <section class="container mx-auto">
-    <app-page-title [description]="'We change your life & world with our valuable expert Clinics'" [title]="'Meet Our Best Clinics'" />
+    <app-page-title [description]="('Pages.Vets.Static_Section.Our_Best_Clinics.Subtitle' | translate)" [title]="('Pages.Vets.Static_Section.Our_Best_Clinics.Title' | translate)" />
 
     @if(loading) {
         <div class="doctor-grid">
@@ -7,7 +7,7 @@
         </div>
     } @else {
         <div class="doctor-grid">
-            <app-vets-card [buttonText]="'View Clinic'" [router]="'/veterinary/clinics/'+ member._id" [darkMode]="false" [borderDark]="false" *ngFor="let member of (clinics$ | async)" [imageUrl]="member.vetImage || ''" [name]="member.vetName" [role]="member.desc || ''"/>
+            <app-vets-card [buttonText]="('Pages.Vets.Static_Section.Our_Best_Clinics.Seconed_Btn' | translate)" [router]="'/veterinary/clinics/'+ member._id" [darkMode]="false" [borderDark]="false" *ngFor="let member of (clinics$ | async)" [imageUrl]="member.vetImage || ''" [name]="member.vetName" [role]="member.desc || ''"/>
         </div>
     }
 </section>
