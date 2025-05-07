@@ -45,8 +45,15 @@ export class AppComponent implements OnInit {
   }
 
   shouldShowLayout(): boolean {
-    return !['/auth/login', '/auth/register', '/auth/forget-password'].includes(this.currentRoute);
+    return !(
+      this.currentRoute.startsWith('/auth/login') ||
+      this.currentRoute.startsWith('/auth/register') ||
+      this.currentRoute.startsWith('/auth/forget-password') ||
+      this.currentRoute.startsWith('/admin/dashboard') ||
+      this.currentRoute.startsWith('/user/dashboard')
+    );
   }
+  
 
   ngOnInit() {
     // Set language
@@ -79,11 +86,13 @@ export class AppComponent implements OnInit {
       ).subscribe((res) => {
         if (res?.role) {
           this.tokenService.setRole(res.role);
-          this.isLoading = false;
+        } else {
+          this.tokenService.setRole(null); 
         }
+        this.isLoading = false;
       });
+    } else {
+      this.tokenService.setRole(null);
     }
-
-
   }
 }

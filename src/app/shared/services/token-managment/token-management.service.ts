@@ -20,13 +20,14 @@ export class TokenService {
     localStorage.setItem(this.TOKEN_KEY, token);
     this.isLoggedInSubject.next(true);
     this.roleSubject.next(role);
+    this.roleLoadedSubject.next(true);
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  setRole(role: any): void {
+  setRole(role: string | null): void {
     this.roleSubject.next(role);
     this.roleLoadedSubject.next(true);
   }
@@ -47,6 +48,7 @@ export class TokenService {
     localStorage.removeItem(this.TOKEN_KEY);
     this.isLoggedInSubject.next(false);
     this.roleSubject.next(null);
+    this.roleLoadedSubject.next(false);
     this.cartService.clearCoupon();
   }
 

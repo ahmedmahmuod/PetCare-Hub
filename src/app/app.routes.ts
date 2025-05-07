@@ -45,17 +45,36 @@ export const routes: Routes = [
   },
   
   // user profile routes
-  { path: 'profile',  canActivate: [AuthRoleGuard], data: { expectedRole: 'user' },
+  { path: 'user',  canActivate: [AuthRoleGuard], data: { expectedRole: 'user' },
     children: [
       { path: 'account-details', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/my-account/my-account.component').then(m => m.MyAccountComponent) },
-      { path: 'dashboard', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/user/user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent) },
+      { path: 'dashboard', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/dashboard/dashboard.component').then(m => m.DashboardComponent), 
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'reviews' },
+          { path: 'reviews', loadComponent: () => import('./features/auth/dashboard/content-area/user/my-reviews/user-reviews.component').then(m => m.UserReviewsComponent )},
+          { path: 'pets', loadComponent: () => import('./features/auth/dashboard/content-area/user/my-pets/user-pets.component').then(m => m.UserPetsComponent )},
+          { path: 'orders', loadComponent: () => import('./features/auth/dashboard/content-area/user/my-orders/user-orders.component').then(m => m.UserOrdersComponent )},
+        ]
+       },
   ]},
     
     // admin profile routes
   { path: 'admin', canActivate: [AuthRoleGuard], data: { expectedRole: 'admin' },
     children: [
       { path: 'account-details', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/my-account/my-account.component').then(m => m.MyAccountComponent) },
-      { path: 'dashboard', canActivate: [AuthRoleGuard],  loadComponent: () => import('./features/auth/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
+      { path: 'dashboard', canActivate: [AuthRoleGuard],  loadComponent: () => import('./features/auth/dashboard/dashboard.component').then(m => m.DashboardComponent), 
+        children: [
+          { path: '', pathMatch: 'full', loadComponent: () => import('./features/auth/dashboard/content-area/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
+          { path: 'blogs', loadComponent: () => import('./features/auth/dashboard/content-area/admin/blogs/admin-blogs.component').then(m => m.AdminBlogsComponent) },
+          { path: 'services', loadComponent: () => import('./features/auth/dashboard/content-area/admin/services/admin-services.component').then(m => m.AdminServicesComponent) },
+          { path: 'coupons', loadComponent: () => import('./features/auth/dashboard/content-area/admin/coupons/admin-coupons.component').then(m => m.AdminCouponsComponent) },
+          { path: 'products', loadComponent: () => import('./features/auth/dashboard/content-area/admin/products/admin-products.component').then(m => m.AdminProductsComponent) },
+          { path: 'doctors', loadComponent: () => import('./features/auth/dashboard/content-area/admin/doctors/admin-doctors.component').then(m => m.AdminDoctorsComponent) },
+          { path: 'clinics', loadComponent: () => import('./features/auth/dashboard/content-area/admin/clinics/admin-clinics.component').then(m => m.AdminClinicsComponent) },
+          { path: 'orders', loadComponent: () => import('./features/auth/dashboard/content-area/admin/orders/admin-orders.component').then(m => m.AdminOrdersComponent) },
+          { path: 'users', loadComponent: () => import('./features/auth/dashboard/content-area/admin/users/admin-users.component').then(m => m.AdminUsersComponent) },
+
+      ]},
   ]},
   
   // Cart routes
