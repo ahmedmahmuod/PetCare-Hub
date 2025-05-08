@@ -6,7 +6,7 @@
       <h2 class="text-xl text-brand-color font-semibold mb-4">{{'Pages.Shop.Categories.Title' | translate}}</h2>
       <div class="">
         <div class="space-y-3">
-          <label *ngFor="let cat of categories" class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors">
+          <label *ngFor="let cat of categories()" class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors">
             <div class="relative">
               <input type="checkbox" [checked]="selectedCategories.includes(cat)" (change)="toggleCategory(cat)" class="peer hidden">
               <div class="w-5 h-5 border-2 border-gray-300 rounded peer-checked:bg-brand-color transition-colors">
@@ -34,7 +34,7 @@
       </div>
 
     <!-- Skeleton when loading -->
-    @if (isLoading) {
+    @if (isLoading()) {
       <app-products-page-skelton />
     } @else {
       <!-- No Products Found -->

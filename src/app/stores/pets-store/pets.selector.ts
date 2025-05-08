@@ -17,3 +17,8 @@ export const selectPetsError = createSelector(
   selectPetsState,
   (state) => state.error
 );
+
+export const selectTotalPets = createSelector(
+  selectPets,
+  (pets) => pets.length
+);

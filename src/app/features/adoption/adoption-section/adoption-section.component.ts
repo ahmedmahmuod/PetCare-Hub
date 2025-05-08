@@ -267,7 +267,7 @@ export class AdoptionSectionComponent implements OnInit {
         this.loading.set(isLoading);
       });
     } else {
-      this.petService.getPetsType(this.type).subscribe((res) => {
+      this.petService.loadPetsByType(this.type).subscribe((res) => {
         this.items$ = of(res.data);
         this.loading.set(false);
       })

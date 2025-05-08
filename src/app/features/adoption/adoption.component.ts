@@ -44,7 +44,7 @@ export class AdoptionComponent implements OnInit {
   isOutletActive = false;
 
   ngOnInit(): void {
-    this.petService.getPetsType('successfullyAdaped').subscribe((res) => {      
+    this.petService.loadPetsByType('successfullyAdaped').subscribe((res) => {      
       this.pets$ = of(res.data);
     })  
   }

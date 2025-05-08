@@ -1,17 +1,35 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal, computed } from '@angular/core';
 import { environment } from '../../../../environments/environment.prod';
+import { PetsApiResponse, Pet } from '../../models/pets/pet.model';
 import { Observable } from 'rxjs';
-import { PetsApiResponse } from '../../models/pets/pet.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PetsService {
-    private http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-    // Get pets by type
-    getPetsType(type: string): Observable<PetsApiResponse> {
-      return this.http.get<PetsApiResponse>(environment.apiUrl + `Pets/${type}`);
-    }
+  private petsSignal = signal<Pet[]>([]);
+  public totalPets = computed(() => this.petsSignal().length);
+
+  loadPetsByType(type: string): Observable<PetsApiResponse> {
+    const obs$ = this.http.get<PetsApiResponse>(environment.apiUrl + `Pets/${type}`);
+    obs$.subscribe({
+      next: (res) => this.petsSignal.set(res.data),
+      error: (err) => console.error(err),
+    });
+    return obs$;
+  }
+
+  loadAllPets(): void {
+    this.http.get<PetsApiResponse>(environment.apiUrl + `Pets/getallpets`).subscribe({
+      next: (res) => this.petsSignal.set(res.data),
+      error: (err) => console.error('Failed to load all pets:', err),
+    });
+  }
+
+  getPetsSignal() {
+    return this.petsSignal.asReadonly();
+  }
 }

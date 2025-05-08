@@ -15,7 +15,7 @@ export class PetsEffects {
     this.actions$.pipe(
       ofType(PetsActions.loadPets),
       mergeMap(({ petType }) =>
-        this.petsServices.getPetsType(petType).pipe(
+        this.petsServices.loadPetsByType(petType).pipe(
           map((response) => {
             const pets = response.data; 
             return PetsActions.loadPetsSuccess({ pets });

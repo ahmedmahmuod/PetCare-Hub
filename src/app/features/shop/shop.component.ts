@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../core/models/products/product.model';
@@ -27,10 +27,12 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ProductListComponent implements OnInit {
   private productsService = inject(ProductsService);
 
-  isLoading: boolean = false;
-
+  
   // Data & reactive state
-  products: Product[] = [];
+  products = signal<Product[]>([]);
+  categories = signal<string[]>([]);
+  isLoading = signal(true);
+
   filteredProducts$ = new BehaviorSubject<Product[]>([]);
   paginatedProducts$ = this.filteredProducts$.pipe(map(products => {
     const start = (this.currentPage() - 1) * this.pageSize;
@@ -44,24 +46,25 @@ export class ProductListComponent implements OnInit {
 
   // Filter state
   searchTerm = '';
-  categories: string[] = [];
   selectedCategories: string[] = [];
 
+  productsEffect = effect(() => {
+    const prods = this.productsService.getProductsSignal()();
+    if (prods.length > 0) {
+      this.products.set(prods);
+      this.categories.set([...new Set(prods.map(p => p.category))]);
+      this.isLoading.set(false);
+
+      this.filterProducts();
+    }
+  }, { allowSignalWrites: true });
+
   ngOnInit() {
-    this.isLoading = true;
-    this.productsService.getProducts().subscribe({
-      next: (products) => {
-        this.products = products;
-        this.categories = [...new Set(products.map(p => p.category))];
-        this.filterProducts();
-        this.isLoading = false;
-      },
-      error: (err) => console.error('Error fetching products:', err)
-    });
+
   }
 
   filterProducts() {
-    const filtered = this.products.filter(p => {
+    const filtered = this.products().filter(p => {
       const matchSearch = p.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
                           p.desc.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchCat = this.selectedCategories.length === 0 || this.selectedCategories.includes(p.category);

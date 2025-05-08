@@ -121,7 +121,7 @@ import { UserData } from '../../../../core/models/user/details/user-details.mode
       font-size: 12px;
       color: var(--brand-seconed-color);
       line-height: 1.2;
-      font-wight: bold;
+      font-weight: bold;
     }
   `]
 })

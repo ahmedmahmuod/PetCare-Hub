@@ -1,40 +1,48 @@
 <div class="cards-row">
     <div class="card !bg-red-500">
-      <div class="card-title">Total Sales</div>
-      <div class="card-value">L.E 126,560</div>
+      <div class="card-title">
+        <span>Total Sales</span>
+        <i class="fa-solid fa-dollar-sign"></i>
+      </div>
+      <div class="card-value">{{(totalRevenue() || 0) | number}} L.E</div>
     </div>
     <div class="card !bg-blue-500">
-      <div class="card-title">Total Products</div>
-      <div class="card-value">149 item</div>
+      <div class="card-title">
+        <span>Total Products</span>
+        <i class="fa-solid fa-basket-shopping"></i>
+      </div>
+      <div class="card-value">{{(totalProducts() || 0) | number}} item</div>
     </div>
     <div class="card !bg-green-500">
-      <div class="card-title">Total Pets</div>
-      <div class="card-value">252 Baby's</div>
+      <div class="card-title">
+        <span>Total Pets</span>
+        <i class="fa-solid fa-dog"></i>
+      </div>
+      <div class="card-value">{{(totalPets() || 0) | number}} Baby's</div>
     </div>
     <div class="card !bg-orange-500">
-      <div class="card-title">Total Orders</div>
-      <div class="card-value">48 order</div>
+      <div class="card-title">
+        <span>Total Orders</span>
+        <i class="fa-regular fa-money-bill-1"></i>
+      </div>
+      <div class="card-value">{{(totalOrders() || 0) | number}} order</div>
     </div>
   </div>
   <div class="main-row">
     <div class="main-card">
-      <div class="main-card-header">
+      <div class="main-card-header mx-5 mt-5">
         <span class="tab active">Orders</span>
       </div>
-      <div class="main-card-body">
-        <!-- <div class="fake-chart"></div> -->
-      </div>
+      <div class="w-full p-0 md:p-14">
+        <app-chart [data]="dataOrder" [options]="optionsOrder" />
+      </div>      
     </div>
     <div class="side-list">
-      <div class="side-list-title">Store Sales Ranking</div>
-      <ul>
-        <li><span class="rank">1</span> Store 0 <span class="amount">323,234</span></li>
-        <li><span class="rank">2</span> Store 1 <span class="amount">323,234</span></li>
-        <li><span class="rank">3</span> Store 2 <span class="amount">323,234</span></li>
-        <li><span class="rank">4</span> Store 3 <span class="amount">323,234</span></li>
-        <li><span class="rank">5</span> Store 4 <span class="amount">323,234</span></li>
-        <li><span class="rank">6</span> Store 5 <span class="amount">323,234</span></li>
-        <li><span class="rank">7</span> Store 6 <span class="amount">323,234</span></li>
-      </ul>
+      <div class="main-card-header">
+        <span class="tab active">Sales</span>
+      </div>      
+      <div class="w-full ">
+        <app-chart [data]="data" [options]="options"  />
+      </div>      
     </div>
   </div>
