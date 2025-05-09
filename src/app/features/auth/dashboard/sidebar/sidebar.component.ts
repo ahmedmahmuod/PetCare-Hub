@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
          <nav *ngIf="role === 'admin'" class="sidebar-menu" aria-label="Main menu">
            <ul>
              <li [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/admin/dashboard/" tabindex="0"><i class="fa-solid fa-gauge"></i>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Title' | translate}}</li>
-             <li routerLinkActive="active" routerLink="/admin/dashboard/blogs" tabindex="0"><i class="fa-solid fa-pen-to-square"></i>Blogs</li>
+             <li routerLinkActive="active" routerLink="/admin/dashboard/blogs" tabindex="0"><i class="fa-solid fa-pen-to-square"></i>{{'Dashboard.Admin.Sidebar_Links.Blogs.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/services" tabindex="0"><i class="fa-solid fa-paw"></i>Services</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/coupons" tabindex="0"><i class="fa-solid fa-tag"></i>Coupons</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/products" tabindex="0"><i class="fa-solid fa-basket-shopping"></i>Products</li>
@@ -44,7 +44,6 @@ import { TranslateModule } from '@ngx-translate/core';
            <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>{{'Dashboard.Main.Links.View_Site' | translate}}</li>
          </nav>
        </ng-container>
-
 
     </aside>
   `,

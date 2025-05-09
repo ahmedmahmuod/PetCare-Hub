@@ -1,24 +1,24 @@
 <section class="flex flex-col gap-y-5 mt-10 relative">
-    <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add blog'"/>
+    <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Btns.Add_Blog' | translate)"/>
     <app-data-table [hasActions]="false" [hasImage]="true" [data]="blogs$ | async" [columns]="columns"/>
 
-  <p-dialog header="Add New Blog" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }"[breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+  <p-dialog [header]="('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Title' | translate)" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }"[breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
     <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddBlog()" novalidate>
       <div class="card flex flex-col gap-6">
         <!-- Description -->
         <p-floatLabel>
           <input name="title" id="description" pInputText [(ngModel)]="form.description" required #titleRef="ngModel"/>
-          <label for="description">Description</label>
+          <label for="description">{{'Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Form.Desc.Placeholder' | translate}}</label>
         </p-floatLabel>
 
         <!-- Blog Link -->
         <p-floatLabel>
           <input name="link" id="blog-link" pInputText [(ngModel)]="form.link" required #linkRef="ngModel"/>
-          <label for="blog-link">Blog Link</label>
+          <label for="blog-link">{{'Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Form.Link.Placeholder' | translate}}</label>
         </p-floatLabel>
 
         <!-- File Upload -->
-        <p-fileUpload styleClass="custom-upload" #fileUploader name="img" [customUpload]="true" mode="basic" accept="image/*" chooseLabel="Blog Image" chooseIcon="pi pi-image" (uploadHandler)="handleImageUpload($event)" [auto]="true"/>
+        <p-fileUpload styleClass="custom-upload" #fileUploader name="img" [customUpload]="true" mode="basic" accept="image/*" [chooseLabel]="('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Form.Blog_Img' | translate)" chooseIcon="pi pi-image" (uploadHandler)="handleImageUpload($event)" [auto]="true"/>
 
         <!-- Preview + Remove -->
         <div *ngIf="form.imgPreview" class="relative w-32 h-32 mt-4">
@@ -31,7 +31,7 @@
 
       <!-- Submit Button -->
       <div class="flex justify-end gap-3 pt-4">
-        <p-button label="Add" class="custom-add-button" icon="pi pi-check" [disabled]="formRef.invalid || !form.plogImage" type="submit"></p-button>
+        <p-button [label]="('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Btns.Add' | translate)" class="custom-add-button" icon="pi pi-check" [disabled]="formRef.invalid || !form.plogImage" type="submit"></p-button>
     </div>
   </form>
   </p-dialog>

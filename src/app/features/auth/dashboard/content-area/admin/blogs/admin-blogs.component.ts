@@ -14,6 +14,7 @@ import * as BlogsActions from '../../../../../../stores/blogs-store/blogs.action
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
 import { BlogsService } from '../../../../../../core/services/blogs/blogs.service';
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 // Interface for table columns
 export interface Column {
@@ -25,7 +26,7 @@ export interface Column {
 @Component({
   selector: 'app-admin-blogs',
   standalone: true,
-  imports: [CommonModule, ImportsModule, DataTableComponent, CustomButtonComponent, SectionSpinnerComponent],
+  imports: [CommonModule, ImportsModule, DataTableComponent, CustomButtonComponent, SectionSpinnerComponent, TranslateModule],
   templateUrl: './admin-blogs.component.html',
   styleUrl: './admin-blogs.component.css',
 })
@@ -34,14 +35,15 @@ export class AdminBlogsComponent {
   private store = inject(Store);
   private blogsService = inject(BlogsService);
   private toastService = inject(ToastService);
+  private translate = inject(TranslateService);
 
   // Blog list observable from the store
   blogs$ = this.store.select(selectBlogs);
 
   // Data table column definitions
   columns: Column[] = [
-    { field: 'description', header: 'Blog Description', type: 'text' },
-    { field: 'plogImage', header: 'Blog Image', type: 'image' }
+    { field: 'description', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Blogs.Data_Table.Rows.Desc'), type: 'text' },
+    { field: 'plogImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Blogs.Data_Table.Rows.Img'), type: 'image' }
   ];
 
   // Dialog visibility flag
@@ -112,7 +114,7 @@ export class AdminBlogsComponent {
     this.blogsService.createLog(formData).subscribe({
       next: (res) => {
         // Optional: success toast
-        this.toastService.success('Good!', 'Blog added successfully');
+        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Toasts.Successful.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Toasts.Successful.Message'));
 
         // Refresh blog list
         this.store.dispatch(BlogsActions.loadBlogs());
@@ -124,8 +126,7 @@ export class AdminBlogsComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Failed to add blog. Please try again.');
-        console.error(err);
+        this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Toasts.Errors.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Blogs.Add_New_Blog.Toasts.Errors.Message'));
       }
     });
   }

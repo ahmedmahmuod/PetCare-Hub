@@ -920,7 +920,46 @@
               "aug": "August"
           }
         }
+      },
+
+      "Blogs": {
+        "Title": "Blogs",
+        "Data_Table": {
+          "Rows": {
+            "Desc": "Blog Description",
+            "Img": "Blog Image"
+          }
+        },
+
+        "Add_New_Blog": {
+          "Title": "Add new blog",
+          "Btns": {
+            "Add_Blog": "Add blog",
+            "Add": "Add"
+          },
+          "Form": {
+            "Desc": {
+              "Placeholder": "Description"
+            },
+            "Link": {
+              "Placeholder": "Blog Link"
+            },
+            "Blog_Img": "Blog Image"
+          },
+
+          "Toasts": {
+            "Successful": {
+              "Title": "Good!",
+              "Message": "Blog added successfully"
+            },
+            "Errors": {
+              "Title": "Error!",
+              "Message": "Failed to add blog. Please try again."
+            }
+          }
+        }
       }
+      
     }
   }
 }
