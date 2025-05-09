@@ -1,0 +1,132 @@
+:host ::ng-deep .p-datatable .p-datatable-header {
+  background: var(--seconed-color);
+  border: none;
+  border-bottom: 2px solid var(--third-color);
+  padding: 1.5rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background: var(--seconed-color);
+  color: var(--brand-color);
+  font-weight: 700;
+  padding: 1.2rem;
+  border: none;
+  border-bottom: 2px solid var(--third-color);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 1.2rem;
+  border: none;
+  border-bottom: 1px solid var(--brand-color);
+  color: var(--brand-color);
+  background-color: var(--third-color);
+}
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td > img {
+  width: 70px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+:host ::ng-deep .p-datatable .p-paginator {
+  background: var(--seconed-color);
+  border: none;
+  border-top: 2px solid var(--third-color);
+  padding: 1rem;
+}
+
+:host ::ng-deep .p-datatable .p-paginator .p-paginator-pages .p-paginator-page {
+  border-radius: 4px;
+  margin: 0 2px;
+  background: var(--third-color);
+  color: var(--fourth-color);
+}
+
+:host
+  ::ng-deep
+  .p-datatable
+  .p-paginator
+  .p-paginator-pages
+  .p-paginator-page.p-highlight {
+  background: var(--brand-color);
+  color: var(--seconed-color);
+  border: none;
+}
+
+:host
+  ::ng-deep
+  .p-datatable
+  .p-paginator
+  .p-paginator-pages
+  .p-paginator-page:hover:not(.p-highlight) {
+  background: var(--third-color);
+}
+
+:host ::ng-deep .p-datatable .p-paginator .p-dropdown {
+  border-radius: 4px;
+  background: var(--brand-seconed-color);
+}
+
+:host ::ng-deep .p-datatable .p-paginator .p-dropdown .ng-star-inserted {
+  color: var(--brand-color) !important;
+}
+
+:host ::ng-deep .p-button.p-button-text {
+  color: var(--brand-color);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-button.p-button-text:hover {
+  color: var(--brand-seconed-color);
+}
+
+:host ::ng-deep .p-button.p-button-text:disabled {
+  color: var(--fourth-color);
+}
+
+.card {
+  box-shadow: 0 4px 12px rgba(21, 91, 132, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(21, 91, 132, 0.12);
+}
+
+.mb-3 {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+img.rounded {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(21, 91, 132, 0.1);
+  transition: all 0.3s ease;
+}
+
+img.rounded:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(21, 91, 132, 0.15);
+}
+
+.actions i {
+  font-size: 25px;
+  cursor: pointer;
+  padding: 0px 10px;
+}
+
+.actions .fa-trash-can {
+  color: red;
+}
+
+.actions .fa-pen {
+  color: var(--brand-color);
+}

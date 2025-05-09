@@ -1,11 +1,10 @@
 import { selectBlogs, selectBlogsLoading } from './../../../stores/blogs-store/blogs.selector';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, of, take, tap } from 'rxjs';
+import { take } from 'rxjs';
 import * as BlogsActions from '../../../stores/blogs-store/blogs.actions';
 import { SkeletonCardComponent } from "../../../shared/components/skeletons/card-services/skelton-services-card.component";
-import { BlogsModel } from '../../../core/models/blogs/blogs.model';
 
 @Component({
     selector: 'app-blog-cards',

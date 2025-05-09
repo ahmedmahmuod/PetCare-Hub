@@ -12,6 +12,17 @@ export class BlogsService {
 
   // Get all blogs
   getBlogs(): Observable<BlogsModel[]> {
-    return this.http.get<BlogsModel[]>(environment.apiUrl + 'Plogs/getallplogs').pipe(map((res: any) => res.data))
+    return this.http.get<BlogsModel[]>(environment.apiUrl + 'Plogs/getallplogs').pipe(
+      map((res: any) =>
+        res.data.filter((blog: any) => !!blog.description && !!blog.plogImage)
+      )
+    );
   }
+
+  // Create log
+  createLog(blogData: FormData): Observable<any> {
+    return this.http.post<any>(environment.apiUrl + 'Plogs/createplog', blogData);
+  }
+
+  
 }

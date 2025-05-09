@@ -1,0 +1,12 @@
+:host ::ng-deep input {
+  font-size: 1rem;
+  padding: 0.55rem;
+  border: 1px solid var(--brand-color);
+  border-radius: 4px;
+  background: transparent;
+  width: 100%;
+}
+
+:host ::ng-deep .custom-upload {
+  background: var(--brand-seconed-color) !important;
+}
