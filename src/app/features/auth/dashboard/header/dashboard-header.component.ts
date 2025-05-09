@@ -1,12 +1,11 @@
 import { Component, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../../core/services/user/users.service';
-import { UserData } from '../../../../core/models/user/details/user-details.model';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-dashboard-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   template: `
     <header class="dashboard-header">
       <div class="header-left">
@@ -21,7 +20,7 @@ import { UserData } from '../../../../core/models/user/details/user-details.mode
             </div>
             <div class="user-details">
               <span class="user-name">{{data.name}}</span>
-              <span class="user-role">{{data.role === 'admin' ? 'Administrator' : 'User'}}</span>
+              <span class="user-role">{{data.role === 'admin' ? ('Dashboard.Main.Header.User_Role.Admin' | translate) : ('Dashboard.Main.Header.User_Role.User' | translate)}}</span>
             </div>
           </div>
         </ng-container>

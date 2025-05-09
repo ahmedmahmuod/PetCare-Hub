@@ -2,11 +2,12 @@ import { Component, Input, Output, EventEmitter, HostBinding, inject } from '@an
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TokenService } from '../../../../shared/services/token-managment/token-management.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, TranslateModule],
   template: `
     <ng-container *ngIf="isMobile && opened">
       <div class="sidebar-backdrop" (click)="closeSidebar()" tabindex="-1" aria-label="Close sidebar"></div>
@@ -20,7 +21,7 @@ import { TokenService } from '../../../../shared/services/token-managment/token-
          <!-- Admin Dashboards Link -->
          <nav *ngIf="role === 'admin'" class="sidebar-menu" aria-label="Main menu">
            <ul>
-             <li [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/admin/dashboard/" tabindex="0"><i class="fa-solid fa-gauge"></i>Dashboard</li>
+             <li [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/admin/dashboard/" tabindex="0"><i class="fa-solid fa-gauge"></i>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/blogs" tabindex="0"><i class="fa-solid fa-pen-to-square"></i>Blogs</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/services" tabindex="0"><i class="fa-solid fa-paw"></i>Services</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/coupons" tabindex="0"><i class="fa-solid fa-tag"></i>Coupons</li>
@@ -30,7 +31,7 @@ import { TokenService } from '../../../../shared/services/token-managment/token-
              <li routerLinkActive="active" routerLink="/admin/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>Orders</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/users" tabindex="0"><i class="fa-solid fa-users"></i>Users</li>
            </ul>
-           <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>View Site</li>
+           <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>{{'Dashboard.Main.Links.View_Site' | translate}}</li>
          </nav>
 
          <!-- User Dashboards Link -->
@@ -40,7 +41,7 @@ import { TokenService } from '../../../../shared/services/token-managment/token-
              <li routerLinkActive="active" routerLink="/user/dashboard/pets" tabindex="0"><i class="fa-solid fa-dog"></i>My Pets</li>
              <li routerLinkActive="active" routerLink="/user/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>My Orders</li>
            </ul>
-           <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>View Site</li>
+           <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>{{'Dashboard.Main.Links.View_Site' | translate}}</li>
          </nav>
        </ng-container>
 

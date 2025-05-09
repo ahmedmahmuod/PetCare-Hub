@@ -836,6 +836,68 @@
       "Help": "هل تحتاج إلى مساعدة؟",
       "Contact_Support": "تواصل مع الدعم"
     }
-    
+  },
+
+    "Dashboard": {
+    "Main": {
+      "Header": {
+        "User_Role": {
+          "Admin": "مسؤول",
+          "User": "مستخدم"
+        }
+      },
+
+      "Links": {
+        "View_Site": "عرض الموقع"
+      }
+    },
+
+    "Admin": {
+      "Sidebar_Links": {
+        "Dashboard": {
+          "Title": "لوحة التحكم",
+          "Cards_Analyses": {
+            "Total_Sales": {
+              "Title": "إجمالي المبيعات",
+              "Currncy": "ج.م"
+            },
+
+            "Total_Products": {
+              "Title": "إجمالي المنتجات",
+              "Item": "عنصر"
+            },
+            "Total_Pets": {
+              "Title": "إجمالي الحيوانات",
+              "Item": "حيوان أليف"
+            },
+            "Total_Orders": {
+              "Title": "إجمالي الطلبات",
+              "Item": "طلب"
+            }
+          },
+
+          "Charts": {
+            "Orders_Chart": {
+              "Title": "الطلبات"
+            },
+
+            "Sales_Chart": {
+              "Title": "المبيعات"
+            },
+
+            "Months": {
+              "jan": "يناير",
+              "feb": "فبراير",
+              "mar": "مارس",
+              "apr": "أبريل",
+              "may": "مايو",
+              "jun": "يونيو",
+              "jul": "يوليو",
+              "aug": "أغسطس"
+            }
+          }
+        }
+      }
+    }
   }
 }

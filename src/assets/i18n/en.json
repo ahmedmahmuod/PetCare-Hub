@@ -859,6 +859,69 @@
       "Help": "Need assistance?",
       "Contact_Support": "Contact Support"
     }
-    
+  },
+
+  "Dashboard": {
+
+    "Main": {
+      "Header": {
+        "User_Role": {
+          "Admin": "Administratior",
+          "User": "User"
+        }
+      },
+
+      "Links": {
+        "View_Site": "View Site"
+      }
+    },
+
+    "Admin": {
+      "Sidebar_Links": {
+        "Dashboard": {
+          "Title": "Dashboard",
+          "Cards_Analyses": {
+            "Total_Sales": {
+              "Title": "Total Sales",
+              "Currncy": "L.E"
+            },
+
+            "Total_Products": {
+              "Title": "Total Products",
+              "Item": "Item"
+            },
+            "Total_Pets": {
+              "Title": "Total Pets",
+              "Item": "Pet"
+            },
+            "Total_Orders": {
+              "Title": "Total Orders",
+              "Item": "Order"
+            }
+          },
+
+          "Charts": {
+            "Orders_Chart": {
+              "Title": "Orders"
+            },
+
+            "Sales_Chart": {
+              "Title": "Sales"
+            },
+
+            "Months": {
+              "jan": "January",
+              "feb": "February",
+              "mar": "March",
+              "apr": "April",
+              "may": "May",
+              "jun": "June",
+              "jul": "July",
+              "aug": "August"
+          }
+        }
+      }
+    }
   }
+}
 }

@@ -1,37 +1,37 @@
 <div class="cards-row">
     <div class="card !bg-red-500">
       <div class="card-title">
-        <span>Total Sales</span>
+        <span>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Sales.Title' | translate}}</span>
         <i class="fa-solid fa-dollar-sign"></i>
       </div>
-      <div class="card-value">{{(totalRevenue() || 0) | number}} L.E</div>
+      <div class="card-value">{{(totalRevenue() || 0) | number}} {{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Sales.Currncy' | translate}}</div>
     </div>
     <div class="card !bg-blue-500">
       <div class="card-title">
-        <span>Total Products</span>
+        <span>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Products.Title' | translate}}</span>
         <i class="fa-solid fa-basket-shopping"></i>
       </div>
-      <div class="card-value">{{(totalProducts() || 0) | number}} item</div>
+      <div class="card-value">{{(totalProducts() || 0) | number}} {{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Products.Item' | translate}}</div>
     </div>
     <div class="card !bg-green-500">
       <div class="card-title">
-        <span>Total Pets</span>
+        <span>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Pets.Title' | translate}}</span>
         <i class="fa-solid fa-dog"></i>
       </div>
-      <div class="card-value">{{(totalPets() || 0) | number}} Baby's</div>
+      <div class="card-value">{{(totalPets() || 0) | number}} {{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Pets.Item' | translate}}</div>
     </div>
     <div class="card !bg-orange-500">
       <div class="card-title">
-        <span>Total Orders</span>
+        <span>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Orders.Title' | translate}}</span>
         <i class="fa-regular fa-money-bill-1"></i>
       </div>
-      <div class="card-value">{{(totalOrders() || 0) | number}} order</div>
+      <div class="card-value">{{(totalOrders() || 0) | number}} {{'Dashboard.Admin.Sidebar_Links.Dashboard.Cards_Analyses.Total_Orders.Item' | translate}}</div>
     </div>
   </div>
   <div class="main-row">
     <div class="main-card">
       <div class="main-card-header mx-5 mt-5">
-        <span class="tab active">Orders</span>
+        <span class="tab active">{{'Dashboard.Admin.Sidebar_Links.Dashboard.Charts.Orders_Chart.Title' | translate}}</span>
       </div>
       <div class="w-full p-0 md:p-14">
         <app-chart [data]="dataOrder" [options]="optionsOrder" />
@@ -39,7 +39,7 @@
     </div>
     <div class="side-list">
       <div class="main-card-header">
-        <span class="tab active">Sales</span>
+        <span class="tab active">{{'Dashboard.Admin.Sidebar_Links.Dashboard.Charts.Sales_Chart.Title' | translate}}</span>
       </div>      
       <div class="w-full ">
         <app-chart [data]="data" [options]="options"  />
