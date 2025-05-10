@@ -1,1 +1,40 @@
-<p>admin-coupons works!</p>
+<section class="flex flex-col gap-y-5 mt-10 relative">
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add Coupon'"/>
+  <app-data-table [hasActions]="false" [hasImage]="true" [data]="coupons()" [columns]="columns"/>
+
+   <p-dialog [header]="'Add new coupon'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }"[breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+        <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddCoupon()" novalidate>
+            <div class="card flex flex-col gap-16">
+                <!-- Coupon Name -->
+                <p-floatLabel>
+                    <input name="name" id="couponName" pInputText [(ngModel)]="form.name" required #nameRef="ngModel" />
+                    <label for="couponName">Coupon Name</label>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error">
+                        Coupon name is required.
+                    </small>
+                </p-floatLabel>
+
+                <!-- Coupon Discount -->
+                <p-floatLabel>
+                    <p-dropdown id="couponDiscount" name="discount" [(ngModel)]="form.discount" [options]="discounts" [showClear]="true" required #discountRef="ngModel"/>
+                    <label for="couponDiscount">Coupon Discount</label>
+                    <small *ngIf="discountRef.invalid && discountRef.touched" class="p-error">
+                        Coupon discount is required.
+                    </small>
+                </p-floatLabel>
+                
+                <!-- Coupon Expire -->
+                <p-floatLabel>
+                    <p-calendar [placeholder]="'Coupon Expire'" [name]="'CouponExpire'" [(ngModel)]="form.expire" [showIcon]="true" [showOnFocus]="false" />
+                </p-floatLabel>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end gap-3 pt-4">
+                <p-button [label]="'Add Coupon'" class="custom-add-button" icon="pi pi-check" type="submit" [disabled]="formRef.invalid"></p-button>
+            </div>
+        </form>
+  </p-dialog>
+
+  <app-section-spinner *ngIf="isLoading"/>
+</section>

@@ -20,7 +20,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export interface Column {
   field: string;
   header: string;
-  type?: 'text' | 'image';
+  type?: 'text' | 'image' | 'percent' | 'date';
 }
 
 @Component({

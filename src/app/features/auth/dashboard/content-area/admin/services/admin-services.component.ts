@@ -25,10 +25,8 @@ export class AdminServicesComponent implements OnInit {
   private translate = inject(TranslateService);
   private toastService = inject(ToastService);
 
-  constructor(private fb: FormBuilder, private messageService: MessageService) {
-
-  }
-
+  constructor(private fb: FormBuilder, private messageService: MessageService) {}
+  
   // Signals
   services = signal<ServiceModel[]>([]);
   showDialog = false;

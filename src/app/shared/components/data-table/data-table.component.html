@@ -39,11 +39,17 @@
         <tr>
           <td *ngFor="let col of columns">
             <ng-container [ngSwitch]="col.type">
+              
               <img *ngSwitchCase="'image'" [src]="row[col.field]" [alt]="col.header" class="w-12 h-12 object-cover rounded" />
-      
+
+              <span *ngSwitchCase="'percent'">{{ row[col.field] + '%' }}</span>
+
+              <span *ngSwitchCase="'date'">{{ row[col.field] | date }}</span>
+
               <span *ngSwitchDefault>
                 {{ row[col.field] }}
               </span>
+
             </ng-container>
           </td>
           <td *ngIf="hasActions" class="actions">
