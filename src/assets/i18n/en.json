@@ -1039,6 +1039,56 @@
             "Message": "Service created successfully!"
           }
         }
+      },
+
+      "Coupons": {
+        "Title": "Coupons",
+          "Data_Table": {
+            "Rows": {
+              "Coupon_Name": "Coupon Name",
+              "Coupon_Discount": "Coupon Discount",
+              "Coupon_Expire": "Coupon Expire",
+              "Coupon_Created": "Coupon Created"
+            }
+        },
+
+        "Form": {
+          "Name": {
+            "Placeholder": "Coupon Name",
+            "Required": " Coupon name is required."
+          },
+          "Discount": {
+            "Placeholder": "Coupon Discount",
+            "Required": " Coupon Discount is required."
+          },
+          "Expire": {
+            "Placeholder": "Coupon Expire",
+            "Required": " Coupon Expire is required."
+          },
+
+          "Btns": {
+            "Add": "Add",
+            "Add_New": "Add coupon"
+          }
+        },
+
+        "Toasts": {
+          "Errors": {
+            "Form": {
+              "Details": "All fields are required."
+            },
+
+            "Error_Res": {
+              "Title": "Error",
+              "Message": "Failed to create the coupon. Please try again later."
+            }
+          },
+
+          "Success_Res": {
+            "Title": "Successfuly",
+            "Message": "Coupon created successfully."
+          }
+        }
       }
       
     }

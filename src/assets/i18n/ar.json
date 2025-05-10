@@ -1004,8 +1004,57 @@
               "Message": "تم إنشاء الخدمة بنجاح!"
             }
           }
-        }
+        },
 
+        "Coupons": {
+          "Title": "كوبونات الخصم",
+          "Data_Table": {
+            "Rows": {
+              "Coupon_Name": "اسم الكوبون",
+              "Coupon_Discount": "نسبة الخصم",
+              "Coupon_Expire": "تاريخ الانتهاء",
+              "Coupon_Created": "تاريخ الإنشاء"
+            }
+          },
+
+          "Form": {
+            "Name": {
+              "Placeholder": "اسم الكوبون",
+              "Required": "اسم الكوبون مطلوب."
+            },
+            "Discount": {
+              "Placeholder": "نسبة الخصم",
+              "Required": "نسبة الخصم مطلوبة."
+            },
+            "Expire": {
+              "Placeholder": "تاريخ الانتهاء",
+              "Required": "تاريخ الانتهاء مطلوب."
+            },
+
+            "Btns": {
+              "Add": "إضافة",
+              "Add_New": "إضافة كوبون جديد"
+            }
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Form": {
+                "Details": "جميع الحقول مطلوبة."
+              },
+
+              "Error_Res": {
+                "Title": "خطأ",
+                "Message": "فشل في إنشاء الكوبون. يرجى المحاولة مرة أخرى لاحقًا."
+              }
+            },
+
+            "Success_Res": {
+              "Title": "تم بنجاح",
+              "Message": "تم إنشاء الكوبون بنجاح."
+            }
+          }
+        }
 
       }
     }

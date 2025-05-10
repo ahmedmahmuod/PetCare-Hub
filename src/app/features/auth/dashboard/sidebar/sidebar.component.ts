@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
              <li [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/admin/dashboard/" tabindex="0"><i class="fa-solid fa-gauge"></i>{{'Dashboard.Admin.Sidebar_Links.Dashboard.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/blogs" tabindex="0"><i class="fa-solid fa-pen-to-square"></i>{{'Dashboard.Admin.Sidebar_Links.Blogs.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/services" tabindex="0"><i class="fa-solid fa-paw"></i>{{'Dashboard.Admin.Sidebar_Links.Services.Title' | translate}}</li>
-             <li routerLinkActive="active" routerLink="/admin/dashboard/coupons" tabindex="0"><i class="fa-solid fa-tag"></i>Coupons</li>
+             <li routerLinkActive="active" routerLink="/admin/dashboard/coupons" tabindex="0"><i class="fa-solid fa-tag"></i>{{'Dashboard.Admin.Sidebar_Links.Coupons.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/products" tabindex="0"><i class="fa-solid fa-basket-shopping"></i>Products</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/doctors" tabindex="0"><i class="fa-solid fa-user-doctor"></i>Doctors</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/clinics" tabindex="0"><i class="fa-solid fa-briefcase-medical"></i>Clinics</li>

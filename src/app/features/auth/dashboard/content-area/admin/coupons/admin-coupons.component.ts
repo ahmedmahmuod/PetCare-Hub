@@ -38,10 +38,10 @@ export class AdminCouponsComponent implements OnInit {
   
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'name', header: 'Coupon Name', type: 'text' },
-    { field: 'discount', header: 'Coupon Discount', type: 'percent' },
-    { field: 'expire', header: 'Coupon Expire', type: 'date' },
-    { field: 'createdAt', header: 'Coupon Created', type: 'date' },
+    { field: 'name', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Data_Table.Rows.Coupon_Name'), type: 'text' },
+    { field: 'discount', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Data_Table.Rows.Coupon_Discount'), type: 'percent' },
+    { field: 'expire', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Data_Table.Rows.Coupon_Expire'), type: 'date' },
+    { field: 'createdAt', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Data_Table.Rows.Coupon_Created'), type: 'date' },
   ];
 
   discounts = Array.from({ length: 20 }, (_, i) => (i + 1) * 5);
@@ -53,7 +53,7 @@ export class AdminCouponsComponent implements OnInit {
 
  onAddCoupon() {
   if (!this.form.name || !this.form.discount || !this.form.expire) {
-    this.toastService.error('All fields are required.');
+    this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Toasts.Errors.Form.Details'));
     return;
   }
 
@@ -72,9 +72,8 @@ export class AdminCouponsComponent implements OnInit {
 
   this.couponService.createCoupon(payload).subscribe({
     next: (response) => {
-      console.log('Coupon created:', response);
       this.couponService.getAllCoupons();
-      this.toastService.success('Success', 'Coupon created successfully.');
+      this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Toasts.Success_Res.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Toasts.Success_Res.Message'));
       this.isLoading = false;
 
       // Reset form
@@ -85,8 +84,7 @@ export class AdminCouponsComponent implements OnInit {
       };
     },
     error: (error) => {
-      console.error('Error creating coupon:', error);
-      this.toastService.error('Error', 'Failed to create the coupon. Please try again later.');
+      this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Toasts.Errors.Error_Res.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Coupons.Toasts.Errors.Error_Res.Message'));
       this.isLoading = false;
     }
   });
