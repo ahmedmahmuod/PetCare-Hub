@@ -1,151 +1,176 @@
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { SkeletonModule } from 'primeng/skeleton';
-import { HeroSectionComponent } from '../../../shared/components/hero-section/hero-section.component';
-import { FormsModule } from '@angular/forms';
-import { map, Observable, of, take, tap } from 'rxjs';
-import { ServiceModel } from '../../../core/models/service/service.model';
-import { ServicesCardComponent } from '../../../shared/components/services-cards/servicesCard.component';
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import {
+  Component,
+  DestroyRef,
+  OnInit,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SkeletonCardComponent } from '../../../shared/components/skeletons/card-services/skelton-services-card.component';
+import { take, tap } from 'rxjs';
+import { ServiceModel } from '../../../core/models/service/service.model';
 import { ServicesService } from '../../../core/services/services/services.service';
+import { HeroSectionComponent } from "../../../shared/components/hero-section/hero-section.component";
+import { SkeletonCardComponent } from "../../../shared/components/skeletons/card-services/skelton-services-card.component";
+import { ServicesCardComponent } from "../../../shared/components/services-cards/servicesCard.component";
+import { TranslateModule } from '@ngx-translate/core';
+import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-all-services',
   standalone: true,
   imports: [
-    TranslateModule,
-    CommonModule,
-    SkeletonModule,
     HeroSectionComponent,
-    FormsModule,
+    SkeletonCardComponent,
     ServicesCardComponent,
+    TranslateModule,
     PaginationComponent,
-    SkeletonCardComponent
+    CommonModule,
   ],
   templateUrl: './all-services.component.html',
   styleUrl: './all-services.component.css',
 })
 export class AllServicesComponent implements OnInit {
-  // Inject dependencies
   private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private serviceServices = inject(ServicesService);
 
-  // Observables and state
-  services$: Observable<ServiceModel[]> = of([]);
-  filteredServices$: Observable<ServiceModel[]> = of([]);
-  isLoading$: Observable<boolean> = of(false);
+  // State
+  services = signal<ServiceModel[]>([]);
+  selectedService = signal('');
+  location = signal('');
+  formServiceType = '';
+  formCity = '';
+  isLoading = signal(true);
+  hasNoResults = signal(false);
 
-  // Pagination and filter state
+  // Pagination
   currentPage = signal(1);
   pageSize = 12;
   totalItems = signal(0);
-  totalItems$ = toObservable(this.totalItems);
-  hasNoResults = signal(false);
 
-  // Form and filter data
-  selectedService = '';
-  location = '';
-  locations: string[] = [];
   allServicesType: string[] = [];
-  formServiceType = '';
-  formCity = '';
+  locations: string[] = [];
+
+  // Filtered services
+  filteredServices = computed(() => {
+    const all = this.services();
+    const type = this.selectedService().toLowerCase().trim();
+    const city = this.location().toLowerCase().trim();
+
+    return all.filter(service => {
+      const matchType = type ? service.serviceType.toLowerCase().includes(type) : true;
+      const matchCity = city ? service.city.toLowerCase().includes(city) : true;
+      return matchType && matchCity;
+    });
+  });
+
+  // Paginated services
+  paginatedServices = computed(() => {
+    const start = (this.currentPage() - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.filteredServices().slice(start, end);
+  });
+
+  // Effect: تحميل البيانات من السيجنال لما تتغير
+  private servicesEffect = effect(() => {
+    const all = this.serviceServices.allServices();
+    if (this.isLoading() && all.length > 0) {
+      const filtered = all.filter(s => s.serviceImage);
+      this.services.set(filtered);
+      this.extractFilterOptions(filtered);
+      this.isLoading.set(false);
+
+      // تطبيق الفلاتر بعد التحميل
+      if (this.selectedService() || this.location()) {
+        this.applyFilters(false);
+      }
+    }
+  }, { allowSignalWrites: true });
+
+  // Effect: تحديث العدد والتحقق من عدم وجود نتائج
+  private filtersMetaEffect = effect(() => {
+    const filtered = this.filteredServices();
+    this.totalItems.set(filtered.length);
+    this.hasNoResults.set(filtered.length === 0);
+  }, { allowSignalWrites: true });
+
+  // Effect: إعادة ضبط الصفحة لو الفلترة قللت عدد النتائج
+  private pageResetEffect = effect(() => {
+    const filtered = this.filteredServices();
+    const maxPage = Math.ceil(filtered.length / this.pageSize);
+
+    if (this.currentPage() > maxPage && maxPage > 0) {
+      this.currentPage.set(maxPage);
+    } else if (filtered.length === 0) {
+      this.currentPage.set(1);
+    }
+  }, { allowSignalWrites: true });
 
   ngOnInit(): void {
-    this.initServices(); // Load services
-    this.checkRouteParams(); // Load filters from URL
+    this.checkRouteParams();
+    this.loadServices();
   }
 
-  private initServices(): void {
-    this.isLoading$ = of(true);
-    this.serviceServices.getAllServices()
-      .pipe(map(services => services.filter(s => s.serviceImage)))
-      .subscribe({
-        next: (services) => {
-          this.services$ = of(services);
-          this.filteredServices$ = of(services);
-          this.totalItems.set(services.length);
-          this.extractFilterOptions(services); // Get cities/types
-          this.applyFiltersFromSelection();
-          this.isLoading$ = of(false);
-        },
-        error: (err) => {
-          console.error('Failed to load services:', err);
-          this.isLoading$ = of(false);
-        }
-      });
+  private loadServices(): void {
+    this.isLoading.set(true);
+    this.serviceServices.getAllServices();
   }
 
   private checkRouteParams(): void {
-    this.route.queryParams.pipe(
-      take(1),
-      tap(params => {
-        // Set filters from URL
-        this.selectedService = params['serviceType'] || '';
-        this.location = params['city'] || '';
-        this.formServiceType = this.selectedService;
-        this.formCity = this.location;
-      }),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe();
+    this.route.queryParams
+      .pipe(
+        take(1),
+        tap(params => {
+          this.selectedService.set(params['serviceType'] || '');
+          this.location.set(params['city'] || '');
+          this.formServiceType = this.selectedService();
+          this.formCity = this.location();
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
   }
 
   private extractFilterOptions(services: ServiceModel[]): void {
-    // Get unique service types and cities
     this.allServicesType = Array.from(new Set(services.map(s => s.serviceType)));
     this.locations = Array.from(new Set(services.map(s => s.city)));
   }
 
-  private applyFiltersFromSelection(): void {
-    if (this.selectedService || this.location) {
-      this.applyFilters(false);
-    }
+  applyFilters(updateUrl = true): void {
+    this.currentPage.set(1);
+    if (updateUrl) this.updateUrlWithFilters();
   }
 
-  applyFilters(updateUrl = true): void {
-    const serviceType = this.selectedService?.trim();
-    const city = this.location?.trim();
-    this.isLoading$ = of(true);
+  resetFilters(): void {
+    this.selectedService.set('');
+    this.location.set('');
+    this.formServiceType = '';
+    this.formCity = '';
+    this.currentPage.set(1);
+    this.hasNoResults.set(false);
+    this.updateUrlWithFilters();
+  }
 
-    this.services$.pipe(
-      take(1),
-      map(services =>
-        services.filter(service => {
-          const matchType = serviceType ? service.serviceType.toLowerCase().includes(serviceType.toLowerCase()) : true;
-          const matchCity = city ? service.city.toLowerCase().includes(city.toLowerCase()) : true;
-          return matchType && matchCity;
-        })
-      ),
-      tap(filteredServices => {
-        // Update filtered list and pagination
-        this.filteredServices$ = of(filteredServices);
-        this.totalItems.set(filteredServices.length);
-        this.hasNoResults.set(filteredServices.length === 0);
+  onSearch(event: any): void {
+    this.selectedService.set(event.service);
+    this.location.set(event.location);
+    this.currentPage.set(1);
+    this.applyFilters();
+  }
 
-        const maxPage = Math.ceil(filteredServices.length / this.pageSize);
-        if (this.currentPage() > maxPage && maxPage > 0) {
-          this.currentPage.set(maxPage);
-        } else if (filteredServices.length === 0) {
-          this.currentPage.set(1);
-        }
-
-        if (updateUrl) {
-          this.updateUrlWithFilters();
-        }
-      }),
-      tap(() => this.isLoading$ = of(false))
-    ).subscribe();
+  onPageChange(page: number): void {
+    this.currentPage.set(page);
   }
 
   private updateUrlWithFilters(): void {
     const queryParams: any = {};
-    if (this.selectedService) queryParams.serviceType = this.selectedService;
-    if (this.location) queryParams.city = this.location;
+    if (this.selectedService()) queryParams.serviceType = this.selectedService();
+    if (this.location()) queryParams.city = this.location();
 
     const currentScroll = window.scrollY;
     this.router.navigate([], {
@@ -159,48 +184,5 @@ export class AllServicesComponent implements OnInit {
         window.scrollTo({ top: currentScroll, behavior: 'auto' });
       }, 0);
     });
-  }
-
-  resetFilters(): void {
-    // Reset all filters
-    this.selectedService = '';
-    this.location = '';
-    this.formServiceType = '';
-    this.formCity = '';
-    this.currentPage.set(1);
-    this.filteredServices$ = this.services$;
-
-    this.services$.pipe(
-      take(1),
-      tap(services => {
-        this.totalItems.set(services.length);
-        this.hasNoResults.set(false);
-      })
-    ).subscribe();
-
-    this.updateUrlWithFilters();
-  }
-
-  onSearch(event: any): void {
-    // Triggered from search component
-    this.selectedService = event.service;
-    this.location = event.location;
-    this.currentPage.set(1);
-    this.applyFilters();
-  }
-
-  getPaginatedServices(): Observable<ServiceModel[]> {
-    // Slice filtered list based on current page
-    return this.filteredServices$.pipe(
-      map(services => {
-        const start = (this.currentPage() - 1) * this.pageSize;
-        const end = start + this.pageSize;
-        return services.slice(start, end);
-      })
-    );
-  }
-
-  onPageChange(page: number): void {
-    this.currentPage.set(page); // Update current page
   }
 }

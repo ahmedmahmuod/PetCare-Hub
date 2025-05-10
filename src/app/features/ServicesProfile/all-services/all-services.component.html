@@ -1,20 +1,41 @@
 <section class="mb-36">
-    <app-hero-section [description]="'Pages.Services.Subtitle'" [initialService]="formServiceType" [initialLocation]="formCity" imageUrl="backgrounds/services-hero/services-hero.png" [title]="'Pages.Services.Title'" [showFilter]="true" (search)="onSearch($event)"/>
+  <app-hero-section
+    [description]="'Pages.Services.Subtitle'"
+    [initialService]="formServiceType"
+    [initialLocation]="formCity"
+    imageUrl="backgrounds/services-hero/services-hero.png"
+    [title]="'Pages.Services.Title'"
+    [showFilter]="true"
+    (search)="onSearch($event)"
+  />
 </section>
 
 <section class="container mx-auto mt-14">
-    <ng-container *ngIf="isLoading$ | async; else content">
-        <app-skeleton-services-card></app-skeleton-services-card>
+  <!-- Skeleton Loader -->
+  <ng-container *ngIf="isLoading(); else content">
+    <app-skeleton-services-card></app-skeleton-services-card>
+  </ng-container>
+
+  <!-- Main Content -->
+  <ng-template #content>
+    <app-services-card
+      [services]="paginatedServices()"
+      [isLoading]="isLoading()"
+    ></app-services-card>
+
+    <!-- No Results Message -->
+    <div *ngIf="filteredServices().length === 0 && !isLoading()" class="text-center py-10 text-3xl text-fourth-color">
+      {{ 'Pages.Services.Filter.Filter_Empty' | translate }}
+    </div>
+
+    <!-- Pagination -->
+    <ng-container *ngIf="(totalItems() / pageSize) > 1">
+      <app-pagination
+        [totalItems]="totalItems"
+        [itemsPerPage]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+      ></app-pagination>
     </ng-container>
-    
-    <ng-template #content>
-        <app-services-card [services]="getPaginatedServices()" [isLoading]="isLoading$"/>
-        <div *ngIf="(filteredServices$ | async)?.length === 0 && !(isLoading$ | async)" class="text-center py-10 text-3xl text-fourth-color">
-            {{'Pages.Services.Filter.Filter_Empty' | translate}}
-          </div>
-        
-        <ng-container *ngIf="(totalItems() / pageSize) > 1">
-            <app-pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"/>
-        </ng-container>
-    </ng-template>
+  </ng-template>
 </section>

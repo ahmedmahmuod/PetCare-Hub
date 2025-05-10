@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [ CommonModule, TranslateModule ],
   template: `
-    <ng-container *ngIf="services | async as services">
+    <ng-container *ngIf="services as services">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 container w-full mx-auto">
         <div *ngFor="let service of services" (click)="onServiceClick(service)" class="sm:m-0 mx-5 flex flex-col bg-third-color cursor-pointer rounded-3xl border-2 border-fourth-color transition-all ease-in-out hover:-translate-y-1 hover:bg-brand-color group overflow-hidden">
           <div class="relative w-full h-64">
@@ -63,8 +63,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ServicesCardComponent {
   private router = inject(Router);
 
-  @Input({ required: true }) services!: Observable<ServiceModel[]>;
-  @Input({ required: true }) isLoading!: Observable<boolean>;
+@Input() services: ServiceModel[] = [];
+@Input() isLoading: boolean = false;
 
 
   onServiceClick(service: ServiceModel) {        
