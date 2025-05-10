@@ -934,7 +934,78 @@
               }
             }
           }
+        },
+
+        "Services": {
+          "Title": "الخدمات",
+          "Data_Table": {
+            "Rows": {
+              "Service_Type": "نوع الخدمة",
+              "Service_Rate": "تقييم الخدمة",
+              "Service_City": "المدينة",
+              "Service_Image": "صورة الخدمة"
+            }
+          },
+          "Form": {
+            "Title": "إضافة خدمة",
+            "Service_Type": {
+              "Placeholder": "نوع الخدمة",
+              "Required": "نوع الخدمة مطلوب.",
+              "Options": {
+                "Training": "تدريب الحيوانات الأليفة",
+                "Grooming": "تنظيف وتجميل الحيوانات الأليفة",
+                "Walking": "تمشية الحيوانات الأليفة",
+                "Boarding": "إقامة مؤقتة للحيوانات",
+                "Care": "رعاية الحيوانات",
+                "Sitting": "مجالسة الحيوانات",
+                "Taxi": "تاكسي الحيوانات",
+                "Hotel": "فندق الحيوانات"
+              }
+            },
+            "City": {
+              "Placeholder": "المدينة",
+              "Required": "المدينة مطلوبة."
+            },
+            "About": {
+              "Placeholder": "وصف الخدمة",
+              "Required": "الوصف مطلوب ويجب أن لا يقل عن 10 أحرف."
+            },
+            "Price": {
+              "Placeholder": "سعر الخدمة",
+              "Required": "السعر مطلوب ويجب أن يكون رقمًا موجبًا."
+            },
+            "Price_Per": {
+              "Placeholder": "السعر لكل",
+              "Required": "وحدة السعر مطلوبة.",
+              "Options": {
+                "Night": "لكل ليلة",
+                "Day": "لكل يوم",
+                "Week": "لكل أسبوع",
+                "Month": "لكل شهر"
+              }
+            },
+            "Service_Image": {
+              "Placeholder": "صورة الخدمة"
+            }
+          },
+          "Btn": "إضافة",
+          "Toasts": {
+            "Errors": {
+              "Form": {
+                "Error": "جميع الحقول مطلوبة."
+              },
+              "Error_Res": {
+                "Title": "خطأ",
+                "Message": "فشل في إنشاء الخدمة!"
+              }
+            },
+            "Successful": {
+              "Title": "تم بنجاح",
+              "Message": "تم إنشاء الخدمة بنجاح!"
+            }
+          }
         }
+
 
       }
     }

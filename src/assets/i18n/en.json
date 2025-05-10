@@ -958,6 +958,87 @@
             }
           }
         }
+      },
+
+      "Services": {
+        "Title": "Services",
+        "Data_Table": {
+          "Rows": {
+            "Service_Type": "Service Type",
+            "Service_Rate": "Service Rate",
+            "Service_City": "Service City",
+            "Service_Image": "Service Image"
+          }
+        },
+
+        "Form": {
+          "Title": "Add Service",
+          "Service_Type": {
+            "Placeholder": "Service type",
+            "Required": "Service type is required.",
+            "Options": {
+              "Training": "Pet Training",
+              "Grooming": "Pet Grooming",
+              "Walking": "Pet Walking",
+              "Boarding": "Pet Boarding",
+              "Care": "Pet Care",
+              "Sitting": "Pet Sitting",
+              "Taxi": "Pet Taxi",
+              "Hotel": "Pet Hotel"
+            }
+          },
+
+          "City": {
+            "Placeholder": "City",
+            "Required": "City is required."
+            
+          },
+
+          "About": {
+            "Placeholder": "About Service",
+            "Required": "About is required and must be at least 10 characters."
+          },
+
+          "Price": {
+            "Placeholder": "Service Price",
+            "Required": "Price is required and must be a positive number."
+          },
+
+          "Price_Per": {
+            "Placeholder": "Price Per",
+            "Required": "Price unit is required.",
+            "Options": {
+              "Night": "Night",
+              "Day": "Day",
+              "Week": "Week",
+              "Month": "Month"
+            }
+          },
+
+          "Service_Image": {
+            "Placeholder": "Service Image"
+          }
+        },
+
+        "Btn": "Add",
+
+        "Toasts": {
+          "Errors": {
+            "Form": {
+              "Error": "All fields are required."
+            },
+
+            "Error_Res": {
+              "Title": "Error",
+              "Message": "Failed to create service!"
+            }
+          },
+
+          "Successful": {
+            "Title": "Successfuly",
+            "Message": "Service created successfully!"
+          }
+        }
       }
       
     }

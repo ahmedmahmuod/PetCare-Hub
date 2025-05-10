@@ -42,25 +42,30 @@ export class AdminServicesComponent implements OnInit {
 
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'serviceType', header: 'Service Type', type: 'text' },
-    { field: 'rate', header: 'Service Rate', type: 'text' },
-    { field: 'city', header: 'Service City', type: 'text' },
-    { field: 'serviceImage', header: 'Service Image', type: 'image' },
+    { field: 'serviceType', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Data_Table.Rows.Service_Type'), type: 'text' },
+    { field: 'rate', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Data_Table.Rows.Service_Rate'), type: 'text' },
+    { field: 'city', header:  this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Data_Table.Rows.Service_City'), type: 'text' },
+    { field: 'serviceImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Data_Table.Rows.Service_Image'), type: 'image' },
   ];
 
   // Select Options
   serviceTypes = [
-    'Pet Training',
-    'Pet Grooming',
-    'Pet Boarding',
-    'Pet Hotel',
-    'Pet Care',
-    'Pet Sitting',
-    'Pet Taxi',
-    'Pet Walking'
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Training'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Grooming'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Boarding'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Hotel'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Care'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Sitting'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Taxi'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Options.Walking'),
   ];
 
-  pricePerOptions = ['night', 'day', 'week', 'month'];
+  pricePerOptions = [
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Options.Night'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Options.Day'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Options.Week'),
+    this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Options.Month'),
+  ];
 
   // Form data
   form = {
@@ -125,7 +130,7 @@ export class AdminServicesComponent implements OnInit {
     
     // 1. Basic validation guard
     if (!this.form.serviceImage || !this.form.price || !this.form.pricePer || !this.form.serviceType) {
-      this.toastService.error('All fields are required.');
+      this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Toasts.Errors.Form.Error'));
       return;
     }
 
@@ -149,13 +154,13 @@ export class AdminServicesComponent implements OnInit {
         
         // Optional: success toast
         this.serviceServices.getAllServices();
-        this.toastService.success('Successfuly', 'Service created successfuly!');
+        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Toasts.Successful.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Toasts.Successful.Message'));
         this.resetForm();
         this.isLoading = false;
       }, 
       error: (err) => { 
         console.log(err);
-        this.toastService.error('Error', 'Failed to create service!');
+        this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Toasts.Errors.Error_Res.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Toasts.Errors.Error_Res.Message'));
         this.isLoading = false;
       }
     });

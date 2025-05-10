@@ -1,48 +1,48 @@
 <section class="flex flex-col gap-y-5 mt-10 relative">
-  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add Service'"/>
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="('Dashboard.Admin.Sidebar_Links.Services.Form.Title' | translate)"/>
   <app-data-table [hasActions]="false" [hasImage]="true" [data]="services()" [columns]="columns"/>
 
-  <p-dialog header="Add Service" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+  <p-dialog [header]="('Dashboard.Admin.Sidebar_Links.Services.Form.Title' | translate)" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
     <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddSerivce()" novalidate>
         <div class="card flex flex-col gap-6">
 
             <!-- Service Type -->
             <p-floatLabel>
-                <p-dropdown id="serviceType" name="serviceType" [(ngModel)]="form.serviceType" [options]="serviceTypes" required #serviceTypeRef="ngModel" placeholder="Select type" />
-                <label for="serviceType">Service type</label>
-                <small *ngIf="serviceTypeRef.invalid && serviceTypeRef.touched" class="p-error">Service type is required.</small>
+                <p-dropdown id="serviceType" name="serviceType" [(ngModel)]="form.serviceType" [options]="serviceTypes" required #serviceTypeRef="ngModel" />
+                <label for="serviceType">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Placeholder' | translate}}</label>
+                <small *ngIf="serviceTypeRef.invalid && serviceTypeRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Required' | translate}}</small>
             </p-floatLabel>
 
             <!-- City -->
             <p-floatLabel>
                 <input id="city" name="city" pInputText [(ngModel)]="form.city" required #cityRef="ngModel" />
-                <label for="city">City</label>
-                <small *ngIf="cityRef.invalid && cityRef.touched" class="p-error">City is required.</small>
+                <label for="city">{{'Dashboard.Admin.Sidebar_Links.Services.Form.City.Placeholder' | translate}}</label>
+                <small *ngIf="cityRef.invalid && cityRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.City.Required' | translate}}</small>
             </p-floatLabel>
 
             <!-- About -->
             <p-floatLabel>
                 <input id="about" name="about" pInputText [(ngModel)]="form.about" required minlength="10" #aboutRef="ngModel" />
-                <label for="about">About Service</label>
-                <small *ngIf="aboutRef.invalid && aboutRef.touched" class="p-error">About is required and must be at least 10 characters.</small>
+                <label for="about">{{'Dashboard.Admin.Sidebar_Links.Services.Form.About.Placeholder' | translate}}</label>
+                <small *ngIf="aboutRef.invalid && aboutRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.About.Required' | translate}}</small>
             </p-floatLabel>
 
             <!-- Price -->
             <p-floatLabel>
                 <input id="price" name="price" pInputText type="number" min="1" [(ngModel)]="form.price" required #priceRef="ngModel" />
-                <label for="price">Price</label>
-                <small *ngIf="priceRef.invalid && priceRef.touched" class="p-error">Price is required and must be a positive number.</small>
+                <label for="price">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price.Placeholder' | translate}}</label>
+                <small *ngIf="priceRef.invalid && priceRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price.Required' | translate}}</small>
             </p-floatLabel>
 
             <!-- Price Per -->
             <p-floatLabel>
                 <p-dropdown id="pricePer" name="pricePer" [(ngModel)]="form.pricePer" [options]="pricePerOptions" required #pricePerRef="ngModel" placeholder="Select" />
-                <label for="pricePer">Price per</label>
-                <small *ngIf="pricePerRef.invalid && pricePerRef.touched" class="p-error">Price unit is required.</small>
+                <label for="pricePer">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Placeholder' | translate}}</label>
+                <small *ngIf="pricePerRef.invalid && pricePerRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Required' | translate}}</small>
             </p-floatLabel>
 
             <!-- File Upload -->
-            <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="'Service Image'" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
+            <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Image.Placeholder' | translate)" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
 
             <!-- Preview + Remove -->
             <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
@@ -54,7 +54,7 @@
 
         <!-- Submit Button -->
         <div class="flex justify-end gap-3 pt-4">
-            <p-button label="Add Service" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.serviceImage"></p-button>
+            <p-button [label]="('Dashboard.Admin.Sidebar_Links.Services.Btn' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.serviceImage"></p-button>
         </div>
     </form>
   </p-dialog>

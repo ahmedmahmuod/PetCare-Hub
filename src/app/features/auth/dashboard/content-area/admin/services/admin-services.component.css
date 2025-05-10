@@ -14,3 +14,6 @@ textarea {
   width: 100%;
 }
 
+:host ::ng-deep .custom-upload {
+  background: var(--brand-seconed-color) !important;
+}
