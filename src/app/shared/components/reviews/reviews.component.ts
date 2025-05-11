@@ -32,7 +32,7 @@ import { RouterLink } from '@angular/router';
 
       <!-- Empty State -->
       <div *ngIf="reviews.length === 0" class="empty-reviews">
-        <p>{{ 'Reviews.Empty' | translate }}</p>
+        <p>{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Is_Empty' | translate }}</p>
       </div>
 
       <!-- Review Form (if user is logged in) -->

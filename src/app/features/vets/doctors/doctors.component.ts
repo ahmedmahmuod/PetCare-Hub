@@ -19,16 +19,20 @@ export class DoctorsComponent implements OnInit {
   private vetSerivce = inject(VetsService)
 
   // Variables 
-  doctors$: Observable<DoctorModel[]> = of([])
-  isLoading: boolean = false;
-
+  get isLoading() {
+    return this.vetSerivce.loadingDoctors();
+  }
   // ng OnInit 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.vetSerivce.getAllDoctors().subscribe((res) => {
-      this.doctors$ = of(res.doctors);
-      this.isLoading = false;
-      
-    })  
+    if (this.doctors.length > 1) {
+      return
+    }
+    this.vetSerivce.loadDoctors();
   }
+
+  get doctors() {
+    return this.vetSerivce.allDoctors();
+  }
+
+
 }

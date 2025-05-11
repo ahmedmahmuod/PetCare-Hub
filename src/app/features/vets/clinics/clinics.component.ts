@@ -19,19 +19,19 @@ export class ClinicsComponent implements OnInit{
   // Privets
   private vetService = inject(VetsService);
 
-  // Variables
-  clinics$!: Observable<VetClinic[]>;
-  loading: boolean = false;
-
-  // call api by ngOnInit
   ngOnInit(): void {
-    this.loading = true;
-    this.vetService.getAllClinics().subscribe((res) =>{
-      this.clinics$ = of(res);
-      this.loading = false;
-      
-    })
+    if (this.clinics.length > 1) {
+      return
+    }
+    this.vetService.loadClinics(); 
   }
 
+  get clinics() {
+    return this.vetService.allClinics();
+  }
+
+  get isLoading() {
+    return this.vetService.loadingClinics();
+  }
 
 }

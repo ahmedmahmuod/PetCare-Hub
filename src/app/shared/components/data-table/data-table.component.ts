@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements OnInit {
-  @Input() data: any[] | null = []
+@Input() data: any[] | null = null;
   @Input() columns!: Column[];
   @Input() hasImage: boolean = false;
   @Input() hasActions: boolean = false;
@@ -21,7 +21,6 @@ export class DataTableComponent implements OnInit {
   currentPageReportTemplate: string = '';
   first = 0;
   rows = 5;
-
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {

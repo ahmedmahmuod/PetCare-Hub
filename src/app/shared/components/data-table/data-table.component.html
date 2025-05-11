@@ -36,27 +36,28 @@
   
       <!-- Body -->
       <ng-template pTemplate="body" let-row>
-        <tr>
-          <td *ngFor="let col of columns">
-            <ng-container [ngSwitch]="col.type">
-              
-              <img *ngSwitchCase="'image'" [src]="row[col.field]" [alt]="col.header" class="w-12 h-12 object-cover rounded" />
+        @if (data === null) {
+          <h1>Loading</h1>
+        } @else {
+          <tr>
+            <td *ngFor="let col of columns">
+              <ng-container [ngSwitch]="col.type">
+                <img *ngSwitchCase="'image'" [src]="row[col.field]" [alt]="col.header" class="w-12 h-12 object-cover rounded" />
+                <span *ngSwitchCase="'percent'">{{ row[col.field] + '%' }}</span>
+                <span *ngSwitchCase="'date'">{{ row[col.field] | date }}</span>
+                <span *ngSwitchDefault>
+                  {{ row[col.field] }}
+                </span>
+              </ng-container>
+            </td>
+            <td *ngIf="hasActions" class="actions">
+              <i class="fa-regular fa-trash-can"></i>
+              <i class="fa-solid fa-pen"></i>
+            </td>
+          </tr>
 
-              <span *ngSwitchCase="'percent'">{{ row[col.field] + '%' }}</span>
+        }
 
-              <span *ngSwitchCase="'date'">{{ row[col.field] | date }}</span>
-
-              <span *ngSwitchDefault>
-                {{ row[col.field] }}
-              </span>
-
-            </ng-container>
-          </td>
-          <td *ngIf="hasActions" class="actions">
-            <i class="fa-regular fa-trash-can"></i>
-            <i class="fa-solid fa-pen"></i>
-          </td>
-        </tr>
       </ng-template>
       
     </p-table>

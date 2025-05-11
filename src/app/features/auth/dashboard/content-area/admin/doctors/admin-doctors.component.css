@@ -1,0 +1,110 @@
+:host ::ng-deep input,
+textarea {
+  font-size: 1rem;
+  padding: 10px 10px;
+  border: 1px solid var(--brand-color);
+  border-radius: 5px;
+  background: transparent;
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+
+:host ::ng-deep .p-dropdown {
+  border: 1px solid var(--brand-color);
+  width: 100%;
+  background: transparent;
+}
+
+:host ::ng-deep .custom-upload {
+  background: var(--brand-seconed-color) !important;
+}
+
+::ng-deep .p-float-label label {
+  transform: translateY(-50%);
+  line-height: 1;
+}
+
+::ng-deep .p-multiselect {
+  border: 1px solid var(--brand-color);
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: transparent !important;
+  width: 100% !important;
+}
+
+::ng-deep .p-multiselect .p-multiselect-label {
+  color: var(--fourth-color);
+  font-weight: 500;
+}
+
+::ng-deep .p-multiselect .p-multiselect-token {
+  background-color: var(--brand-color);
+  color: var(--seconed-color);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 4px 8px;
+}
+
+::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+  padding: 8px 12px;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
+  background-color: var(--third-color) !important;
+}
+
+textarea.p-inputtextarea {
+  border: 1px solid var(--brand-color);
+  border-radius: 5px;
+  padding: 10px 10px;
+  font-size: 1rem;
+  background-color: transparent;
+  transition: 0.2s ease-in-out;
+}
+
+/* chips */
+::ng-deep .custom-chips .p-chips-token {
+  background-color: var(--brand-color);
+  color: var(--seconed-color);
+  font-weight: 500;
+  border-radius: 9999px;
+  margin: 4px 4px 0 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+::ng-deep .custom-chips .p-chips-token-icon {
+  color: var(--seconed-color);
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+::ng-deep .custom-chips .p-inputwrapper-filled,
+::ng-deep .custom-chips .p-inputwrapper-focus {
+  box-shadow: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+}
+
+::ng-deep .custom-chips .p-inputtext {
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Doctor gallaru */
+::ng-deep .custom-upload .p-button {
+  background: var(--brand-seconed-color) !important;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.875rem;
+}
+
+::ng-deep .p-fileupload .p-fileupload-buttonbar .p-button.p-fileupload-choose {
+  background-color: var(--brand-color) !important;
+  color: var(--seconed-color);
+  width: 100% !important;
+}

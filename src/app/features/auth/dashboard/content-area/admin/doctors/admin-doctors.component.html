@@ -1,1 +1,82 @@
-<p>admin-doctors works!</p>
+<section class="flex flex-col gap-y-5 mt-10 relative">
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add Doctor'"/>
+  <app-data-table [hasActions]="false" [hasImage]="true" [data]="doctors" [columns]="columns"/>
+
+      <p-dialog [header]="'Add new doctor'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+        <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddDoctor()" novalidate>
+            <div class="card flex flex-col gap-6">
+
+                <!-- Doctor Name -->
+                <div class="card flex flex-col justify-center">
+                    <p-floatLabel class="w-full">
+                        <input id="doctorName" name="doctorName" pInputText [(ngModel)]="form.name" required #nameRef="ngModel" class="w-full" />
+                        <label for="doctorName">Doctor Name</label>
+                    </p-floatLabel>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">Doctor Name is requierd</small>
+                </div>
+                
+                <!-- Doctor About -->
+                <div class="card flex justify-content-center">
+                    <p-floatLabel class="w-full">
+                        <textarea [placeholder]="'Type about'" [name]="'About'" [(ngModel)]="form.about" id="float-input" rows="5" cols="30" pInputTextarea></textarea>
+                    </p-floatLabel>
+                </div>
+                
+                <!-- Doctor Address -->
+                <div class="card flex flex-col justify-center">
+                    <p-floatLabel class="w-full">
+                        <input id="doctorAddress" name="doctorAddress" pInputText [(ngModel)]="form.description" required #addressRef="ngModel" class="w-full" />
+                        <label for="doctorAddress">Doctor Address</label>
+                    </p-floatLabel>
+                    <small *ngIf="addressRef.invalid && addressRef.touched" class="p-error ml-2">Doctor Address is requierd</small>
+                </div>
+                
+                <!-- Doctor Phone -->
+                <div class="flex-auto">
+                    <label for="phoneNumber" class="block mb-1 font-medium text-fourth-color">Phone Number</label>
+                    <input id="phoneNumber" name="phoneNumber" type="text" pInputText [(ngModel)]="form.phone" maxlength="11" pattern="^01[0-9]{9}$" placeholder="Like: 01234567890"class="w-full p-inputtext-sm" required/>
+                    <small *ngIf="form.phone && !isPhoneValid()" class="p-error">
+                        Invalid phone number. Must start with 010, 011, 012, or 015 and be 11 digits.                    
+                    </small>
+                </div>
+
+                <!-- File Upload -->
+                <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="'Doctor Image'" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
+
+                <!-- Preview + Remove -->
+                <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
+                    <img [src]="imgPreview" alt="Image Preview" class="w-full h-full object-cover rounded shadow" />
+                    <button type="button" (click)="removeImage(); fileUploader.clear()" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">✕</button>
+                </div>
+
+                <!-- Accepted Pets -->
+                <div class="card flex flex-col justify-center">
+                    <p-multiSelect [required]="true" #accPetsRef="ngModel" [appendTo]="'body'" [filter]="false" name="pets" [options]="petOptions" [(ngModel)]="form.accepted_pet_types" placeholder="Accepted Pets" [showClear]="true" selectionLimit="2" [showToggleAll]="true" display="chip" panelStyleClass="pet-multiselect-panel">
+                        <ng-template let-pet pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <span>{{ pet.label }}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+                    <small *ngIf="accPetsRef.invalid && accPetsRef.touched" class="p-error ml-2">Accepted Pets is requierd</small>
+                </div>
+                
+                <!-- Specialized in -->
+                <div class="card p-fluid custom-chips-container">
+                    <label for="specialized_in" class="mb-1 text-fourth-color font-semibold block">Specialized In</label>
+                    <p-chips #specializedRef="ngModel" [required]="true" id="specialized_in" name="specialized_in" [(ngModel)]="form.specialized_in" placeholder="Type and press Enter" separator="," class="custom-chips"/>
+                    <small *ngIf="specializedRef.invalid && specializedRef.touched" class="p-error ml-2">Specializations is requierd</small>
+                </div>
+                
+                <!-- Doctor Gallry -->
+                <p-fileUpload [customUpload]="true" name="images" [auto]="true" [multiple]="true" accept="image/*" [showUploadButton]="false" chooseLabel="Upload Gallery Images" chooseIcon="pi pi-images" (uploadHandler)="handleImageGalleryUpload($event)" #fileUploader/>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end gap-3 pt-4">
+                <p-button [label]="('Dashboard.Admin.Sidebar_Links.Products.Form.Btns.Add' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.doctorImage || !form.name"></p-button>
+            </div>
+        </form>
+  </p-dialog>
+    <app-section-spinner *ngIf="isLoading"/>
+</section>

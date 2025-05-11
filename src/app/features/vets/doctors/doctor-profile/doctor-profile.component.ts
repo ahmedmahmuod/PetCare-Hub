@@ -134,7 +134,7 @@ import { ToastService } from '../../../../shared/services/toast-notification/tos
           <!-- Reviews -->
           <div class="p-6 shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
               <h2 class="text-2xl font-bold mb-4 text-brand-color">{{'Pages.Vets.Doctor_Page.Profile.Reviews' | translate}}</h2>
-              <app-reviews [reviews]="doctor.reviewsOfDoctor" [isLoading]="isLoading" (reviewSubmitted)="addSubmetReview($event)"/>
+              <app-reviews [reviews]="doctor.reviewsOfDoctor" [isLoading]="loading" (reviewSubmitted)="addSubmetReview($event)"/>
           </div>
         </div>
       </div>
@@ -154,9 +154,11 @@ export class DoctorProfileComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private reviewsService = inject(ReviewsService);
   private toastService = inject(ToastService);
+
   // Variables
   doctor$!: Observable<DoctorModel>;
   isLoading: boolean = false;
+  loading: boolean = false;
   selectedImage: string | null = null;
   doctorId: string  = '';
 
