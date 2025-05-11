@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
              <li routerLinkActive="active" routerLink="/admin/dashboard/blogs" tabindex="0"><i class="fa-solid fa-pen-to-square"></i>{{'Dashboard.Admin.Sidebar_Links.Blogs.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/services" tabindex="0"><i class="fa-solid fa-paw"></i>{{'Dashboard.Admin.Sidebar_Links.Services.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/coupons" tabindex="0"><i class="fa-solid fa-tag"></i>{{'Dashboard.Admin.Sidebar_Links.Coupons.Title' | translate}}</li>
-             <li routerLinkActive="active" routerLink="/admin/dashboard/products" tabindex="0"><i class="fa-solid fa-basket-shopping"></i>Products</li>
+             <li routerLinkActive="active" routerLink="/admin/dashboard/products" tabindex="0"><i class="fa-solid fa-basket-shopping"></i>{{'Dashboard.Admin.Sidebar_Links.Products.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/doctors" tabindex="0"><i class="fa-solid fa-user-doctor"></i>Doctors</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/clinics" tabindex="0"><i class="fa-solid fa-briefcase-medical"></i>Clinics</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>Orders</li>

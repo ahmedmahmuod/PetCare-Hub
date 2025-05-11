@@ -18,7 +18,7 @@
       [first]="first"
       [showCurrentPageReport]="true"
       [responsiveLayout]="'scroll'"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} items"
+      [currentPageReportTemplate]="currentPageReportTemplate"
       (onPage)="pageChange($event)"
       [rowsPerPageOptions]="[3, 7, 15, 30]">
   

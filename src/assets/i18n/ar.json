@@ -838,7 +838,11 @@
     }
   },
 
-    "Dashboard": {
+  "Dashboard": {
+    "TABLE": {
+      "PAGE_REPORT": "عرض من {first} إلى {last} من أصل {totalRecords} عنصر"
+    },
+
     "Main": {
       "Header": {
         "User_Role": {
@@ -1054,7 +1058,69 @@
               "Message": "تم إنشاء الكوبون بنجاح."
             }
           }
+        },
+
+        "Products": {
+          "Title": "المنتجات",
+          "Btn": "إضافة منتج",
+          "Data_Table": {
+            "Rows": {
+              "Product_Name": "اسم المنتج",
+              "Product_Price": "سعر المنتج",
+              "Product_Discount": "خصم المنتج",
+              "Product_Category": "فئة المنتج",
+              "Product_Image": "صورة المنتج"
+            }
+          },
+
+          "Form": {
+            "Name": {
+              "Placeholder": "اسم المنتج",
+              "Required": "اسم المنتج مطلوب."
+            },
+            "Price": {
+              "Placeholder": "سعر المنتج",
+              "Required": "سعر المنتج مطلوب."
+            },
+            "Quantity": {
+              "Placeholder": "كمية المنتج",
+              "Required": "كمية المنتج مطلوبة."
+            },
+            "Discount": {
+              "Placeholder": "خصم المنتج",
+              "Required": "خصم المنتج مطلوب."
+            },
+            "Category": {
+              "Placeholder": "فئة المنتج",
+              "Required": "فئة المنتج مطلوبة."
+            },
+            "Image": {
+              "Placeholder": "صورة المنتج"
+            },
+            "Btns": {
+              "Add": "إضافة",
+              "Add_New": "إضافة منتج جديد"
+            }
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Form": {
+                "Details": "جميع الحقول مطلوبة."
+              },
+              "Error_Res": {
+                "Title": "خطأ",
+                "Message": "فشل في إنشاء المنتج. حاول مرة أخرى لاحقًا."
+              }
+            },
+
+            "Success_Res": {
+              "Title": "تم بنجاح",
+              "Message": "تم إنشاء المنتج بنجاح."
+            }
+          }
         }
+
 
       }
     }

@@ -862,6 +862,9 @@
   },
 
   "Dashboard": {
+    "TABLE": {
+      "PAGE_REPORT": "Showing {first} to {last} of {totalRecords} items"
+    },
 
     "Main": {
       "Header": {
@@ -1088,6 +1091,68 @@
             "Title": "Successfuly",
             "Message": "Coupon created successfully."
           }
+        }
+      },
+
+      "Products": {
+        "Title": "Products",
+        "Btn": "Add Product",
+        "Data_Table": {
+            "Rows": {
+              "Product_Name": "Product Name",
+              "Product_Price": "Product Price",
+              "Product_Discount": "Product Discount",
+              "Product_Category": "Product Category",
+              "Product_Image": "Product Image"
+            }
+          },
+
+          "Form": {
+            "Name": {
+              "Placeholder": "Product Name",
+              "Required": " Product name is required."
+            },
+            "Price": {
+              "Placeholder": "Product Price",
+              "Required": " Product Price is required."
+            },
+            "Quantity": {
+              "Placeholder": "Product Quantity",
+              "Required": " Product Quantity is required."
+            },
+            "Discount": {
+              "Placeholder": "Product Discount",
+              "Required": " Product Discount is required."
+            },
+            "Category": {
+              "Placeholder": "Product Category",
+              "Required": " Product Category is required."
+            },
+            "Image": {
+              "Placeholder": "Product Image"
+            },
+            "Btns": {
+              "Add": "Add",
+              "Add_New": "Add new product"
+            }
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Form": {
+                "Details": "All fields are required."
+              },
+
+              "Error_Res": {
+                "Title": "Error",
+                "Message": "Failed to create the product. Please try again later."
+              }
+            },
+
+            "Success_Res": {
+              "Title": "Successfuly",
+              "Message": "Product created successfully."
+            }
         }
       }
       

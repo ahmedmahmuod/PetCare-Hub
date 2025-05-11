@@ -130,3 +130,7 @@ img.rounded:hover {
 .actions .fa-pen {
   color: var(--brand-color);
 }
+
+.p-button-icon {
+  background: red !important;
+}

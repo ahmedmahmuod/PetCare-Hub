@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Column } from '../../../features/auth/dashboard/content-area/admin/blogs/admin-blogs.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-data-table',
@@ -11,14 +12,23 @@ import { Column } from '../../../features/auth/dashboard/content-area/admin/blog
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.css']
 })
-export class DataTableComponent {
+export class DataTableComponent implements OnInit {
   @Input() data: any[] | null = []
   @Input() columns!: Column[];
   @Input() hasImage: boolean = false;
   @Input() hasActions: boolean = false;
 
+  currentPageReportTemplate: string = '';
   first = 0;
   rows = 5;
+
+  constructor(private translate: TranslateService) {}
+
+  ngOnInit(): void {
+    this.translate.get('Dashboard.TABLE.PAGE_REPORT').subscribe(res => {
+      this.currentPageReportTemplate = res;
+    });
+  }
 
   next() {
     this.first += this.rows;

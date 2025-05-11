@@ -1,71 +1,71 @@
 <section class="flex flex-col gap-y-5 mt-10 relative">
-  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add Product'"/>
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="('Dashboard.Admin.Sidebar_Links.Products.Btn' | translate)"/>
   <app-data-table [hasActions]="false" [hasImage]="true" [data]="allProducts()" [columns]="columns"/>
 
-    <p-dialog [header]="'Add new product'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
-    <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddSerivce()" novalidate>
-        <div class="card flex flex-col gap-6">
+    <p-dialog [header]="('Dashboard.Admin.Sidebar_Links.Products.Form.Btns.Add_New' | translate)" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+        <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddSerivce()" novalidate>
+            <div class="card flex flex-col gap-6">
 
-            <!-- Product Name -->
-            <div class="card flex flex-col justify-content-center mb-3">
-                <p-floatLabel class="w-full">
-                    <input id="productName" name="productName" pInputText [(ngModel)]="form.name" required #nameRef="ngModel" class="w-full" />
-                    <label for="productName">Product Name</label>
-                </p-floatLabel>
-                <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">Product Name is required!</small>
+                <!-- Product Name -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <input id="productName" name="productName" pInputText [(ngModel)]="form.name" required #nameRef="ngModel" class="w-full" />
+                        <label for="productName">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Name.Placeholder' | translate}}</label>
+                    </p-floatLabel>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Name.Required' | translate}}</small>
+                </div>
+
+                <!-- Price -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <input id="price" name="price" pInputText type="number" min="1" [(ngModel)]="form.price" required #priceRef="ngModel" class="w-full" />
+                        <label for="price">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Price.Placeholder' | translate}}</label>
+                    </p-floatLabel>
+                    <small *ngIf="priceRef.invalid && priceRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Price.Required' | translate}}</small>
+                </div>
+
+                <!-- Quantity -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <input id="quantity" name="quantity" pInputText type="number" min="1" [(ngModel)]="form.quantity" required #quantityeRef="ngModel" class="w-full" />
+                        <label for="quantity">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Quantity.Placeholder' | translate}}</label>
+                    </p-floatLabel>
+                    <small *ngIf="quantityeRef.invalid && quantityeRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Quantity.Required' | translate}}</small>
+                </div>
+
+                <!-- Discount -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <p-dropdown id="couponDiscount" name="discount" [(ngModel)]="form.discount" [options]="discounts" [showClear]="true" required #discountRef="ngModel" class="w-full" />
+                        <label for="couponDiscount">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Discount.Placeholder' | translate}}</label>
+                    </p-floatLabel>
+                </div>
+
+                <!-- Product Category -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <p-dropdown id="categories" name="categories" [(ngModel)]="form.category" [options]="smallCategories" required #categoriesRef="ngModel" />
+                        <label for="categories">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Category.Placeholder' | translate}}</label>
+                    </p-floatLabel>
+                    <small *ngIf="categoriesRef.invalid && categoriesRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Products.Form.Category.Required' | translate}}</small>
+                </div>
+
+                <!-- File Upload -->
+                <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]=" ('Dashboard.Admin.Sidebar_Links.Products.Form.Image.Placeholder' | translate) " chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
+
+                <!-- Preview + Remove -->
+                <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
+                    <img [src]="imgPreview" alt="Image Preview" class="w-full h-full object-cover rounded shadow" />
+                    <button type="button" (click)="removeImage(); fileUploader.clear()" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">✕</button>
+                </div>
+
             </div>
 
-            <!-- Price -->
-            <div class="card flex flex-col justify-content-center mb-3">
-                <p-floatLabel class="w-full">
-                    <input id="price" name="price" pInputText type="number" min="1" [(ngModel)]="form.price" required #priceRef="ngModel" class="w-full" />
-                    <label for="price">Product Price</label>
-                </p-floatLabel>
-                <small *ngIf="priceRef.invalid && priceRef.touched" class="p-error ml-2">Product Price is required!</small>
+            <!-- Submit Button -->
+            <div class="flex justify-end gap-3 pt-4">
+                <p-button [label]="('Dashboard.Admin.Sidebar_Links.Products.Form.Btns.Add' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.productImage || !form.name || !form.price || !form.quantity"></p-button>
             </div>
-
-            <!-- Quantity -->
-            <div class="card flex flex-col justify-content-center mb-3">
-                <p-floatLabel class="w-full">
-                    <input id="quantity" name="quantity" pInputText type="number" min="1" [(ngModel)]="form.quantity" required #quantityeRef="ngModel" class="w-full" />
-                    <label for="quantity">Product Quantity</label>
-                </p-floatLabel>
-                <small *ngIf="quantityeRef.invalid && quantityeRef.touched" class="p-error ml-2">Product Quantity is requierd</small>
-            </div>
-
-            <!-- Discount -->
-            <div class="card flex flex-col justify-content-center mb-3">
-                <p-floatLabel class="w-full">
-                    <p-dropdown id="couponDiscount" name="discount" [(ngModel)]="form.discount" [options]="discounts" [showClear]="true" required #discountRef="ngModel" class="w-full" />
-                    <label for="couponDiscount">Product Discount</label>
-                </p-floatLabel>
-            </div>
-
-            <!-- Product Category -->
-            <div class="card flex flex-col justify-content-center mb-3">
-                <p-floatLabel class="w-full">
-                    <p-dropdown id="categories" name="categories" [(ngModel)]="form.category" [options]="smallCategories" required #categoriesRef="ngModel" />
-                    <label for="categories">Product Category</label>
-                </p-floatLabel>
-                <small *ngIf="categoriesRef.invalid && categoriesRef.touched" class="p-error ml-2">Product category is required!</small>
-            </div>
-
-            <!-- File Upload -->
-            <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="'Product Image'" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
-
-            <!-- Preview + Remove -->
-            <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
-                <img [src]="imgPreview" alt="Image Preview" class="w-full h-full object-cover rounded shadow" />
-                <button type="button" (click)="removeImage(); fileUploader.clear()" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">✕</button>
-            </div>
-
-        </div>
-
-        <!-- Submit Button -->
-        <div class="flex justify-end gap-3 pt-4">
-            <p-button [label]="'Add'" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.productImage || !form.name || !form.price || !form.quantity"></p-button>
-        </div>
-    </form>
+        </form>
   </p-dialog>
     <app-section-spinner *ngIf="isLoading"/>
 </section>

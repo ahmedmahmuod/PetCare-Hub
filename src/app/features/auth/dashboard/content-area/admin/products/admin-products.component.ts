@@ -30,11 +30,11 @@ export class AdminProductsComponent  {
 
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'name', header: 'Product Name', type: 'text' },
-    { field: 'price', header: 'Product Price', type: 'text' },
-    { field: 'discount', header: 'Product Discount', type: 'percent' },
-    { field: 'category', header: 'Product Category', type: 'text' },
-    { field: 'productImage', header: 'Product Image', type: 'image' },
+    { field: 'name', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Data_Table.Rows.Product_Name'), type: 'text' },
+    { field: 'price', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Data_Table.Rows.Product_Price'), type: 'text' },
+    { field: 'discount', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Data_Table.Rows.Product_Discount'), type: 'percent' },
+    { field: 'category', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Data_Table.Rows.Product_Category'), type: 'text' },
+    { field: 'productImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Data_Table.Rows.Product_Image'), type: 'image' },
   ];
 
   smallCategories = ['food', 'accessories', 'grooming', 'medicine', 'toys'];
@@ -85,7 +85,7 @@ export class AdminProductsComponent  {
     
     // 1. Basic validation guard
     if (!this.form.productImage || !this.form.name || !this.form.price || !this.form.quantity) {
-      this.toastService.error('Please fill in all fields');
+      this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Form.Details'));
       return;
     }
 
@@ -109,13 +109,13 @@ export class AdminProductsComponent  {
         console.log(response);
         
         this.productsService.loadProducts();
-        this.toastService.success('Success','Product added sucessfully');
+        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Success_Res.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Success_Res.Message'));
         this.resetForm();
         this.isLoading = false;
       },
       error: (error) => {
         console.log(error);
-        this.toastService.error('Error','Failed to add product');
+        this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Error_Res.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Error_Res.Message'));
         this.isLoading = false;
       }
     })

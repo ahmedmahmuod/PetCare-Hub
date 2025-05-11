@@ -12,6 +12,7 @@ textarea {
 :host ::ng-deep .p-dropdown {
   border: 1px solid var(--brand-color);
   width: 100%;
+  background: transparent;
 }
 
 :host ::ng-deep .custom-upload {
