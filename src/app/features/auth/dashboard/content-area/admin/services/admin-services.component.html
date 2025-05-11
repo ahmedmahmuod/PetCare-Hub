@@ -7,39 +7,50 @@
         <div class="card flex flex-col gap-6">
 
             <!-- Service Type -->
-            <p-floatLabel>
-                <p-dropdown id="serviceType" name="serviceType" [(ngModel)]="form.serviceType" [options]="serviceTypes" required #serviceTypeRef="ngModel" />
-                <label for="serviceType">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Placeholder' | translate}}</label>
-                <small *ngIf="serviceTypeRef.invalid && serviceTypeRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Required' | translate}}</small>
-            </p-floatLabel>
+            <div class="card flex flex-col justify-content-center mb-3">
+                <p-floatLabel>
+                    <p-dropdown id="serviceType" name="serviceType" [(ngModel)]="form.serviceType" [options]="serviceTypes" required #serviceTypeRef="ngModel" />
+                    <label for="serviceType">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Placeholder' | translate}}</label>
+                </p-floatLabel>
+                <small *ngIf="serviceTypeRef.invalid && serviceTypeRef.touched" class="p-error mt-1">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Service_Type.Required' | translate}}</small>
+            </div>
 
             <!-- City -->
-            <p-floatLabel>
-                <input id="city" name="city" pInputText [(ngModel)]="form.city" required #cityRef="ngModel" />
-                <label for="city">{{'Dashboard.Admin.Sidebar_Links.Services.Form.City.Placeholder' | translate}}</label>
-                <small *ngIf="cityRef.invalid && cityRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.City.Required' | translate}}</small>
-            </p-floatLabel>
+            <div class="card flex flex-col justify-content-center mb-3">
+                <p-floatLabel>
+                    <input id="city" name="city" pInputText [(ngModel)]="form.city" required #cityRef="ngModel" />
+                    <label for="city">{{'Dashboard.Admin.Sidebar_Links.Services.Form.City.Placeholder' | translate}}</label>
+                </p-floatLabel>
+                <small *ngIf="cityRef.invalid && cityRef.touched" class="p-error mt-1">{{'Dashboard.Admin.Sidebar_Links.Services.Form.City.Required' | translate}}</small>
+            </div>
 
             <!-- About -->
-            <p-floatLabel>
-                <input id="about" name="about" pInputText [(ngModel)]="form.about" required minlength="10" #aboutRef="ngModel" />
-                <label for="about">{{'Dashboard.Admin.Sidebar_Links.Services.Form.About.Placeholder' | translate}}</label>
-                <small *ngIf="aboutRef.invalid && aboutRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.About.Required' | translate}}</small>
-            </p-floatLabel>
+            <div class="card flex flex-col justify-content-center mb-3">
+                <p-floatLabel>
+                    <input id="about" name="about" pInputText [(ngModel)]="form.about" required minlength="10" #aboutRef="ngModel" />
+                    <label for="about">{{'Dashboard.Admin.Sidebar_Links.Services.Form.About.Placeholder' | translate}}</label>
+                </p-floatLabel>
+                <small *ngIf="aboutRef.invalid && aboutRef.touched" class="p-error mt-1">{{'Dashboard.Admin.Sidebar_Links.Services.Form.About.Required' | translate}}</small>
+            </div>
 
             <!-- Price -->
-            <p-floatLabel>
-                <input id="price" name="price" pInputText type="number" min="1" [(ngModel)]="form.price" required #priceRef="ngModel" />
-                <label for="price">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price.Placeholder' | translate}}</label>
-                <small *ngIf="priceRef.invalid && priceRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price.Required' | translate}}</small>
-            </p-floatLabel>
+            <div class="card flex flex-col justify-content-center mb-3">
+                <p-floatLabel>
+                    <input id="price" name="price" pInputText type="number" min="1" [(ngModel)]="form.price" required #priceRef="ngModel" />
+                    <label for="price">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price.Placeholder' | translate}}</label>
+                </p-floatLabel>
+                <small *ngIf="priceRef.invalid && priceRef.touched" class="p-error mt-1">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price.Required' | translate}}</small>
+            </div>
 
             <!-- Price Per -->
-            <p-floatLabel>
-                <p-dropdown id="pricePer" name="pricePer" [(ngModel)]="form.pricePer" [options]="pricePerOptions" required #pricePerRef="ngModel" placeholder="Select" />
-                <label for="pricePer">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Placeholder' | translate}}</label>
-                <small *ngIf="pricePerRef.invalid && pricePerRef.touched" class="p-error">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Required' | translate}}</small>
-            </p-floatLabel>
+            <div class="card flex flex-col justify-content-center mb-3">
+                <p-floatLabel>
+                    <p-dropdown id="pricePer" name="pricePer" [(ngModel)]="form.pricePer" [options]="pricePerOptions" required #pricePerRef="ngModel" placeholder="Select" />
+                    <label for="pricePer">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Placeholder' | translate}}</label>
+                </p-floatLabel>
+                <small *ngIf="pricePerRef.invalid && pricePerRef.touched" class="p-error mt-1">{{'Dashboard.Admin.Sidebar_Links.Services.Form.Price_Per.Required' | translate}}</small>
+            </div>
+
 
             <!-- File Upload -->
             <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="('Dashboard.Admin.Sidebar_Links.Services.Form.Service_Image.Placeholder' | translate)" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />

@@ -46,7 +46,7 @@ export class AdminCouponsComponent implements OnInit {
 
   discounts = Array.from({ length: 20 }, (_, i) => (i + 1) * 5);
 
-    // Show dialog
+  // Show dialog
   onShowDialog(event: any) {
     this.showDialog = true;
   }

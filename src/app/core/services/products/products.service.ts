@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal, computed } from "@angular/core";
-import { map } from "rxjs";
+import { map, Observable } from "rxjs";
 import { environment } from "../../../../environments/environment.prod";
 import { Product, ProductResponse } from "../../models/products/product.model";
 
@@ -30,5 +30,10 @@ export class ProductsService {
   // Get all products
   getProductsSignal() {
     return this.productsSignal.asReadonly();
+  }
+
+  // Add new Product
+  addProduct(product: FormData): Observable<any> {
+    return this.http.post<any>(environment.apiUrl + 'product/createproduct', product);
   }
 }

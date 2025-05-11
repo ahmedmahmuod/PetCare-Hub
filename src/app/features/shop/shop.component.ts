@@ -65,9 +65,8 @@ export class ProductListComponent implements OnInit {
 
   filterProducts() {
     const filtered = this.products().filter(p => {
-      const matchSearch = p.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                          p.desc.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchCat = this.selectedCategories.length === 0 || this.selectedCategories.includes(p.category);
+    const matchSearch = (p.name?.toLowerCase() || '').includes(this.searchTerm.toLowerCase()) || (p.desc?.toLowerCase() || '').includes(this.searchTerm.toLowerCase());      
+    const matchCat = this.selectedCategories.length === 0 || this.selectedCategories.includes(p.category);
       return matchSearch && matchCat;
     });
     this.filteredProducts$.next(filtered);

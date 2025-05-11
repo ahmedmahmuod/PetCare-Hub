@@ -1,12 +1,124 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
+import { ProductsService } from '../../../../../../core/services/products/products.service';
+import { Product } from '../../../../../../core/models/products/product.model';
+import { CommonModule } from '@angular/common';
+import { CustomButtonComponent } from "../../../../../../shared/components/buttons/dashboard-btn.component";
+import { DataTableComponent } from "../../../../../../shared/components/data-table/data-table.component";
+import { Column } from '../blogs/admin-blogs.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
+import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
+import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ImportsModule],
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css'
 })
-export class AdminProductsComponent {
+export class AdminProductsComponent  {
+  private productsService = inject(ProductsService);
+  private translate = inject(TranslateService);
+  private toastService = inject(ToastService);
+
+  // Reactive computed products
+  allProducts = computed<Product[]>(() => this.productsService.getProductsSignal()());
+  isLoading: boolean = false;
+  showDialog = false;
+  imgPreview: string | null = null;
+
+  // Column Definitions for Table
+  columns: Column[] = [
+    { field: 'name', header: 'Product Name', type: 'text' },
+    { field: 'price', header: 'Product Price', type: 'text' },
+    { field: 'discount', header: 'Product Discount', type: 'percent' },
+    { field: 'category', header: 'Product Category', type: 'text' },
+    { field: 'productImage', header: 'Product Image', type: 'image' },
+  ];
+
+  smallCategories = ['food', 'accessories', 'grooming', 'medicine', 'toys'];
+  discounts = Array.from({ length: 20 }, (_, i) => (i + 1) * 5);
+
+    // Form data
+  form = {
+    name: '',
+    quantity: '',
+    price: '',
+    discount: '',
+    category: '',
+    productImage: null as string | null
+  };
+
+
+  // Show dialog
+  onShowDialog(event: any) {
+    this.showDialog = true;
+  }
+
+    // Handle image upload
+  handleImageUpload(event: any) {
+    const file = event.files?.[0];
+    if (file) {
+      this.form.productImage = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imgPreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  resetForm(): void {
+    this.form.productImage = null;
+    this.imgPreview = null;
+  }
+
+  // Clear selected image and preview
+  removeImage() {
+    this.form.productImage = null;
+    this.imgPreview = null;
+  }
+
+  onAddSerivce() {    
+    console.log(this.form);
+    
+    // 1. Basic validation guard
+    if (!this.form.productImage || !this.form.name || !this.form.price || !this.form.quantity) {
+      this.toastService.error('Please fill in all fields');
+      return;
+    }
+
+    // 2. Prepare form data
+    const formData = new FormData();
+
+    formData.append('name', this.form.name);
+    formData.append('price', this.form.price);
+    formData.append('quantity', this.form.quantity);
+    formData.append('discount', this.form.discount);
+    formData.append('category', this.form.category);
+    formData.append('productImage', this.form.productImage);
+
+    // 3. Set loading state and close dialog
+    this.isLoading = true;
+    this.showDialog = false;
+
+    // 4. Call the API
+    this.productsService.addProduct(formData).subscribe({
+      next: (response) => {        
+        console.log(response);
+        
+        this.productsService.loadProducts();
+        this.toastService.success('Success','Product added sucessfully');
+        this.resetForm();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.toastService.error('Error','Failed to add product');
+        this.isLoading = false;
+      }
+    })
+  }
 
 }

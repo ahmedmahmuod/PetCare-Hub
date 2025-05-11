@@ -17,3 +17,8 @@ textarea {
 :host ::ng-deep .custom-upload {
   background: var(--brand-seconed-color) !important;
 }
+
+::ng-deep .p-float-label label {
+  transform: translateY(-50%);
+  line-height: 1;
+}
