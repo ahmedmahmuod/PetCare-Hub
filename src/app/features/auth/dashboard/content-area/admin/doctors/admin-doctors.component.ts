@@ -8,10 +8,6 @@ import { ToastService } from '../../../../../../shared/services/toast-notificati
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
 
-interface UploadEvent {
-    originalEvent: Event;
-    files: File[];
-}
 @Component({
   selector: 'app-admin-doctors',
   standalone: true,
@@ -38,9 +34,9 @@ export class AdminDoctorsComponent implements OnInit{
 
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'name', header: 'Doctor Name', type: 'text' },
-    { field: 'rate', header: 'Doctor Rate', type: 'text' },
-    { field: 'doctorImage', header: 'Doctor Image', type: 'image' },
+    { field: 'name', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Data_Table.Rows.Doctor_Name'), type: 'text' },
+    { field: 'rate', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Data_Table.Rows.Doctor_Rate'), type: 'text' },
+    { field: 'doctorImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Data_Table.Rows.Doctor_Image'), type: 'image' },
   ];
 
   // Form data
@@ -55,23 +51,18 @@ export class AdminDoctorsComponent implements OnInit{
     imagesProfile: [] as File[]
   };
 
-
   petOptions = [
-    { label: 'Dog', value: 'dog' },
-    { label: 'Cat', value: 'cat' }
+    { label: this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Form.Accepted_Pets.Options.Dogs'), value: 'dogs' },
+    { label: this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Form.Accepted_Pets.Options.Cats'), value: 'cats' }
   ];
-
-  selectedPets: string[] = [];
 
   isPhoneValid(): boolean {
     return /^01[0-9]{9}$/.test(this.form.phone);
   }
 
-
   // Doctor Gallary
   handleImageGalleryUpload(event: any) {
     const files: File[] = event.files;
-
     for (let file of files) {
       this.form.imagesProfile.push(file); 
       const reader = new FileReader();
@@ -98,20 +89,20 @@ export class AdminDoctorsComponent implements OnInit{
     this.imgPreview = null;
   }
 
-resetForm(): void {
-  this.form = {
-    name: '',
-    about: '',
-    phone: '',
-    description: '',
-    accepted_pet_types: '',
-    specialized_in: '',
-    doctorImage: null,
-    imagesProfile: []
-  };
+  resetForm(): void {
+    this.form = {
+      name: '',
+      about: '',
+      phone: '',
+      description: '',
+      accepted_pet_types: '',
+      specialized_in: '',
+      doctorImage: null,
+      imagesProfile: []
+    };
 
-  this.imgPreview = null;
-}
+    this.imgPreview = null;
+  }
 
   // Show dialog
   onShowDialog(event: any) {
@@ -120,11 +111,8 @@ resetForm(): void {
 
   // On add doctor
   onAddDoctor() {    
-    console.log(this.form);
-    
     // 1. Basic validation guard
     if (!this.form.doctorImage || !this.form.name || !this.form.description) {
-      this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Form.Details'));
       return;
     }
 
@@ -134,12 +122,10 @@ resetForm(): void {
     formData.append('name', this.form.name);
     formData.append('description', this.form.description);
     formData.append('doctorImage', this.form.doctorImage!); 
-
     formData.append('phone', this.form.phone);
     formData.append('about', this.form.about);
     formData.append('specialized_in', this.form.specialized_in);
     formData.append('accepted_pet_types', this.form.accepted_pet_types);
-
     this.form.imagesProfile.forEach(file => {
       formData.append('imagesProfile', file);
     });
@@ -148,18 +134,16 @@ resetForm(): void {
     this.isLoading = true;
     this.showDialog = false;
     
-    // 4. Call the API
+    // 4. Call the API 
     this.vetServices.addDoctor(formData).subscribe({
       next: (response) => {
-        console.log(response);
-        this.toastService.success('Successfuly', 'Doctor added successfuly');
+        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Successful.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Successful.Message'));
         this.isLoading = false;
         this.resetForm()
       },
       
       error: (error) => {
-        console.error(error);
-        this.toastService.error('Error', 'Error to adding doctor');
+        this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Errors.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Errors.Message'));
         this.isLoading = false;
         this.resetForm()
       }

@@ -1119,8 +1119,72 @@
               "Message": "تم إنشاء المنتج بنجاح."
             }
           }
-        }
+        },
 
+        "Doctors": {
+          "Title": "الأطباء",
+          "Btn": "إضافة طبيب",
+          "Data_Table": {
+            "Rows": {
+              "Doctor_Name": "اسم الطبيب",
+              "Doctor_Rate": "تقييم الطبيب",
+              "Doctor_Image": "صورة الطبيب"
+            }
+          },
+
+          "Form": {
+            "Title": "إضافة طبيب جديد",
+            "Doctor_Name": {
+              "Placeholder": "اسم الطبيب",
+              "Required": "الاسم مطلوب"
+            },
+            "Doctor_About": {
+              "Placeholder": "نبذة عن الطبيب",
+              "Required": "النبذة مطلوبة"
+            },
+            "Doctor_Address": {
+              "Placeholder": "عنوان الطبيب",
+              "Required": "العنوان مطلوب"
+            },
+            "Doctor_Phone": {
+              "Label": "رقم هاتف الطبيب",
+              "Placeholder": "مثال: 01234567890",
+              "Required": "رقم غير صالح. يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقمًا."
+            },
+            "Doctor_Image": {
+              "Placeholder": "صورة الطبيب"
+            },
+            "Accepted_Pets": {
+              "Placeholder": "الحيوانات المقبولة",
+              "Required": "اختيار الحيوانات المقبولة مطلوب",
+              "Options": {
+                "Dogs": "كلاب",
+                "Cats": "قطط"
+              }
+            },
+            "Specialized_In": {
+              "Label": "متخصص في",
+              "Placeholder": "اكتب واضغط Enter",
+              "Required": "التخصصات مطلوبة"
+            },
+            "Gallary_Images": {
+              "Placeholder": "تحميل صور المعرض",
+              "Required": "صور المعرض مطلوبة"
+            },
+            "Btn": "إضافة"
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Title": "خطأ",
+              "Message": "حدث خطأ أثناء إضافة الطبيب"
+            },
+            "Successful": {
+              "Title": "تم بنجاح",
+              "Message": "تمت إضافة الطبيب بنجاح"
+            }
+          }
+        }
 
       }
     }

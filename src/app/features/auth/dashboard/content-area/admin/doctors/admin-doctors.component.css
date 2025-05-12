@@ -63,6 +63,12 @@ textarea.p-inputtextarea {
   transition: 0.2s ease-in-out;
 }
 
+::ng-deep p-floatLabel textarea + label {
+  margin-top: 10px;
+  background: var(--seconed-color);
+  padding: 5px 2px;
+}
+
 /* chips */
 ::ng-deep .custom-chips .p-chips-token {
   background-color: var(--brand-color);

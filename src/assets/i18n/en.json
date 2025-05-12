@@ -1105,7 +1105,7 @@
               "Product_Category": "Product Category",
               "Product_Image": "Product Image"
             }
-          },
+        },
 
           "Form": {
             "Name": {
@@ -1153,6 +1153,71 @@
               "Title": "Successfuly",
               "Message": "Product created successfully."
             }
+        }
+      },
+
+      "Doctors": {
+        "Title": "Doctors",
+        "Btn": "Add Doctor",
+        "Data_Table": {
+          "Rows": {
+            "Doctor_Name": "Doctor Name",
+            "Doctor_Rate": "Doctor Rate",
+            "Doctor_Image": "Doctor Image"
+          }
+        },
+
+        "Form": {
+          "Title": "Add new doctor",
+          "Doctor_Name": {
+            "Placeholder": "Doctor Name",
+            "Required": "Name is required"
+          },
+          "Doctor_About": {
+            "Placeholder": "About doctor",
+            "Required": "About is required"
+          },
+          "Doctor_Address": {
+            "Placeholder": "Doctor Address",
+            "Required": "Address is required"
+          },
+          "Doctor_Phone": {
+            "Label": "Doctor Phone",
+            "Placeholder": "Like: 01234567890",
+            "Required": "Invalid phone number. Must start with 010, 011, 012, or 015 and be 11 digits."
+          },
+          "Doctor_Image": {
+            "Placeholder": "Doctor Image"
+          },
+          "Accepted_Pets": {
+            "Placeholder": "Accepted Pets",
+            "Required": "Accepted Pets is required",
+            "Options": {
+              "Dogs": "Dogs",
+              "Cats": "Cats"
+            }
+          },
+          "Specialized_In": {
+            "Label": "Specialized In",
+            "Placeholder": "Type and press enter",
+            "Required": "Specializations is requierd"
+          },
+          "Gallary_Images": {
+            "Placeholder": "Upload Gallery Images",
+            "Required": "Gallery Images is requierd"
+          },
+          "Btn": "Add"
+        },
+
+        "Toasts": {
+          "Errors": {
+            "Title": "Errors",
+            "Message": "Error to adding doctor"
+          },
+          "Successful": {
+            "Title": "Successfuly",
+            "Message": "Doctor added successfuly"
+          }
         }
       }
       

@@ -21,6 +21,7 @@
   font-family: var(--font-family);
 }
 
+
 /* Fontausome fa-solid */
 .header-icon {
   color: var(--seconed-color);
@@ -56,3 +57,19 @@ input:-webkit-autofill {
   box-shadow: none !important;
 }
 
+
+@font-face {
+  font-family: "Inter var";
+  src: local("Arial");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter var";
+  src: local("Arial");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}

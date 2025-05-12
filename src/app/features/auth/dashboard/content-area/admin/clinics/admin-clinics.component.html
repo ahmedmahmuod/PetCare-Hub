@@ -1,1 +1,74 @@
-<p>admin-clinics works!</p>
+<section class="flex flex-col gap-y-5 mt-10 relative">
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add clinic'"/>
+  <app-data-table [hasActions]="false" [hasImage]="true" [data]="clinics" [columns]="columns"/>
+
+  <p-dialog [header]="'Add new clinic'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+        <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddDoctor()">
+            <div class="card flex flex-col gap-6">
+
+                <!-- Clinic Name -->
+                <div class="card flex flex-col justify-center">
+                    <p-floatLabel class="w-full">
+                        <input id="clinic_name" name="clinic_name" pInputText [(ngModel)]="form.vetName" required #nameRef="ngModel" class="w-full" />
+                        <label for="clinic_name">Clinic Name</label>
+                    </p-floatLabel>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">Clinic Name is requierd</small>
+                </div>
+
+                <!-- Clinic Bio -->
+                <div class="card flex flex-col justify-center">
+                    <p-floatLabel class="w-full">
+                        <input id="clinic_Bio" name="clinic_Bio" pInputText [(ngModel)]="form.bio" required #clinicBioRef="ngModel" class="w-full" />
+                        <label for="clinic_Bio">Clinic Bio</label>
+                    </p-floatLabel>
+                    <small *ngIf="clinicBioRef.invalid && clinicBioRef.touched" class="p-error ml-2">Clinic Bio is requierd</small>
+                </div>
+
+                <!-- Clinic Location -->
+                <div class="card flex flex-col justify-center">
+                    <p-floatLabel class="w-full">
+                        <input id="clinic_Location" name="clinic_Location" pInputText [(ngModel)]="form.locations.address" required #clinicLocationRef="ngModel" class="w-full" />
+                        <label for="clinic_Location">Clinic Location</label>
+                    </p-floatLabel>
+                    <small *ngIf="clinicLocationRef.invalid && clinicLocationRef.touched" class="p-error ml-2">Clinic Location is requierd</small>
+                </div>
+                
+                <!-- Clinic Number -->
+                <div class="flex-auto">
+                    <p-floatLabel class="w-full">
+                        <input #clinicNumberRef="ngModel" id="callNumber" name="callNumber" type="text" pInputText [(ngModel)]="form.callNumber" pattern="^01[0-9]{9}$" class="w-full p-inputtext-sm" required/>
+                        <label for="callNumber">Clinic Phone</label>
+                    </p-floatLabel>
+                    <small *ngIf="clinicNumberRef.invalid && clinicNumberRef.touched" class="p-error">
+                        Invalid phone number. Must start with 010, 011, 012, or 015 and be 11 digits.          
+                    </small>
+                </div>
+
+                <!-- Clinic Type -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <p-dropdown id="clinicType" name="clinicType" [(ngModel)]="form.desc" [options]="clinicType" [showClear]="true" required #discountRef="ngModel" class="w-full" />
+                        <label for="clinicType">Clinic Type</label>
+                    </p-floatLabel>
+                </div>
+
+
+                <!-- File Upload -->
+                <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="'Clinic Image'" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
+
+                <!-- Preview + Remove -->
+                <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
+                    <img [src]="imgPreview" alt="Image Preview" class="w-full h-full object-cover rounded shadow" />
+                    <button type="button" (click)="removeImage(); fileUploader.clear()" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">✕</button>
+                </div>
+
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end gap-3 pt-4">
+                <p-button [label]="('Dashboard.Admin.Sidebar_Links.Doctors.Form.Btn' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.vetImage || !form.vetName || !form.bio || !form.bio || !form.locations "></p-button>
+            </div>
+        </form>
+  </p-dialog>
+  <app-section-spinner *ngIf="isLoading"/>
+</section>

@@ -44,7 +44,7 @@ export class VetsService {
     loadClinics() {
     this.isLoadingClinics.set(true);
     this.http.get<VetClinicResponse>(environment.apiUrl + 'vet/getallvet')
-        .pipe(map(res => res.data.filter(clinic => clinic.vetImage && clinic.desc)))
+        .pipe(map(res => res.data.filter(clinic => clinic.vetImage && clinic.vetName)))
         .subscribe({
         next: (clinics) => {
             this.clinicsSignal.set(clinics);
@@ -73,5 +73,10 @@ export class VetsService {
     // Add New Doctor
     addDoctor(doctor: FormData): Observable<any> {
         return this.http.post<any>(environment.apiUrl + 'doctors/add-doctor', doctor);
+    }
+
+    // Add New Clinic
+    addClinic(clinic: FormData): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + 'vet/createvet', clinic);
     }
 }
