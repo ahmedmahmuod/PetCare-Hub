@@ -1274,6 +1274,25 @@
             "Message": "Clinic added successfuly"
           }
         }
+      },
+
+      "Orders": {
+        "Title": "Orders",
+          "Data_Table": {
+          "Rows": {
+            "Order_Price": "Total Price",
+            "Order_Item": "Order Item",
+            "Payment_Methode": "Payment Method",
+            "Deliverd": "Deliverd"
+          },
+
+          "Currncy": "L.E",
+          "Boolen": {
+            "Yes": "Yes",
+            "No": "No"
+          },
+          "Item": "Item"
+        }
       }
       
     }

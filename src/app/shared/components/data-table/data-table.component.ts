@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Column } from '../../../features/auth/dashboard/content-area/admin/blogs/admin-blogs.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule],
+  imports: [CommonModule, TableModule, ButtonModule, TranslateModule],
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.css']
 })

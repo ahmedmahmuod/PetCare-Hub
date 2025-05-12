@@ -19,10 +19,10 @@ export class AdminOrdersComponent implements OnInit {
 
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'totalOrderPrice', header: 'Total Price', type: 'price' },
-    { field: 'cartItems', header: 'Cart Items', type: 'length' },
-    { field: 'paymentMethodType', header: 'Payment Method', type: 'text' },
-    { field: 'paidAndDeliveredAt', header: 'Deliverd', type: 'boolen' },
+    { field: 'totalOrderPrice', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Rows.Order_Price'), type: 'price' },
+    { field: 'cartItems', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Rows.Order_Item'), type: 'length' },
+    { field: 'paymentMethodType', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Rows.Payment_Methode'), type: 'text' },
+    { field: 'paidAndDeliveredAt', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Rows.Deliverd'), type: 'boolen' },
   ];
   
   ngOnInit(): void {

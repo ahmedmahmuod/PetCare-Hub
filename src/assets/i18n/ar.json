@@ -1239,8 +1239,25 @@
               "Message": "تمت إضافة العيادة بنجاح"
             }
           }
-        }
+        },
 
+        "Orders": {
+          "Title": "الطلبات",
+          "Data_Table": {
+            "Rows": {
+              "Order_Price": "السعر الإجمالي",
+              "Order_Item": "عنصر الطلب",
+              "Payment_Methode": "طريقة الدفع",
+              "Deliverd": "تم التوصيل"
+            },
+            "Currncy": "ج.م",
+            "Boolen": {
+              "Yes": "نعم",
+              "No": "لا"
+            },
+            "Item": "العنصر"
+          }
+        }
 
       }
     }

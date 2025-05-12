@@ -42,9 +42,9 @@
                 <img *ngSwitchCase="'image'" [src]="row[col.field]" [alt]="col.header" class="w-12 h-12 object-cover rounded" />
                 <span *ngSwitchCase="'percent'">{{ row[col.field] + '%' }}</span>
                 <span *ngSwitchCase="'date'">{{ row[col.field] | date }}</span>
-                <span *ngSwitchCase="'length'">{{ row[col.field].length }} Item</span>
-                <span *ngSwitchCase="'price'">{{ row[col.field] }} L.E</span>
-                <span *ngSwitchCase="'boolen'">{{ (row[col.field]) === true ? 'Yes' : 'No' }}</span>
+                <span *ngSwitchCase="'length'">{{ row[col.field].length }} {{'Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Item' | translate}}</span>
+                <span *ngSwitchCase="'price'">{{ row[col.field] }} {{'Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Currncy' | translate}}</span>
+                <span *ngSwitchCase="'boolen'">{{ (row[col.field]) === true ? ('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Boolen.Yes' | translate) : ('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Boolen.No' | translate) }}</span>
                 <span *ngSwitchDefault>
                   {{ row[col.field] }}
                 </span>
