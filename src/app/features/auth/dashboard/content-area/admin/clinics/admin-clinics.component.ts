@@ -1,3 +1,4 @@
+import { transition } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { VetsService } from '../../../../../../core/services/veterinary/veterinary.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -47,12 +48,12 @@ export class AdminClinicsComponent {
 
     // Column Definitions for Table
   columns: Column[] = [
-    { field: 'vetName', header: 'Clinic Name', type: 'text' },
-    { field: 'rate', header: 'Clinic Rate', type: 'text' },
-    { field: 'vetImage', header: 'Clinic Image', type: 'image' },
+    { field: 'vetName', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Data_Table.Rows.Clinic_Name'), type: 'text' },
+    { field: 'rate', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Data_Table.Rows.Clinic_Rate'), type: 'text' },
+    { field: 'vetImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Data_Table.Rows.Clinic_Image'), type: 'image' },
   ];
 
-  clinicType = ["Pet Clinic", "Veterinary Clinic"]
+  clinicType = [this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Type.Options.Pet_Clinic'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Type.Options.Veterinary_Clinic')]
 
   // Show dialog
   onShowDialog(event: any) {
@@ -119,13 +120,13 @@ export class AdminClinicsComponent {
     this.vetServices.addClinic(formData).subscribe({
       next: (response) => {
         this.vetServices.loadClinics();
-        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Successful.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Successful.Message'));
+        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Toasts.Successful.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Toasts.Successful.Message'));
         this.isLoading = false;
         this.resetForm()
       },
       
       error: (error) => {
-        this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Errors.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Doctors.Toasts.Errors.Message'));
+        this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Toasts.Errors.Title'), this.translate.instant('Dashboard.Admin.Sidebar_Links.Clinics.Toasts.Errors.Message'));
         this.isLoading = false;
         this.resetForm()
       }

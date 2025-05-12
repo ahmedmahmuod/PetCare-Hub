@@ -1219,6 +1219,61 @@
             "Message": "Doctor added successfuly"
           }
         }
+      },
+
+      "Clinics": {
+        "Title": "Clinics",
+        "Btn": "Add Clinic",
+        "Data_Table": {
+          "Rows": {
+            "Clinic_Name": "Clinic Name",
+            "Clinic_Rate": "Clinic Rate",
+            "Clinic_Image": "Clinic Image"
+          }
+        },
+
+        "Form": {
+          "Title": "Add new clinic",
+          "Clinic_Name": {
+            "Placeholder": "Clinic Name",
+            "Required": "Name is required"
+          },
+          "Clinic_Bio": {
+            "Placeholder": "Clinic Bio",
+            "Required": "Bio is required"
+          },
+          "Clinic_Location": {
+            "Placeholder": "Clinic Location",
+            "Required": "Location is required"
+          },
+          "Clinic_Phone": {
+            "Label": "Clinic Phone",
+            "Required": "Invalid phone number. Must start with 010, 011, 012, or 015 and be 11 digits."
+          },
+          "Clinic_Type": {
+            "Label": "Clinic Type",
+            "Required": "Type is required.",
+            "Options": {
+              "Pet_Clinic": "Pet Clinic",
+              "Veterinary_Clinic": "Veterinary Clinic"
+            }
+          },
+          "Clinic_Image": {
+            "Placeholder": "Clinic Image"
+          },
+          "Btn": "Add"
+        },
+
+        "Toasts": {
+          "Errors": {
+            "Title": "Errors",
+            "Message": "Error to adding clinic"
+          },
+          "Successful": {
+            "Title": "Successfuly",
+            "Message": "Clinic added successfuly"
+          }
+        }
       }
       
     }

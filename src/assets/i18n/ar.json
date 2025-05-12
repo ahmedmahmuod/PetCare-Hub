@@ -1184,7 +1184,63 @@
               "Message": "تمت إضافة الطبيب بنجاح"
             }
           }
+        },
+
+        "Clinics": {
+          "Title": "العيادات",
+          "Btn": "إضافة عيادة",
+          "Data_Table": {
+            "Rows": {
+              "Clinic_Name": "اسم العيادة",
+              "Clinic_Rate": "تقييم العيادة",
+              "Clinic_Image": "صورة العيادة"
+            }
+          },
+
+          "Form": {
+            "Title": "إضافة عيادة جديدة",
+            "Clinic_Name": {
+              "Placeholder": "اسم العيادة",
+              "Required": "الاسم مطلوب"
+            },
+            "Clinic_Bio": {
+              "Placeholder": "نبذة عن العيادة",
+              "Required": "النبذة مطلوبة"
+            },
+            "Clinic_Location": {
+              "Placeholder": "عنوان العيادة",
+              "Required": "العنوان مطلوب"
+            },
+            "Clinic_Phone": {
+              "Label": "رقم هاتف العيادة",
+              "Required": "رقم الهاتف غير صحيح. يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقمًا."
+            },
+            "Clinic_Type": {
+              "Label": "نوع العيادة",
+              "Required": "النوع مطلوب.",
+              "Options": {
+                "Pet_Clinic": "عيادة للحيوانات الأليفة",
+                "Veterinary_Clinic": "عيادة بيطرية"
+              }
+            },
+            "Clinic_Image": {
+              "Placeholder": "صورة العيادة"
+            },
+            "Btn": "إضافة"
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Title": "خطأ",
+              "Message": "حدث خطأ أثناء إضافة العيادة"
+            },
+            "Successful": {
+              "Title": "تم بنجاح",
+              "Message": "تمت إضافة العيادة بنجاح"
+            }
+          }
         }
+
 
       }
     }

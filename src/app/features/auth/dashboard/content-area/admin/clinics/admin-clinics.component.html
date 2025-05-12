@@ -1,8 +1,8 @@
 <section class="flex flex-col gap-y-5 mt-10 relative">
-  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add clinic'"/>
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="('Dashboard.Admin.Sidebar_Links.Clinics.Btn' | translate)"/>
   <app-data-table [hasActions]="false" [hasImage]="true" [data]="clinics" [columns]="columns"/>
 
-  <p-dialog [header]="'Add new clinic'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+  <p-dialog [header]="('Dashboard.Admin.Sidebar_Links.Clinics.Form.Title' | translate)" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
         <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddDoctor()">
             <div class="card flex flex-col gap-6">
 
@@ -10,51 +10,55 @@
                 <div class="card flex flex-col justify-center">
                     <p-floatLabel class="w-full">
                         <input id="clinic_name" name="clinic_name" pInputText [(ngModel)]="form.vetName" required #nameRef="ngModel" class="w-full" />
-                        <label for="clinic_name">Clinic Name</label>
+                        <label for="clinic_name">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Name.Placeholder' | translate}}</label>
                     </p-floatLabel>
-                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">Clinic Name is requierd</small>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Name.Required' | translate}}</small>
                 </div>
 
                 <!-- Clinic Bio -->
                 <div class="card flex flex-col justify-center">
                     <p-floatLabel class="w-full">
                         <input id="clinic_Bio" name="clinic_Bio" pInputText [(ngModel)]="form.bio" required #clinicBioRef="ngModel" class="w-full" />
-                        <label for="clinic_Bio">Clinic Bio</label>
+                        <label for="clinic_Bio">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Bio.Placeholder' | translate}}</label>
                     </p-floatLabel>
-                    <small *ngIf="clinicBioRef.invalid && clinicBioRef.touched" class="p-error ml-2">Clinic Bio is requierd</small>
+                    <small *ngIf="clinicBioRef.invalid && clinicBioRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Bio.Required' | translate}}</small>
                 </div>
 
                 <!-- Clinic Location -->
                 <div class="card flex flex-col justify-center">
                     <p-floatLabel class="w-full">
                         <input id="clinic_Location" name="clinic_Location" pInputText [(ngModel)]="form.locations.address" required #clinicLocationRef="ngModel" class="w-full" />
-                        <label for="clinic_Location">Clinic Location</label>
+                        <label for="clinic_Location">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Location.Placeholder' | translate}}</label>
                     </p-floatLabel>
-                    <small *ngIf="clinicLocationRef.invalid && clinicLocationRef.touched" class="p-error ml-2">Clinic Location is requierd</small>
+                    <small *ngIf="clinicLocationRef.invalid && clinicLocationRef.touched" class="p-error ml-2">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Location.Required' | translate}}</small>
                 </div>
                 
                 <!-- Clinic Number -->
                 <div class="flex-auto">
                     <p-floatLabel class="w-full">
                         <input #clinicNumberRef="ngModel" id="callNumber" name="callNumber" type="text" pInputText [(ngModel)]="form.callNumber" pattern="^01[0-9]{9}$" class="w-full p-inputtext-sm" required/>
-                        <label for="callNumber">Clinic Phone</label>
+                        <label for="callNumber">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Phone.Label' | translate}}</label>
                     </p-floatLabel>
                     <small *ngIf="clinicNumberRef.invalid && clinicNumberRef.touched" class="p-error">
-                        Invalid phone number. Must start with 010, 011, 012, or 015 and be 11 digits.          
+                        {{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Phone.Required' | translate}}         
                     </small>
                 </div>
-
+                
                 <!-- Clinic Type -->
                 <div class="card flex flex-col justify-content-center mb-3">
                     <p-floatLabel class="w-full">
                         <p-dropdown id="clinicType" name="clinicType" [(ngModel)]="form.desc" [options]="clinicType" [showClear]="true" required #discountRef="ngModel" class="w-full" />
-                        <label for="clinicType">Clinic Type</label>
+                        <label for="clinicType">{{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Type.Label' | translate}}</label>
                     </p-floatLabel>
+                    
+                    <small *ngIf="discountRef.invalid && discountRef.touched" class="p-error">
+                        {{'Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Type.Required' | translate}}     
+                    </small>
                 </div>
 
 
                 <!-- File Upload -->
-                <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="'Clinic Image'" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
+                <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="('Dashboard.Admin.Sidebar_Links.Clinics.Form.Clinic_Image.Placeholder' | translate)" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
 
                 <!-- Preview + Remove -->
                 <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
@@ -66,7 +70,7 @@
 
             <!-- Submit Button -->
             <div class="flex justify-end gap-3 pt-4">
-                <p-button [label]="('Dashboard.Admin.Sidebar_Links.Doctors.Form.Btn' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.vetImage || !form.vetName || !form.bio || !form.bio || !form.locations "></p-button>
+                <p-button [label]="('Dashboard.Admin.Sidebar_Links.Clinics.Form.Btn' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.vetImage || !form.vetName || !form.bio || !form.bio || !form.locations "></p-button>
             </div>
         </form>
   </p-dialog>
