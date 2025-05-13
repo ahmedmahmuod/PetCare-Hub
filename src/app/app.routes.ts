@@ -50,8 +50,7 @@ export const routes: Routes = [
       { path: 'account-details', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/my-account/my-account.component').then(m => m.MyAccountComponent) },
       { path: 'dashboard', canActivate: [AuthRoleGuard], loadComponent: () => import('./features/auth/dashboard/dashboard.component').then(m => m.DashboardComponent), 
         children: [
-          { path: '', pathMatch: 'full', redirectTo: 'reviews' },
-          { path: 'reviews', loadComponent: () => import('./features/auth/dashboard/content-area/user/my-reviews/user-reviews.component').then(m => m.UserReviewsComponent )},
+          { path: '', pathMatch: 'full', redirectTo: 'pets' },
           { path: 'pets', loadComponent: () => import('./features/auth/dashboard/content-area/user/my-pets/user-pets.component').then(m => m.UserPetsComponent )},
           { path: 'orders', loadComponent: () => import('./features/auth/dashboard/content-area/user/my-orders/user-orders.component').then(m => m.UserOrdersComponent )},
         ]

@@ -6,8 +6,8 @@
 /* Variables Roots */
 :root {
   /* colors */
-  --brand-color: #155B84;
-  --brand-seconed-color: #FFC107;
+  --brand-color: #155b84;
+  --brand-seconed-color: #ffc107;
   --seconed-color: #ffffff;
   --third-color: #f1f0f0;
   --fourth-color: #7f8487;
@@ -20,7 +20,6 @@
 * {
   font-family: var(--font-family);
 }
-
 
 /* Fontausome fa-solid */
 .header-icon {
@@ -56,7 +55,6 @@ input:-webkit-autofill {
   outline: none !important;
   box-shadow: none !important;
 }
-
 
 @font-face {
   font-family: "Inter var";

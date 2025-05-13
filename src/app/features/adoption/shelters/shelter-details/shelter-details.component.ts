@@ -12,6 +12,7 @@ import { Pet } from '../../../../core/models/pets/pet.model';
 import { SliderComponent } from "../../../../shared/components/slider/slicder.component";
 import { ReviewsService } from '../../../../core/services/reviews/reviews.service';
 import { ToastService } from '../../../../shared/services/toast-notification/tost-notification.service';
+import { Review } from '../../../../core/models/service/service.model';
 
 @Component({
   selector: 'app-shelter-details',
@@ -33,7 +34,6 @@ export class ShelterDetailsComponent implements OnInit {
 
   shelter$!: Observable<ShelterModel>;
   originalShelterPets$: Observable<Pet[]> = of([]);
-  filteredShelterPets$: Observable<Pet[]> = of([]);
   isLoading: boolean = false;
 
   // Image Modal
@@ -59,6 +59,46 @@ export class ShelterDetailsComponent implements OnInit {
     })
   }
 
+  // deleting review func
+  onDeletedReview(review: any) {    
+    this.isLoading = true;
+    this.reviewsService.deleteReview(review).subscribe({
+      next: (res) => {
+        this.sheltersService.getShelterById(this.shleterId).subscribe({
+          next: (data) => {
+            this.shelter$ = of(data);
+            this.isLoading = false;
+            this.toastService.success('Success!', 'Your rating has been deleting successfully..');
+          }
+        })
+      }, 
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    })
+  }
+
+  // updating review function
+  onUpdatingReview(review: any) {    
+    this.isLoading = true;
+    
+    this.reviewsService.updateReview(review).subscribe({
+      next: (res) => {
+        this.sheltersService.getShelterById(this.shleterId).subscribe({
+          next: (data) => {
+            this.shelter$ = of(data);
+            this.isLoading = false;
+            this.toastService.success('Success!', 'Your rating has been updating successfully..');
+          }
+        })
+      }, 
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    })
+  }
 
   // add review function
   addSubmetReview(review: any) {    

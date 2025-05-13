@@ -45,6 +45,7 @@ export class SingleServiceComponent implements OnInit {
   hoverRating = 0;
   loading = signal<boolean>(false);
   isLoading: boolean = false;
+  reviewsLoading: boolean = false;
   role = this.tokenService.role$;
 
   // ngOninit
@@ -114,66 +115,108 @@ export class SingleServiceComponent implements OnInit {
   }
 
   // Submet of form service request 
-submitBooking(): void {
-  this.tokenService.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
-    if (!isLoggedIn) {
-      this.toastService.error('Login Required', 'Please log in first to continue.');
-      return;
-    }
-
-    this.tokenService.role$.pipe(take(1)).subscribe((role) => {
-      if (role === 'admin') {
-        this.toastService.info(
-          this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Title'),
-          this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Message')
-        );
+  submitBooking(): void {
+    this.tokenService.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
+      if (!isLoggedIn) {
+        this.toastService.error('Login Required', 'Please log in first to continue.');
         return;
       }
 
-      const requestData = {
-        ...this.bookingForm.value,
-        serviceType: this.serviceData.name,
-      };
-
-      this.isLoading = true;
-      this.serviceServices.addServiceRequest(requestData).subscribe({
-        next: () => {
-          this.toastService.success('Success!', 'Your request has been submitted successfully.');
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
-          this.isLoading = false;
+      this.tokenService.role$.pipe(take(1)).subscribe((role) => {
+        if (role === 'admin') {
+          this.toastService.info(
+            this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Title'),
+            this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Message')
+          );
+          return;
         }
-      });
 
-      // Reset form
-      this.bookingForm.reset({
-        city: '',
-        duration: '',
-        date: '',
-        paymentMethod: '',
+        const requestData = {
+          ...this.bookingForm.value,
+          serviceType: this.serviceData.name,
+        };
+
+        this.isLoading = true;
+        this.serviceServices.addServiceRequest(requestData).subscribe({
+          next: () => {
+            this.toastService.success('Success!', 'Your request has been submitted successfully.');
+            this.isLoading = false;
+          },
+          error: (err) => {
+            this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+            this.isLoading = false;
+          }
+        });
+
+        // Reset form
+        this.bookingForm.reset({
+          city: '',
+          duration: '',
+          date: '',
+          paymentMethod: '',
+        });
       });
     });
-  });
-}
+  }
 
-
-  // add review function
-  addSubmetReview(review: any) {    
-    this.isLoading = true;
-    this.reviewsService.addServiceReview(review.text, review.rating, this.serviceId).subscribe({
+  // delete review function
+  onDeletedReview(review: any) {    
+    this.reviewsLoading = true;
+    this.reviewsService.deleteReview(review).subscribe({
       next: (res) => {
         this.serviceServices.getSingleService(this.serviceId).subscribe({
           next: (data) => {
             this.serviceData = data;
-            this.isLoading = false;
+            this.reviewsLoading = false;
+            this.toastService.success('Success!', 'Your rating has been deleted successfully..');
+          }
+        })
+      },
+
+      error: (err) => {
+        this.reviewsLoading = false;
+        this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
+      },
+    })
+  }
+
+  // updating review function
+  onUpdatingReview(review: any) {    
+    this.reviewsLoading = true;
+    
+    this.reviewsService.updateReview(review).subscribe({
+      next: (res) => {
+        this.serviceServices.getSingleService(this.serviceId).subscribe({
+          next: (data) => {
+            this.serviceData = data;
+            this.reviewsLoading = false;
+            this.toastService.success('Success!', 'Your rating has been updating successfully..');
+          }
+        })
+      },
+
+      error: (err) => {
+        this.reviewsLoading = false;
+        this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
+      },
+    })
+  }
+
+  // add review function
+  addSubmetReview(review: any) {    
+    this.reviewsLoading = true;
+    this.reviewsService.addServiceReview(review.review, review.rating, this.serviceId).subscribe({
+      next: (res) => {
+        this.serviceServices.getSingleService(this.serviceId).subscribe({
+          next: (data) => {
+            this.serviceData = data;
+            this.reviewsLoading = false;
             this.toastService.success('Success!', 'Your rating has been added successfully..');
           }
         })
       },
       error: (err) => {
-        this.isLoading = false;
+        this.reviewsLoading = false;
         this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
       },
     });

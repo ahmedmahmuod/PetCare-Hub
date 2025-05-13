@@ -27,7 +27,7 @@ import { ToastService } from '../../../../shared/services/toast-notification/tos
       </div>
     </div>
 
-    @if(isLoading) {
+    @if(initialLoading) {
       <app-doctor-profile-skeleton/>
     } @else {
       <div class="min-h-screen" *ngIf="(doctor$ | async) as doctor">
@@ -134,7 +134,7 @@ import { ToastService } from '../../../../shared/services/toast-notification/tos
           <!-- Reviews -->
           <div class="p-6 shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
               <h2 class="text-2xl font-bold mb-4 text-brand-color">{{'Pages.Vets.Doctor_Page.Profile.Reviews' | translate}}</h2>
-              <app-reviews [reviews]="doctor.reviewsOfDoctor" [isLoading]="loading" (reviewSubmitted)="addSubmetReview($event)"/>
+              <app-reviews (reviewUpdated)="onUpdatingReview($event)" (reviewDeleted)="onDeletedReview($event)" [reviews]="doctor.reviewsOfDoctor" [isLoading]="isLoading" (reviewSubmitted)="addSubmetReview($event)"/>
           </div>
         </div>
       </div>
@@ -158,17 +158,19 @@ export class DoctorProfileComponent implements OnInit {
   // Variables
   doctor$!: Observable<DoctorModel>;
   isLoading: boolean = false;
-  loading: boolean = false;
+  initialLoading: boolean = false;
   selectedImage: string | null = null;
   doctorId: string  = '';
 
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.initialLoading = true;
     this.doctorId = this.route.snapshot.paramMap.get('doctorId') || '';    
     this.vetService.getDoctor(this.doctorId).subscribe((res) => {
       this.doctor$ = of(res);
       this.isLoading = false;
+      this.initialLoading = false;
     })  
   }
   
@@ -180,6 +182,44 @@ export class DoctorProfileComponent implements OnInit {
     this.selectedImage = null;
   }
 
+  // delete review function
+  onDeletedReview(review: any) {    
+    this.isLoading = true;
+    this.reviewsService.deleteReview(review).subscribe({
+      next: (res) => {
+        this.vetService.getDoctor(this.doctorId).subscribe((res) => {
+          this.doctor$ = of(res);
+          this.isLoading = false;
+          this.toastService.success('Success!', 'Your rating has been deleted successfully..');
+        })
+      }, 
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    })
+  }
+
+    // updating review function
+  onUpdatingReview(review: any) {    
+    this.isLoading = true;
+
+    this.reviewsService.deleteReview(review).subscribe({
+      next: (res) => {
+        this.vetService.getDoctor(this.doctorId).subscribe((res) => {
+          this.doctor$ = of(res);
+          this.isLoading = false;
+          this.toastService.success('Success!', 'Your rating has been updating successfully..');
+        })
+      }, 
+      error: (err) => {
+        this.isLoading = false;
+        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+      },
+    })
+  }
+
+
   // add review function
   addSubmetReview(review: any) {    
     this.isLoading = true;
@@ -187,14 +227,14 @@ export class DoctorProfileComponent implements OnInit {
       next: (res) => {
         this.vetService.getDoctor(this.doctorId).subscribe((res) => {
           this.doctor$ = of(res);
-          this.isLoading = false;
           this.toastService.success('Success!', 'Your rating has been added successfully..');
+          this.isLoading = false;
         })  
 
       },
       error: (err) => {
-        this.isLoading = false;
         this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+        this.isLoading = false;
       },
     });
   }

@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   template: `
     <div class="section-spinner-overlay flex flex-col justify-center gap-3">
       <div class="spinner"></div>
-      <span class="font-bold text-brand-seconed-color">{{'Global.Loading' | translate}}</span>
+      <span class="font-bold text-brand-color">{{'Global.Loading' | translate}}</span>
     </div>
   `,
   styles: [`
@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     .spinner {
       width: 40px;
       height: 40px;
-      border: 4px solid var(--brand-seconed-color, #3498db);
+      border: 7px solid var(--brand-color, #3498db);
       border-top: 4px solid transparent;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;

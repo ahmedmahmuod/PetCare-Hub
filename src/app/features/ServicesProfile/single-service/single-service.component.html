@@ -124,7 +124,7 @@
         </div>
       </div>
       
-      <app-reviews *ngIf="activeTab === 'reviews'" [reviews]="serviceData.reviewsOfService" (reviewSubmitted)="addSubmetReview($event)" [isLoading]="isLoading"></app-reviews>
+      <app-reviews (reviewUpdated)="onUpdatingReview($event)" (reviewDeleted)="onDeletedReview($event)" [isLoading]="reviewsLoading" *ngIf="activeTab === 'reviews'" [reviews]="serviceData.reviewsOfService" (reviewSubmitted)="addSubmetReview($event)"></app-reviews>
      
     </div>
   </div>

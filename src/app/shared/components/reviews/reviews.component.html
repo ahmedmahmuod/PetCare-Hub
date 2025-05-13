@@ -1,0 +1,90 @@
+    <div class="reviews-container">
+      <!-- Reviews List -->
+      <div class="reviews-list relative" *ngIf="reviews.length > 0">
+        <app-section-spinner *ngIf="isLoading"/>
+        <div *ngFor="let review of reviews" class="review-item">
+          <div class="review-main-content">
+            <img [src]="review.user?.profileImage || 'assets/images/default-avatar.png'" alt="User" class="review-avatar" />
+            <div class="review-content">
+              <div class="review-header">
+                <span class="review-author cursor-pointer" [routerLink]="'/community/profile/' + review.user?.id">{{ review.user?.name || review.name }}</span>
+                <span class="review-date">{{ review.createdAt | date }}</span>
+              </div>
+              <div class="review-stars">
+                <span *ngFor="let star of [1,2,3,4,5]" [class.active]="star <= review.rating">★</span>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <p class="review-text" *ngIf="!review.isEditing">{{ review.review }}</p>
+
+                <!-- Actions (shown when not editing and user is owner) -->
+                <div class="review-actions" *ngIf="review.user.id === (user | async)?._id && !review.isEditing">
+                  <button class="action-btn edit" title="Edit Review" (click)="startEdit(review)">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <span class="action-label">{{ 'Edit' | translate }}</span>
+                  </button>
+
+                  <button class="action-btn delete" title="Delete Review" (click)="deleteReview($event, review)">
+                    <i class="fa-regular fa-trash-can"></i>
+                    <span class="action-label">{{ 'Delete' | translate }}</span>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Edit Form (shown when editing) -->
+              <form *ngIf="review.isEditing" [formGroup]="editForm" (ngSubmit)="saveEdit(review)" class="edit-review-form">
+                <div class="rating-input">
+                  <div class="stars-selector">
+                    <span *ngFor="let star of [1,2,3,4,5]" (click)="setEditRating(star)" [class.active]="star <= editForm.value.rating">★</span>
+                  </div>
+                </div>
+                <textarea formControlName="review" class="edit-textarea"></textarea>
+                <div class="edit-actions">
+                  <button type="submit" class="save-btn" [disabled]="editForm.invalid">
+                    {{ 'Save' | translate }}
+                  </button>
+                  <button type="button" class="cancel-btn" (click)="cancelEdit(review)">
+                    {{ 'Cancel' | translate }}
+                  </button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="reviews.length === 0" class="empty-reviews">
+        <p>{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Is_Empty' | translate }}</p>
+      </div>
+
+      <!-- Review Form (if user is logged in) -->
+      <form *ngIf="isLoggedIn | async" [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form relative">
+        <app-section-spinner *ngIf="isLoading"/>
+        <h3>{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Title' | translate }}</h3>
+        
+        <!-- Rating -->
+        <div class="rating-input">
+          <div class="stars-selector">
+            <span *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)" (mouseenter)="hoverRating = star" (mouseleave)="hoverRating = 0" [class.active]="star <= (hoverRating || reviewForm.value.rating)">
+              ★
+            </span>
+          </div>
+        </div>
+
+        <!-- Review Text -->
+        <div class="form-group">
+          <textarea formControlName="review" [placeholder]="'Pages.Services.Single_Service.Tabs.Reviews_Page.Placeholder' | translate" class="review-textarea"></textarea>
+          <small *ngIf="reviewForm.get('review')?.invalid && reviewForm.get('review')?.touched" class="error-message">
+            {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Error' | translate }}
+          </small>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button" [disabled]="reviewForm.invalid">
+          {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Btn' | translate }}
+        </button>
+      </form>
+      <p-confirmDialog />
+    </div>

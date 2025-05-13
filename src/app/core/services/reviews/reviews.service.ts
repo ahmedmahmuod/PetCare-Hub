@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.prod';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,15 @@ export class ReviewsService {
     return this.http.post(environment.apiUrl + 'reviews/createReviewDoctor/' + doctorId , { review, rating });
   }
 
-  deleteReview(reviewId: string) {
-    // Logic to delete a review
+  // Delete my Review
+  deleteReview(reviewId: string): Observable<any> {
+    return this.http.delete<any>(environment.apiUrl + `reviews/deleteReview/${reviewId}`);
   }
+
+  // Update my Review
+  updateReview(review: any): Observable<any> {
+    const body = { review: review.review, rating: review.rating };
+    return this.http.patch<any>(`${environment.apiUrl}reviews/updateReview/${review.id}`, body)
+  }
+
 }

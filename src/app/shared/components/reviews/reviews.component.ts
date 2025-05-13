@@ -7,301 +7,59 @@ import { SectionSpinnerComponent } from "../spinner/spinner-loading.component";
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast-notification/tost-notification.service';
 import { take } from 'rxjs';
+import { UsersService } from '../../../core/services/user/users.service';
+import { ImportsModule } from '../data-table/imports';
+import { ConfirmationService } from 'primeng/api';
+import { Review } from '../../../core/models/service/service.model';
+import { ReviewsService } from '../../../core/services/reviews/reviews.service';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, SectionSpinnerComponent, RouterLink ],
-  template: `
-    <div class="reviews-container">
-      <!-- Reviews List -->
-      <div class="reviews-list relative" *ngIf="reviews.length > 0">
-      <app-section-spinner *ngIf="isLoading"/>
-        <div *ngFor="let review of reviews" class="review-item">
-          <img [src]="review.user?.profileImage || 'assets/images/default-avatar.png'" alt="User" class="review-avatar" />
-          <div class="review-content">
-            <div class="review-header">
-              <span class="review-author cursor-pointer" [routerLink]="'/community/profile/' + review.user?.id ">{{ review.user?.name || review.name }}</span>
-              <span class="review-date">{{ review.createdAt | date }}</span>
-            </div>
-            <div class="review-stars">
-              <span *ngFor="let star of [1,2,3,4,5]" [class.active]="star <= review.rating">★</span>
-            </div>
-            <p class="review-text">{{ review.review }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Empty State -->
-      <div *ngIf="reviews.length === 0" class="empty-reviews">
-        <p>{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Is_Empty' | translate }}</p>
-      </div>
-
-      <!-- Review Form (if user is logged in) -->
-      <form *ngIf="isLoggedIn | async" [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form relative">
-        <app-section-spinner *ngIf="isLoading"/>
-        <h3>{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Title' | translate }}</h3>
-        
-        <!-- Rating -->
-        <div class="rating-input">
-          <div class="stars-selector">
-            <span *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)" (mouseenter)="hoverRating = star" (mouseleave)="hoverRating = 0" [class.active]="star <= (hoverRating || reviewForm.value.rating)">
-              ★
-            </span>
-          </div>
-        </div>
-
-        <!-- Review Text -->
-        <div class="form-group">
-          <textarea formControlName="text" [placeholder]="'Pages.Services.Single_Service.Tabs.Reviews_Page.Placeholder' | translate" class="review-textarea"></textarea>
-          <small *ngIf="reviewForm.get('text')?.invalid && reviewForm.get('text')?.touched" class="error-message">
-            {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Error' | translate }}
-          </small>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="submit-button" [disabled]="reviewForm.invalid">
-          {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Btn' | translate }}
-        </button>
-      </form>
-    </div>
-  `,
-  styles: [`
-    /* Main Container */
-    .reviews-container {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    /* Reviews List Section */
-    .reviews-list {
-      flex: 1;
-      min-width: 0;
-    }
-
-    /* Single Review Item */
-    .review-item {
-      display: flex;
-      gap: 1rem;
-      padding: 1rem;
-      border-bottom: 1px solid #eee;
-      margin-bottom: 1rem;
-    }
-
-    .review-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    .review-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .review-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .review-author {
-      font-weight: 600;
-      color: var(--brand-color);
-      font-size: 0.95rem;
-
-    }
-
-    .review-author:hover {
-      text-decoration: underline;
-      color: var(--brand-seconed-color);    
-    }
-
-    .review-date {
-      color: var(--fourth-color);
-      font-size: 0.8rem;
-    }
-
-    .review-stars span {
-      color: var(--third-color);
-      font-size: 1.1rem;
-    }
-
-    .review-stars span.active {
-      color: var(--brand-seconed-color);
-    }
-
-    .review-text {
-      color: var(--fourth-color);
-      line-height: 1.5;
-      font-size: 0.9rem;
-      word-break: break-word;
-    }
-
-    /* Empty State */
-    .empty-reviews {
-      text-align: center;
-      padding: 2rem;
-      color: #666;
-    }
-
-    /* Review Form */
-    .review-form {
-      padding: 1.5rem;
-      width: 350px;
-      height: fit-content;
-    }
-
-    .review-form h3 {
-      margin-bottom: 1rem;
-      color: var(--brand-color);
-      font-size: 1.5rem;
-    }
-
-    /* Rating Stars */
-    .stars-selector {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .stars-selector span {
-      font-size: 1.8rem;
-      color: #ddd;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .stars-selector span.active {
-      color: var(--brand-seconed-color);
-      transform: scale(1.1);
-    }
-
-    /* Textarea */
-    .review-textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      min-height: 120px;
-      resize: vertical;
-      font-family: inherit;
-      font-size: 0.9rem;
-      transition: border 0.3s;
-      background-color: var(--seconed-color);
-      color: var(--brand-color)
-    }
-
-    .review-textarea:focus {
-      outline: none;
-      border-color: var(--brand-color);
-      box-shadow: 0 0 0 2px rgba(var(--brand-color), 0.2);
-    }
-
-    /* Error Message */
-    .error-message {
-      color: #f44336;
-      font-size: 0.75rem;
-      margin-top: 0.25rem;
-      display: block;
-    }
-
-    /* Submit Button */
-    .submit-button {
-      background-color: var(--brand-color);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 500;
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-
-    .submit-button:hover {
-      background-color: var(--brand-seconed-color);
-    }
-
-    .submit-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 992px) {
-      .reviews-container {
-        flex-direction: column;
-      }
-
-      .review-form {
-        width: 100%;
-        order: -1;
-        margin-bottom: 2rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .review-item {
-        flex-direction: column;
-      }
-
-      .review-avatar {
-        align-self: center;
-        margin-bottom: 0.5rem;
-      }
-
-      .review-header {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .review-stars {
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .review-form {
-        padding: 1rem;
-      }
-
-      .stars-selector span {
-        font-size: 1.5rem;
-      }
-    }
-  `]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, SectionSpinnerComponent, RouterLink, ImportsModule],
+  providers: [ConfirmationService],
+  templateUrl: './reviews.component.html', 
+  styleUrls: ['./reviews.component.css']
 })
 export class ReviewsComponent {  
   @Input() reviews: any[] = [];
   @Input() isLoading: boolean = false;
   @Output() reviewSubmitted = new EventEmitter<any>();
+  @Output() reviewUpdated = new EventEmitter<any>();
+  @Output() reviewDeleted = new EventEmitter<string>();
 
   private tokenService = inject(TokenService);
   private toast = inject(ToastService);
   private translate = inject(TranslateService);
+  private usersService = inject(UsersService);
+  private confirmationService = inject(ConfirmationService);
 
   hoverRating = 0;
   reviewForm!: FormGroup;
+  editForm!: FormGroup;
   isLoggedIn = this.tokenService.isLoggedIn$;
   role = this.tokenService.role$;
+  user = this.usersService.user$;
+  currentlyEditingId: string | null = null;
 
   constructor(private fb: FormBuilder) {
     this.reviewForm = this.fb.group({
       rating: [0, [Validators.required, Validators.min(1)]],
-      text: ['', [Validators.required, Validators.minLength(10)]]
+      review: ['', [Validators.required, Validators.minLength(4)]]
+    });
+
+    this.editForm = this.fb.group({
+      rating: [0, [Validators.required, Validators.min(1)]],
+      review: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
   setRating(star: number): void {
     this.reviewForm.patchValue({ rating: star });
+  }
+
+  setEditRating(star: number): void {
+    this.editForm.patchValue({ rating: star });
   }
 
   onSubmit(): void {
@@ -316,10 +74,61 @@ export class ReviewsComponent {
 
       if (this.reviewForm.valid) {
         this.reviewSubmitted.emit(this.reviewForm.value);
-        this.reviewForm.reset({ rating: 0, text: '' });
+        this.reviewForm.reset({ rating: 0, review: '' });
         this.hoverRating = 0;
       }
     });
+  }
+
+  startEdit(review: any): void {
+    // Reset any previously edited review
+    this.reviews.forEach(r => r.isEditing = false);
+    
+    // Set this review to editing mode
+    review.isEditing = true;
+    this.currentlyEditingId = review.id;
+    
+    // Initialize the edit form with current values
+    this.editForm.patchValue({
+      rating: review.rating,
+      review: review.review
+    });
+  }
+
+  saveEdit(review: any): void {    
+    if (this.editForm.valid) {
+      const updatedReview = {
+        id: review.id,
+        ...this.editForm.value
+      };
+
+      this.reviewUpdated.emit(updatedReview);
+      review.isEditing = false;
+      this.currentlyEditingId = null;
+    }
+  }
+
+  cancelEdit(review: any): void {
+    review.isEditing = false;
+    this.currentlyEditingId = null;
+  }
+
+  deleteReview(event: Event, review: Review) {    
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Do you want to delete this review?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass:"p-button-danger p-button-text",
+        rejectButtonStyleClass:"p-button-text p-button-text",
+        acceptIcon:"none",
+        rejectIcon:"none",
+
+        accept: () => {
+          this.reviewDeleted.emit(review._id);
+        }
+      });
+    
   }
 
 }

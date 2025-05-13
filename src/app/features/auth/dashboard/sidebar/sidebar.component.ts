@@ -37,7 +37,6 @@ import { TranslateModule } from '@ngx-translate/core';
          <!-- User Dashboards Link -->
          <nav *ngIf="role === 'user'" class="sidebar-menu" aria-label="Main menu">
            <ul>
-             <li routerLinkActive="active" routerLink="/user/dashboard/reviews" tabindex="0"><i class="fa-solid fa-gauge"></i>My Reviews</li>
              <li routerLinkActive="active" routerLink="/user/dashboard/pets" tabindex="0"><i class="fa-solid fa-dog"></i>My Pets</li>
              <li routerLinkActive="active" routerLink="/user/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>My Orders</li>
            </ul>
