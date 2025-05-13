@@ -21,12 +21,12 @@
                 <div class="review-actions" *ngIf="review.user.id === (user | async)?._id && !review.isEditing">
                   <button class="action-btn edit" title="Edit Review" (click)="startEdit(review)">
                     <i class="fa-regular fa-pen-to-square"></i>
-                    <span class="action-label">{{ 'Edit' | translate }}</span>
+                    <span class="action-label">{{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Title_Btn' | translate }}</span>
                   </button>
 
                   <button class="action-btn delete" title="Delete Review" (click)="deleteReview($event, review)">
                     <i class="fa-regular fa-trash-can"></i>
-                    <span class="action-label">{{ 'Delete' | translate }}</span>
+                    <span class="action-label">{{'Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Title_Btn' | translate }}</span>
                   </button>
                 </div>
               </div>
@@ -41,10 +41,10 @@
                 <textarea formControlName="review" class="edit-textarea"></textarea>
                 <div class="edit-actions">
                   <button type="submit" class="save-btn" [disabled]="editForm.invalid">
-                    {{ 'Save' | translate }}
+                    {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Actions.Save' | translate }}
                   </button>
                   <button type="button" class="cancel-btn" (click)="cancelEdit(review)">
-                    {{ 'Cancel' | translate }}
+                    {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Actions.Cancel' | translate }}
                   </button>
                 </div>
               </form>

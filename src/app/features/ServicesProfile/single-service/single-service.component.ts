@@ -168,14 +168,14 @@ export class SingleServiceComponent implements OnInit {
           next: (data) => {
             this.serviceData = data;
             this.reviewsLoading = false;
-            this.toastService.success('Success!', 'Your rating has been deleted successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Success.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Success.Message'));
           }
         })
       },
 
       error: (err) => {
         this.reviewsLoading = false;
-        this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Errors.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Errors.Message'));
       },
     })
   }
@@ -190,14 +190,14 @@ export class SingleServiceComponent implements OnInit {
           next: (data) => {
             this.serviceData = data;
             this.reviewsLoading = false;
-            this.toastService.success('Success!', 'Your rating has been updating successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Success.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Success.Message'));
           }
         })
       },
 
       error: (err) => {
         this.reviewsLoading = false;
-        this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Errors.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Errors.Message'));
       },
     })
   }
@@ -211,13 +211,13 @@ export class SingleServiceComponent implements OnInit {
           next: (data) => {
             this.serviceData = data;
             this.reviewsLoading = false;
-            this.toastService.success('Success!', 'Your rating has been added successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Successful.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Successful.Message'));
           }
         })
       },
       error: (err) => {
         this.reviewsLoading = false;
-        this.toastService.error('Error!', 'An unexpected error occurred. Please try again.');
+        this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.User_Error.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.User_Error.Message'))
       },
     });
   }

@@ -11,7 +11,6 @@ import { UsersService } from '../../../core/services/user/users.service';
 import { ImportsModule } from '../data-table/imports';
 import { ConfirmationService } from 'primeng/api';
 import { Review } from '../../../core/models/service/service.model';
-import { ReviewsService } from '../../../core/services/reviews/reviews.service';
 
 @Component({
   selector: 'app-reviews',
@@ -116,13 +115,15 @@ export class ReviewsComponent {
   deleteReview(event: Event, review: Review) {    
     this.confirmationService.confirm({
         target: event.target as EventTarget,
-        message: 'Do you want to delete this review?',
-        header: 'Delete Confirmation',
+        message: this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Description_Dialog'),
+        header: this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Title_Dialog'),
         icon: 'pi pi-info-circle',
         acceptButtonStyleClass:"p-button-danger p-button-text",
         rejectButtonStyleClass:"p-button-text p-button-text",
         acceptIcon:"none",
         rejectIcon:"none",
+        acceptLabel: this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Actions.Yes'),
+        rejectLabel: this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Actions.No'),
 
         accept: () => {
           this.reviewDeleted.emit(review._id);

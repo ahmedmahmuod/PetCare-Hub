@@ -221,17 +221,17 @@
 
 .action-btn.delete:hover {
   background-color: #e74c3c;
-  color: white;
+  color: var(--seconed-color)
 }
 
 .action-btn.edit {
-  border-color: #2980b9;
-  color: #2980b9;
+  border-color: var(--brand-seconed-color);
+  color: var(--brand-seconed-color);
 }
 
 .action-btn.edit:hover {
-  background-color: #2980b9;
-  color: white;
+  background-color: var(--brand-seconed-color);
+  color: var(--seconed-color);
 }
 
 .action-label {
@@ -262,13 +262,14 @@
 }
 
 .save-btn {
-  background-color: var(--brand-color);
-  color: white;
+  background-color: var(--brand-seconed-color);
+  color: var(--seconed-color);
   border: none;
+  transition: 0.3s;
 }
 
 .save-btn:hover {
-  background-color: var(--brand-seconed-color);
+  opacity: 0.8;
 }
 
 .save-btn:disabled {
@@ -278,7 +279,7 @@
 
 .cancel-btn {
   background-color: transparent;
-  border: 1px solid #ccc;
+  border: 1px solid var(--fourth-color);
   color: var(--fourth-color);
 }
 

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ReviewsComponent } from "../../../../shared/components/reviews/reviews.component";
 import { SheltersService } from '../../../../core/services/shelters/shelters.service';
 import { map, Observable, of } from 'rxjs';
@@ -26,6 +26,7 @@ export class ShelterDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private reviewsService = inject(ReviewsService);
   private toastService = inject(ToastService);
+  private translate = inject(TranslateService);
 
   shleterId: string  = '';
   activeTab = 'reviews';
@@ -68,13 +69,13 @@ export class ShelterDetailsComponent implements OnInit {
           next: (data) => {
             this.shelter$ = of(data);
             this.isLoading = false;
-            this.toastService.success('Success!', 'Your rating has been deleting successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Success.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Success.Message'));
           }
         })
       }, 
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Errors.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Errors.Message'));
       },
     })
   }
@@ -89,13 +90,13 @@ export class ShelterDetailsComponent implements OnInit {
           next: (data) => {
             this.shelter$ = of(data);
             this.isLoading = false;
-            this.toastService.success('Success!', 'Your rating has been updating successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Success.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Success.Message'));
           }
         })
       }, 
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Errors.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Errors.Message'));
       },
     })
   }
@@ -109,13 +110,13 @@ export class ShelterDetailsComponent implements OnInit {
           next: (data) => {
             this.shelter$ = of(data);
             this.isLoading = false;
-            this.toastService.success('Success!', 'Your rating has been added successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Successful.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Successful.Message'));
           }
         })
       },
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+        this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.User_Error.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.User_Error.Message'))
       },
     });
   }

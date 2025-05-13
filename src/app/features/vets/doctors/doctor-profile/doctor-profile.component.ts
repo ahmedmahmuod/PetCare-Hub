@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { DoctorModel } from '../../../../core/models/veterinary/veterinary.model';
 import { DoctorProfileSkeletonComponent } from "../../../../shared/components/skeletons/doctor-profile/doc-profile-skelton.component";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ReviewsService } from '../../../../core/services/reviews/reviews.service';
 import { ToastService } from '../../../../shared/services/toast-notification/tost-notification.service';
 
@@ -154,6 +154,7 @@ export class DoctorProfileComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private reviewsService = inject(ReviewsService);
   private toastService = inject(ToastService);
+  private translate = inject(TranslateService);
 
   // Variables
   doctor$!: Observable<DoctorModel>;
@@ -190,12 +191,12 @@ export class DoctorProfileComponent implements OnInit {
         this.vetService.getDoctor(this.doctorId).subscribe((res) => {
           this.doctor$ = of(res);
           this.isLoading = false;
-          this.toastService.success('Success!', 'Your rating has been deleted successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Success.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Success.Message'));
         })
       }, 
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Errors.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Toasts.Errors.Message'));
       },
     })
   }
@@ -204,17 +205,17 @@ export class DoctorProfileComponent implements OnInit {
   onUpdatingReview(review: any) {    
     this.isLoading = true;
 
-    this.reviewsService.deleteReview(review).subscribe({
+    this.reviewsService.updateReview(review).subscribe({
       next: (res) => {
         this.vetService.getDoctor(this.doctorId).subscribe((res) => {
           this.doctor$ = of(res);
           this.isLoading = false;
-          this.toastService.success('Success!', 'Your rating has been updating successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Success.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Success.Message'));
         })
       }, 
       error: (err) => {
         this.isLoading = false;
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+          this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Errors.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Toasts.Errors.Message'));
       },
     })
   }
@@ -227,13 +228,13 @@ export class DoctorProfileComponent implements OnInit {
       next: (res) => {
         this.vetService.getDoctor(this.doctorId).subscribe((res) => {
           this.doctor$ = of(res);
-          this.toastService.success('Success!', 'Your rating has been added successfully..');
+          this.toastService.success(this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Successful.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Successful.Message'));
           this.isLoading = false;
         })  
 
       },
       error: (err) => {
-        this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+        this.toastService.error(this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.User_Error.Title'), this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.User_Error.Message'))
         this.isLoading = false;
       },
     });
