@@ -80,9 +80,7 @@ export class AdminProductsComponent  {
     this.imgPreview = null;
   }
 
-  onAddSerivce() {    
-    console.log(this.form);
-    
+  onAddSerivce() {        
     // 1. Basic validation guard
     if (!this.form.productImage || !this.form.name || !this.form.price || !this.form.quantity) {
       this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Form.Details'));
@@ -105,16 +103,13 @@ export class AdminProductsComponent  {
 
     // 4. Call the API
     this.productsService.addProduct(formData).subscribe({
-      next: (response) => {        
-        console.log(response);
-        
+      next: (response) => {                
         this.productsService.loadProducts();
         this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Success_Res.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Success_Res.Message'));
         this.resetForm();
         this.isLoading = false;
       },
       error: (error) => {
-        console.log(error);
         this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Error_Res.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Products.Toasts.Errors.Error_Res.Message'));
         this.isLoading = false;
       }

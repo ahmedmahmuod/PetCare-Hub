@@ -11,7 +11,7 @@ export class AuthService {
   private http = inject(HttpClient);
 
   // Sign up (Register) a new user
-  signUp(userData: SignInModel): Observable<AuthResponse> {
+  signUp(userData: any): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(environment.apiUrl + 'users/signup', userData);
   }
 

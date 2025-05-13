@@ -29,9 +29,9 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.registerForm = this.fb.group({
-      name: ['mutaz', [Validators.required, Validators.minLength(3)]],
-      email: ['mutazz111@gmail.com', [Validators.required, Validators.email]],
-      password: ['mezoooooo', [Validators.required, Validators.minLength(8)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -48,7 +48,7 @@ export class RegisterComponent {
           this.registerForm.markAsUntouched();
 
           setTimeout(() => {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
           }, 2000);
         },
         error: (error) => {

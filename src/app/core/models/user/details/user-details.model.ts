@@ -1,4 +1,4 @@
-import { Pet } from "../../pets/pet.model";
+import { Pet } from '../../pets/pet.model';
 
 export interface UserData {
   _id: string;
@@ -29,6 +29,10 @@ export interface UserDataResponse {
   data: {
     data: UserData;
   };
+}
+export interface AllUserDataResponse {
+  results: string;
+  data: UserData[];
 }
 
 export interface UpdateProfileDto {

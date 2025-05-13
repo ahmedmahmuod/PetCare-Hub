@@ -1,12 +1,97 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { UsersService } from '../../../../../../core/services/user/users.service';
+import { DataTableComponent } from "../../../../../../shared/components/data-table/data-table.component";
+import { Column } from '../blogs/admin-blogs.component';
+import { CustomButtonComponent } from "../../../../../../shared/components/buttons/dashboard-btn.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
+import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
+import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
+import { AuthService } from '../../../../../../core/services/auth/logs/user-loging.service';
 
 @Component({
   selector: 'app-admin-users',
   standalone: true,
-  imports: [],
+  imports: [DataTableComponent, CustomButtonComponent, TranslateModule, SectionSpinnerComponent, ImportsModule],
   templateUrl: './admin-users.component.html',
-  styleUrl: './admin-users.component.css'
+  styleUrl: './admin-users.component.css',
 })
-export class AdminUsersComponent {
+export class AdminUsersComponent implements OnInit{
+  private usersService = inject(UsersService);
+  private authService = inject(AuthService);
+  private toastService = inject(ToastService)
+  private translate = inject(TranslateService)
+  
+  // Column Definitions for Table
+  columns: Column[] = [
+    { field: 'name', header: 'User Name', type: 'text' },
+    { field: 'email', header: 'Email', type: 'text' },
+    { field: 'role', header: 'Role', type: 'text' },
+    { field: 'profileImage', header: 'User Image', type: 'image' },
+    { field: 'createdAt', header: 'Join in', type: 'date' },
+  ];
+
+  stateOptions: any[] = [{ label: 'Admin', value: 'admin' },{ label: 'User', value: 'user' }];
+
+  isLoading: boolean = false;
+  showDialog = false;
+
+  // Form data
+  form = {
+    name: '' as string | null,
+    email: '' as string | null,
+    password: '' as string | null,
+    role: 'user',
+  };
+
+  ngOnInit(): void {
+    this.usersService.getAllUsers();  
+  }
+
+  get allUsers() {
+    return this.usersService.allUsers();
+  }
+
+
+  // Show dialog
+  onShowDialog(event: any) {
+    this.showDialog = true;
+  }
+
+  resetForm(): void {
+    this.form.email = null;
+    this.form.password = null;
+    this.form.email = null;
+  }
+
+  onAddSerivce() {    
+    // 1. Basic validation guard
+    if (!this.form.name || !this.form.email || !this.form.password || !this.form.role) {
+      return;
+    }
+
+    // 3. Set loading state and close dialog
+    this.isLoading = true;
+    this.showDialog = false;
+
+    // 4. Call the API
+    this.authService.signUp(this.form).subscribe({
+      next: (response) => {        
+        console.log(response);
+        this.usersService.getAllUsers();
+        this.toastService.success('Sucessfully','User created sucessfully');
+        this.resetForm();
+        this.isLoading = false;
+      },
+      error: (error) => {        
+        if (error.error.error.statusCode === 401) {
+          this.toastService.error('Error','Email is Already Exist!');
+        } else {
+          this.toastService.error('Error','Error creating user!');
+        }
+        this.isLoading = false;
+      }
+    })
+  }
 
 }

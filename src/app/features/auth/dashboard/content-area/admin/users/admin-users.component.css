@@ -1,0 +1,53 @@
+:host ::ng-deep input,
+textarea {
+  font-size: 1rem;
+  padding: 10px 10px;
+  border: 1px solid var(--brand-color);
+  border-radius: 5px;
+  background: transparent;
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+
+:host ::ng-deep .p-dropdown {
+  border: 1px solid var(--brand-color);
+  width: 100%;
+  background: transparent;
+}
+
+:host ::ng-deep .custom-upload {
+  background: var(--brand-seconed-color) !important;
+}
+
+::ng-deep .p-float-label label {
+  transform: translateY(-50%);
+  line-height: 1;
+}
+
+::ng-deep .p-password {
+  width: 100%;
+  position: relative;
+}
+
+::ng-deep eyeicon {
+  position: absolute !important;
+  top: 24px !important;
+}
+::ng-deep eyeslashicon {
+  position: absolute !important;
+  top: 24px !important;
+}
+
+::ng-deep p-selectbutton {
+  background: red !important
+  width: 100% !important;
+}
+
+::ng-deep p-selectbutton .p-ripple {
+  width: 50% !important;
+  background-color: var(--third-color) !important;
+} 
+
+::ng-deep p-selectbutton .p-highlight {
+  background-color: var(--brand-seconed-color) !important;
+} 

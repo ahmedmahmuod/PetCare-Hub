@@ -1,1 +1,62 @@
-<p>admin-users works!</p>
+<section class="flex flex-col gap-y-5 mt-10 relative">
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add User'"/>
+  <app-data-table [hasActions]="false" [hasImage]="true" [data]="allUsers" [columns]="columns"/>
+
+  <p-dialog [header]="'Add new user'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+        <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="onAddSerivce()" novalidate>
+            <div class="card flex flex-col gap-6">
+
+                <!-- User Name -->
+                <div class="card flex flex-col justify-content-center my-3">
+                    <p-floatLabel class="w-full">
+                        <input id="productName" name="productName" pInputText [(ngModel)]="form.name" required #nameRef="ngModel" class="w-full" />
+                        <label for="productName">User Name</label>
+                    </p-floatLabel>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">User name is required</small>
+                </div>
+
+                <!-- User email -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <input id="email" name="email" type="email" pInputText [(ngModel)]="form.email" required email #emailRef="ngModel" class="w-full"/>
+                        <label for="email">Email</label>
+                    </p-floatLabel>
+
+                    <!-- Error Message -->
+                    <small *ngIf="emailRef.invalid && emailRef.touched" class="p-error ml-2">
+                        <ng-container *ngIf="emailRef.errors?.['required']">
+                        Email is required
+                        </ng-container>
+                        <ng-container *ngIf="emailRef.errors?.['email']">
+                        Please enter a valid email address
+                        </ng-container>
+                    </small>
+                </div>
+
+                <!-- Password Field -->
+                <div class="card flex flex-col justify-content-center w-full mb-3">
+                    <p-floatLabel class="w-full">
+                        <p-password id="password" name="password" [(ngModel)]="form.password" [feedback]="false" [toggleMask]="true" [inputStyle]="{ width: '100%' }" required #passwordRef="ngModel"></p-password>
+                        <label for="password">Password</label>
+                    </p-floatLabel>
+
+                    <!-- Error Message -->
+                    <small *ngIf="passwordRef.invalid && passwordRef.touched" class="p-error ml-2">
+                        Password is required
+                    </small>
+                </div>
+
+                <!-- Role -->
+                <div class="card flex flex-col justify-content-center w-full mb-3">
+                    <p-selectButton id="role" name="Role" [options]="stateOptions" [(ngModel)]="form.role" optionLabel="label" optionValue="value"/>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end gap-3 pt-4">
+                <p-button [label]="('Dashboard.Admin.Sidebar_Links.Products.Form.Btns.Add' | translate)" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.role || !form.name || !form.email || !form.password"></p-button>
+            </div>
+        </form>
+  </p-dialog>
+    <app-section-spinner *ngIf="isLoading"/>
+</section>
