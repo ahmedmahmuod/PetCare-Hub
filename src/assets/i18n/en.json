@@ -1293,8 +1293,67 @@
           },
           "Item": "Item"
         }
+      },
+
+      "Users": {
+        "Title": "Users",
+        "Data_Table": {
+          "Rows": {
+            "User_Name": "User Name",
+            "Email": "Email",
+            "Role": "Role",
+            "User_Image": "User Image",
+            "Join_In": "Join In"
+            },
+
+            "Btns": {
+              "Add": "Add User",
+              "Title": "Add new user"
+            }
+          },
+
+        "Form": {
+          "User_Name": {
+            "Label": "User Name",
+            "Required": "User name is required"
+          },
+          "Email": {
+            "Label": "Email",
+            "Required": "Email is required",
+            "Invalid": "Please enter a valid email address"
+          },
+          "Password": {
+            "Label": "Password",
+            "Required": "Password is required"
+          },
+          "Role": {
+            "Options": {
+              "Admin": "Admin",
+              "User": "User"
+            }
+          },
+
+          "Btn": "Add"
+        },
+
+        "Toasts": {
+          "Errors": {
+            "Email_Exist": {
+              "Title": "Error",
+              "Message": "Email already exists"
+            },
+            "Error": {
+              "Title": "Error",
+              "Message": "Error creating user!"
+            }
+          },
+
+          "Successful": {
+            "Title": "Successfuly",
+            "Message": "User created successfully!"
+          }
+        }
       }
-      
     }
   }
 }

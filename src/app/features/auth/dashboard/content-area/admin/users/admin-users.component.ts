@@ -24,15 +24,14 @@ export class AdminUsersComponent implements OnInit{
   
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'name', header: 'User Name', type: 'text' },
-    { field: 'email', header: 'Email', type: 'text' },
-    { field: 'role', header: 'Role', type: 'text' },
-    { field: 'profileImage', header: 'User Image', type: 'image' },
-    { field: 'createdAt', header: 'Join in', type: 'date' },
+    { field: 'name', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.User_Name'), type: 'text' },
+    { field: 'email', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.Email'), type: 'text' },
+    { field: 'role', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.Role'), type: 'text' },
+    { field: 'profileImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.User_Image'), type: 'image' },
+    { field: 'createdAt', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.Join_In'), type: 'date' },
   ];
 
-  stateOptions: any[] = [{ label: 'Admin', value: 'admin' },{ label: 'User', value: 'user' }];
-
+  stateOptions: any[] = [{ label: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Form.Role.Options.Admin'), value: 'admin' },{ label: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Form.Role.Options.User'), value: 'user' }];
   isLoading: boolean = false;
   showDialog = false;
 
@@ -79,15 +78,15 @@ export class AdminUsersComponent implements OnInit{
       next: (response) => {        
         console.log(response);
         this.usersService.getAllUsers();
-        this.toastService.success('Sucessfully','User created sucessfully');
+        this.toastService.success(this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Toasts.Successful.Title'),('Dashboard.Admin.Sidebar_Links.Users.Toasts.Successful.Message'));
         this.resetForm();
         this.isLoading = false;
       },
       error: (error) => {        
         if (error.error.error.statusCode === 401) {
-          this.toastService.error('Error','Email is Already Exist!');
+          this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Toasts.Errors.Email_Exist.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Toasts.Errors.Email_Exist.Message'));
         } else {
-          this.toastService.error('Error','Error creating user!');
+          this.toastService.error(this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Toasts.Errors.Error.Title'),this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Toasts.Errors.Error.Message'));
         }
         this.isLoading = false;
       }

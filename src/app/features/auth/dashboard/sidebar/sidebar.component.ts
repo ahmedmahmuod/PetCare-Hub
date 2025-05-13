@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
              <li routerLinkActive="active" routerLink="/admin/dashboard/doctors" tabindex="0"><i class="fa-solid fa-user-doctor"></i>{{'Dashboard.Admin.Sidebar_Links.Doctors.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/clinics" tabindex="0"><i class="fa-solid fa-briefcase-medical"></i>{{'Dashboard.Admin.Sidebar_Links.Clinics.Title' | translate}}</li>
              <li routerLinkActive="active" routerLink="/admin/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>{{'Dashboard.Admin.Sidebar_Links.Orders.Title' | translate}}</li>
-             <li routerLinkActive="active" routerLink="/admin/dashboard/users" tabindex="0"><i class="fa-solid fa-users"></i>Users</li>
+             <li routerLinkActive="active" routerLink="/admin/dashboard/users" tabindex="0"><i class="fa-solid fa-users"></i>{{'Dashboard.Admin.Sidebar_Links.Users.Title' | translate}}</li>
            </ul>
            <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>{{'Dashboard.Main.Links.View_Site' | translate}}</li>
          </nav>
