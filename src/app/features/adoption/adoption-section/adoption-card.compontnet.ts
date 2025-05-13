@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
           <div class="overlay">
           <span></span>
             <div class="content">
-              <h3>
+              <h3 class="text-brand-seconed-color font-bold">
                 {{ item.weight }} {{ 'Pages.Adoption.Card.Kg' | translate }}
               </h3>
               <div class="flex items-center justify-between">

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ServicesService } from '../../../core/services/services/services.service';
 import { egyptGovernoratesArrayen } from '../../../core/data/eg-governorates.model';
 import { egyptGovernoratesArrayAr } from '../../../core/data/eg-governorates.model';
@@ -30,6 +30,8 @@ export class SingleServiceComponent implements OnInit {
   private reviewsService = inject(ReviewsService);
   private toastService = inject(ToastService);
   private tokenService = inject(TokenService);
+  private translate = inject(TranslateService);
+
 
   // another variables
   serviceId!: string;
@@ -43,6 +45,7 @@ export class SingleServiceComponent implements OnInit {
   hoverRating = 0;
   loading = signal<boolean>(false);
   isLoading: boolean = false;
+  role = this.tokenService.role$;
 
   // ngOninit
   ngOnInit(): void {
@@ -111,48 +114,50 @@ export class SingleServiceComponent implements OnInit {
   }
 
   // Submet of form service request 
-  submitBooking(): void {
-    this.tokenService.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
-      if (!isLoggedIn) {
-        this.toastService.error('Login Required', 'Please log in first to continue.');
+submitBooking(): void {
+  this.tokenService.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
+    if (!isLoggedIn) {
+      this.toastService.error('Login Required', 'Please log in first to continue.');
+      return;
+    }
+
+    this.tokenService.role$.pipe(take(1)).subscribe((role) => {
+      if (role === 'admin') {
+        this.toastService.info(
+          this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Title'),
+          this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Message')
+        );
         return;
       }
-  
-      this.tokenService.role$.pipe(take(1)).subscribe((role) => {
-        if (role !== 'user') {
-          this.toastService.info('Access Denied', 'Admins do not have access to this feature.');
-          return;
+
+      const requestData = {
+        ...this.bookingForm.value,
+        serviceType: this.serviceData.name,
+      };
+
+      this.isLoading = true;
+      this.serviceServices.addServiceRequest(requestData).subscribe({
+        next: () => {
+          this.toastService.success('Success!', 'Your request has been submitted successfully.');
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
+          this.isLoading = false;
         }
-  
-        // Proceed with booking request for user role
-        const requestData = {
-          ...this.bookingForm.value,
-          serviceType: this.serviceData.name,
-        };
-  
-        this.isLoading = true;
-        this.serviceServices.addServiceRequest(requestData).subscribe({
-          next: () => {
-            this.toastService.success('Success!', 'Your request has been submitted successfully.');
-            this.isLoading = false;
-          },
-          error: (err) => {
-            this.toastService.error('Error!', err.error?.message || 'An unexpected error occurred. Please try again.');
-            this.isLoading = false;
-          }
-        });
-  
-        // Reset form with default values
-        this.bookingForm.reset({
-          city: '',
-          duration: '',
-          date: '',
-          paymentMethod: '',
-        });
+      });
+
+      // Reset form
+      this.bookingForm.reset({
+        city: '',
+        duration: '',
+        date: '',
+        paymentMethod: '',
       });
     });
-  }
-  
+  });
+}
+
 
   // add review function
   addSubmetReview(review: any) {    

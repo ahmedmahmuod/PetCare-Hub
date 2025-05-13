@@ -1,10 +1,12 @@
-import { Component, Input, Output, EventEmitter, inject, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TokenService } from '../../services/token-managment/token-management.service';
 import { SectionSpinnerComponent } from "../spinner/spinner-loading.component";
 import { RouterLink } from '@angular/router';
+import { ToastService } from '../../services/toast-notification/tost-notification.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-reviews',
@@ -277,15 +279,19 @@ import { RouterLink } from '@angular/router';
     }
   `]
 })
-export class ReviewsComponent {
+export class ReviewsComponent {  
   @Input() reviews: any[] = [];
   @Input() isLoading: boolean = false;
   @Output() reviewSubmitted = new EventEmitter<any>();
 
   private tokenService = inject(TokenService);
+  private toast = inject(ToastService);
+  private translate = inject(TranslateService);
+
   hoverRating = 0;
   reviewForm!: FormGroup;
   isLoggedIn = this.tokenService.isLoggedIn$;
+  role = this.tokenService.role$;
 
   constructor(private fb: FormBuilder) {
     this.reviewForm = this.fb.group({
@@ -299,10 +305,21 @@ export class ReviewsComponent {
   }
 
   onSubmit(): void {
-    if (this.reviewForm.valid) {
-      this.reviewSubmitted.emit(this.reviewForm.value);
-      this.reviewForm.reset({ rating: 0, text: '' });
-      this.hoverRating = 0;
-    }
+    this.role.pipe(take(1)).subscribe((role) => {
+      if (role === 'admin') {
+        this.toast.info(
+          this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Title'),
+          this.translate.instant('Pages.Services.Single_Service.Tabs.Toasts.Errors.Admin_Error.Message')
+        );
+        return;
+      }
+
+      if (this.reviewForm.valid) {
+        this.reviewSubmitted.emit(this.reviewForm.value);
+        this.reviewForm.reset({ rating: 0, text: '' });
+        this.hoverRating = 0;
+      }
+    });
   }
+
 }

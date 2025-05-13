@@ -140,6 +140,24 @@
             "Error": "Review must be at least 6 characters long",
             "Btn": "Submit Review",
             "Is_Empty": "No Reviews in this service yet!"
+          },
+
+          "Toasts": {
+            "Errors": {
+              "Admin_Error": {
+                "Title": "Access Denied!",
+                "Message": "Admins do not have access to this feature."
+              },
+              "User_Error": {
+                "Title": "Error!",
+                "Message": "An unexpected error occurred. Please try again."
+              }
+            },
+
+            "Successful": {
+              "Title": "Success!",
+              "Message": "Your rating has been added successfully.."
+            }
           }
         }
       }

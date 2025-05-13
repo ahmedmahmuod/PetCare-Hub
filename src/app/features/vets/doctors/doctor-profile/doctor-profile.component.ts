@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReviewsComponent } from "../../../../shared/components/reviews/reviews.component";
 import { VetsService } from '../../../../core/services/veterinary/veterinary.service';

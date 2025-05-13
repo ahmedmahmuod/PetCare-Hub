@@ -80,5 +80,4 @@ export class ShelterDetailsComponent implements OnInit {
     });
   }
 
-
 }
