@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -13,10 +13,22 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements OnInit {
-@Input() data: any[] | null = null;
+  @Input() data: any[] | null = null;
   @Input() columns!: Column[];
   @Input() hasImage: boolean = false;
   @Input() hasActions: boolean = false;
+
+  @Output() deleteItem: EventEmitter<any> = new EventEmitter<any>();
+  @Output() editItem: EventEmitter<any> = new EventEmitter<any>();
+
+
+  onDeleteItem(col: any) {
+    this.deleteItem.emit(col);
+  }
+  
+  onEditItem(col: any) {
+    this.editItem.emit(col);
+  }
 
   currentPageReportTemplate: string = '';
   first = 0;

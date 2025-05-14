@@ -1,0 +1,25 @@
+:host ::ng-deep input,
+textarea {
+  font-size: 1rem;
+  padding: 10px 10px;
+  border: 1px solid var(--brand-color);
+  border-radius: 5px;
+  background: transparent;
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+
+:host ::ng-deep .p-dropdown {
+  border: 1px solid var(--brand-color);
+  width: 100%;
+  background: transparent;
+}
+
+:host ::ng-deep .custom-upload {
+  background: var(--brand-seconed-color) !important;
+}
+
+::ng-deep .p-float-label label {
+  transform: translateY(-50%);
+  line-height: 1;
+}

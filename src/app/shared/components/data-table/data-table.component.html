@@ -1,62 +1,75 @@
 <!-- Buttons + Table Container -->
-<div dir="ltr" class="card p-4 bg-white shadow-md rounded-xl">
+<div class="card p-4 bg-seconed-color shadow-md rounded-xl">
 
-    <!-- Navigation Buttons -->
-    <div class="mb-4 flex flex-wrap gap-2 items-center">
-      <p-button type="button" icon="pi pi-chevron-left" (onClick)="prev()" [disabled]="isFirstPage()" styleClass="p-button-text" />
-      <p-button type="button" icon="pi pi-refresh" (onClick)="reset()" styleClass="p-button-text" />
-      <p-button type="button" icon="pi pi-chevron-right" (onClick)="next()" [disabled]="isLastPage()" styleClass="p-button-text" />
-    </div>
-  
-    <!-- Table -->
-    <p-table
-      class="w-full"
-      styleClass="p-datatable-sm"
-      [value]="data ?? []"
-      [paginator]="true"
-      [rows]="3"
-      [first]="first"
-      [showCurrentPageReport]="true"
-      [responsiveLayout]="'scroll'"
-      [currentPageReportTemplate]="currentPageReportTemplate"
-      (onPage)="pageChange($event)"
-      [rowsPerPageOptions]="[3, 7, 15, 30]">
-  
-      <!-- Header -->
-      <ng-template pTemplate="header">
-        <tr>
-            <th *ngFor="let col of columns" class="text-left">
-              {{ col.header }}
-            </th>
-            <th *ngIf="hasActions" class="text-left">
-                Actions
-            </th>
-        </tr>          
-      </ng-template>
-  
-      <!-- Body -->
-      <ng-template pTemplate="body" let-row>
-          <tr>
-            <td *ngFor="let col of columns">
-              <ng-container [ngSwitch]="col.type">
-                <img *ngSwitchCase="'image'" [src]="row[col.field]" [alt]="col.header" class="w-12 h-12 object-cover rounded" />
-                <span *ngSwitchCase="'percent'">{{ row[col.field] + '%' }}</span>
-                <span *ngSwitchCase="'date'">{{ row[col.field] | date }}</span>
-                <span *ngSwitchCase="'length'">{{ row[col.field].length }} {{'Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Item' | translate}}</span>
-                <span *ngSwitchCase="'price'">{{ row[col.field] }} {{'Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Currncy' | translate}}</span>
-                <span *ngSwitchCase="'boolen'">{{ (row[col.field]) === true ? ('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Boolen.Yes' | translate) : ('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Boolen.No' | translate) }}</span>
-                <span *ngSwitchDefault>
-                  {{ row[col.field] }}
-                </span>
-              </ng-container>
-            </td>
-            <td *ngIf="hasActions" class="actions">
-              <i class="fa-regular fa-trash-can"></i>
-              <i class="fa-solid fa-pen"></i>
-            </td>
-          </tr>
-      </ng-template>
-      
-    </p-table>
+  <!-- Navigation Buttons -->
+  <div class="mb-4 flex flex-wrap gap-2 items-center">
+    <p-button type="button" icon="pi pi-chevron-left" (onClick)="prev()" [disabled]="isFirstPage()" styleClass="p-button-text" />
+    <p-button type="button" icon="pi pi-refresh" (onClick)="reset()" styleClass="p-button-text" />
+    <p-button type="button" icon="pi pi-chevron-right" (onClick)="next()" [disabled]="isLastPage()" styleClass="p-button-text" />
   </div>
-  
+
+  <!-- Table -->
+  <p-table
+    tableStyleClass="text-center-table"
+    class="w-full"
+    styleClass="p-datatable-sm"
+    [value]="data ?? []"
+    [paginator]="true"
+    [rows]="3"
+    [first]="first"
+    [showCurrentPageReport]="true"
+    [responsiveLayout]="'scroll'"
+    [currentPageReportTemplate]="currentPageReportTemplate"
+    (onPage)="pageChange($event)"
+    [rowsPerPageOptions]="[3, 7, 15, 30]">
+
+    <!-- Header -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of columns" class="text-left">
+          {{ col.header }}
+        </th>
+        <th *ngIf="hasActions" class="text-left">Actions</th>
+      </tr>
+    </ng-template>
+
+    <!-- Body -->
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td *ngFor="let col of columns">
+          <ng-container [ngSwitch]="col.type">
+            <img *ngSwitchCase="'image'" [src]="row[col.field]" [alt]="col.header" class="w-12 h-12 object-cover rounded" />
+            <span *ngSwitchCase="'percent'">{{ row[col.field] + '%' }}</span>
+            <span *ngSwitchCase="'date'">{{ row[col.field] | date }}</span>
+            <span *ngSwitchCase="'length'">{{ row[col.field].length }} {{ 'Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Item' | translate }}</span>
+            <span *ngSwitchCase="'price'">{{ row[col.field] }} {{ 'Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Currncy' | translate }}</span>
+            <span *ngSwitchCase="'boolen'">
+              {{
+                (row[col.field]) === true
+                  ? ('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Boolen.Yes' | translate)
+                  : ('Dashboard.Admin.Sidebar_Links.Orders.Data_Table.Boolen.No' | translate)
+              }}
+            </span>
+            <span *ngSwitchDefault>{{ row[col.field] }}</span>
+          </ng-container>
+        </td>
+
+        <!-- Actions Column -->
+        <td *ngIf="hasActions" class="actions">
+          <div class="flex flex-col space-y-2 items-start md:items-center">
+            <button
+              class="bg-red-600 hover:opacity-80 text-seconed-color text-sm px-3 py-1 rounded-lg w-full transition shadow-md" (click)="onDeleteItem(row)">
+              {{'Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Confirm_Delete.Title_Btn' | translate }}
+            </button>
+            <button
+              class="bg-brand-seconed-color hover:opacity-80 text-seconed-color text-sm px-3 py-1 rounded-lg w-full transition shadow-md" (click)="onEditItem(row)">
+              {{ 'Pages.Services.Single_Service.Tabs.Reviews_Page.Dialogs.Update_Dialog.Title_Btn' | translate }}
+            </button>
+          </div>
+        </td>
+
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

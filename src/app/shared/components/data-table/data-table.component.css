@@ -134,3 +134,9 @@ img.rounded:hover {
 .p-button-icon {
   background: red !important;
 }
+
+::ng-deep .text-center-table td,
+::ng-deep .text-center-table th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}

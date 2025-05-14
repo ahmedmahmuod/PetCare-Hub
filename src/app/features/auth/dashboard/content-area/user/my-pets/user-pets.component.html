@@ -1,1 +1,64 @@
-<p>user-pets works!</p>
+<section class="flex flex-col gap-y-5 mt-10 relative">
+  <app-dashboard-button (clicked)="onShowDialog($event)" [icon]="'pi pi-plus'" [label]="'Add Pet'"/>
+  <app-data-table (editItem)="editPet($event)" (deleteItem)="deletePet($event)" [hasActions]="true" [hasImage]="true" [data]="allMyPets()" [columns]="columns"/>
+    
+  <p-dialog (onHide)="closeDialog()" [header]="addSubmet ? 'Add Pet' : 'Edit Pet'" [(visible)]="showDialog" [modal]="true" [dismissableMask]="true" [draggable]="false" [resizable]="false" [style]="{ width: '500px' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }">
+        <form class="p-4 sm:p-6 space-y-6" #formRef="ngForm" (ngSubmit)="addSubmet ? onAddSerivce() : updatePet()" novalidate>
+            <div class="card flex flex-col gap-6">
+
+                <!-- Pet Name -->
+                <div class="card flex flex-col justify-content-center my-3">
+                    <p-floatLabel class="w-full">
+                        <input id="petName" name="petName" pInputText [(ngModel)]="form.name" required #nameRef="ngModel" class="w-full" />
+                        <label for="petName">Pet Name</label>
+                    </p-floatLabel>
+                    <small *ngIf="nameRef.invalid && nameRef.touched" class="p-error ml-2">Name is required</small>
+                </div>
+
+                <!-- Pet Gender -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <p-dropdown id="petGender" name="petGender" optionLabel="label" optionValue="value"  [(ngModel)]="form.gender" [options]="petGenderOptions" required #petGenderRef="ngModel" />
+                        <label for="petGender">Pet Gender</label>
+                    </p-floatLabel>
+                    <small *ngIf="petGenderRef.invalid && petGenderRef.touched" class="p-error ml-2">Gender is required</small>
+                </div>
+
+                <!-- Pet Type -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <p-dropdown id="petType" name="petType" optionLabel="label" optionValue="value" [(ngModel)]="form.type" [options]="petTypeOptions" required #petTypeRef="ngModel" />
+                        <label for="petType">Pet Type</label>
+                    </p-floatLabel>
+                    <small *ngIf="petTypeRef.invalid && petTypeRef.touched" class="p-error ml-2">Type is required</small>
+                </div>
+
+                <!-- Pet weight -->
+                <div class="card flex flex-col justify-content-center mb-3">
+                    <p-floatLabel class="w-full">
+                        <input id="petWeight" name="petWeight" pInputText type="number" min="1" [(ngModel)]="form.weight" required #petWeighteRef="ngModel" class="w-full" />
+                        <label for="petWeight">Pet weight</label>
+                    </p-floatLabel>
+                    <small *ngIf="petWeighteRef.invalid && petWeighteRef.touched" class="p-error ml-2">Weight is required</small>
+                </div>
+
+                <!-- File Upload -->
+                <p-fileUpload styleClass="custom-upload" name="img" mode="basic" accept="image/*" [chooseLabel]="'Pet Image'" chooseIcon="pi pi-image" [customUpload]="true" [auto]="true" (uploadHandler)="handleImageUpload($event)" #fileUploader />
+
+                <!-- Preview + Remove -->
+                <div *ngIf="imgPreview" class="relative w-32 h-32 mt-4">
+                    <img [src]="imgPreview" alt="Image Preview" class="w-full h-full object-cover rounded shadow" />
+                    <button type="button" (click)="removeImage(); fileUploader.clear()" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">✕</button>
+                </div>
+
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end gap-3 pt-4">
+                <p-button [label]="addSubmet ? 'Add' : 'Update'" icon="pi pi-check" type="submit" class="custom-add-button" [disabled]="formRef.invalid || !form.petImage || !form.name || !form.gender || !form.type"></p-button>
+            </div>
+            
+        </form>
+  </p-dialog>
+    <app-section-spinner *ngIf="isLoading"/>
+</section>

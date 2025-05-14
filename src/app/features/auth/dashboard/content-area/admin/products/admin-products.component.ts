@@ -40,7 +40,7 @@ export class AdminProductsComponent  {
   smallCategories = ['food', 'accessories', 'grooming', 'medicine', 'toys'];
   discounts = Array.from({ length: 20 }, (_, i) => (i + 1) * 5);
 
-    // Form data
+  // Form data
   form = {
     name: '',
     quantity: '',
@@ -72,6 +72,11 @@ export class AdminProductsComponent  {
   resetForm(): void {
     this.form.productImage = null;
     this.imgPreview = null;
+    this.form.category = '';
+    this.form.name = '';
+    this.form.discount = '';
+    this.form.price = '';
+    this.form.quantity = '';
   }
 
   // Clear selected image and preview
