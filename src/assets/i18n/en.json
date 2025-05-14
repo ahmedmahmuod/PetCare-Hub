@@ -1507,6 +1507,10 @@
           }
         }
       }
+    },
+
+    "My_Orders": {
+      "Title": "My Orders"
     }
   }
 

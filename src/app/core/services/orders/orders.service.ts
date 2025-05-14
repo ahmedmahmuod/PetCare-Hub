@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.prod';
 import { Order, OrderResponse } from '../../models/orders/orders.model';
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +47,14 @@ export class OrdersService {
   // Get signal to subscribe to it in components
   getOrdersSignal() {
     return this.ordersSignal.asReadonly();
+  }
+
+  // Get My Orders
+  getMyOrders() {
+    this.http.get<OrderResponse>(environment.apiUrl + 'order/getallownorder')
+      .pipe(map((res) => res.data))
+      .subscribe({
+        next: (orders) => this.ordersSignal.set(orders),
+      });
   }
 }

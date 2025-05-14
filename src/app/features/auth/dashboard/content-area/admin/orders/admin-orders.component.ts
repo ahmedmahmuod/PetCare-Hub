@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CustomButtonComponent } from '../../../../../../shared/components/buttons/dashboard-btn.component';
 import { DataTableComponent } from '../../../../../../shared/components/data-table/data-table.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';

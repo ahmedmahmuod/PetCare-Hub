@@ -38,7 +38,7 @@ import { TranslateModule } from '@ngx-translate/core';
          <nav *ngIf="role === 'user'" class="sidebar-menu" aria-label="Main menu">
            <ul>
              <li routerLinkActive="active" routerLink="/user/dashboard/pets" tabindex="0"><i class="fa-solid fa-dog"></i>{{'Dashboard.User.My_Pets.Title' | translate}}</li>
-             <li routerLinkActive="active" routerLink="/user/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>My Orders</li>
+             <li routerLinkActive="active" routerLink="/user/dashboard/orders" tabindex="0"><i class="fa-regular fa-money-bill-1"></i>{{'Dashboard.User.My_Orders.Title' | translate}}</li>
            </ul>
            <li (click)="goToHome()"><i class="fa-solid fa-arrow-up-right-from-square"></i>{{'Dashboard.Main.Links.View_Site' | translate}}</li>
          </nav>
