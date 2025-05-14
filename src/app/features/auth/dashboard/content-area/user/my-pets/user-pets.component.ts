@@ -28,21 +28,21 @@ export class UserPetsComponent implements OnInit {
 
   // Column Definitions for Table
   columns: Column[] = [
-    { field: 'name', header: 'Pet Name', type: 'text' },
-    { field: 'type', header: 'Pet Type', type: 'text' },
-    { field: 'gender', header: 'Pet Gender', type: 'text' },
-    { field: 'weight', header: 'Pet Weight', type: 'text' },
-    { field: 'petImage', header: 'Pet Image', type: 'image' },
+    { field: 'name', header: this.translate.instant('Dashboard.User.My_Pets.Data_Table.Columns.Pet_Name'), type: 'text' },
+    { field: 'type', header: this.translate.instant('Dashboard.User.My_Pets.Data_Table.Columns.Pet_Type'), type: 'text' },
+    { field: 'gender', header: this.translate.instant('Dashboard.User.My_Pets.Data_Table.Columns.Pet_Gender'), type: 'text' },
+    { field: 'weight', header: this.translate.instant('Dashboard.User.My_Pets.Data_Table.Columns.Pet_Weight'), type: 'text' },
+    { field: 'petImage', header: this.translate.instant('Dashboard.User.My_Pets.Data_Table.Columns.Pet_Image'), type: 'image' },
   ];
 
   petTypeOptions = [
-    { label: 'Dog', value: 'dog' },
-    { label: 'Cat', value: 'cat' },
+    { label: this.translate.instant('Dashboard.User.My_Pets.Form.Pet_Type.Options.Dog'), value: 'dog' },
+    { label: this.translate.instant('Dashboard.User.My_Pets.Form.Pet_Type.Options.Cat'), value: 'cat' },
   ];
 
   petGenderOptions = [
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' }
+    { label: this.translate.instant('Dashboard.User.My_Pets.Form.Pet_Gender.Options.Male'), value: 'male' },
+    { label: this.translate.instant('Dashboard.User.My_Pets.Form.Pet_Gender.Options.Female'), value: 'female' }
   ];
 
   // Form data
@@ -130,12 +130,12 @@ export class UserPetsComponent implements OnInit {
       next: (response) => {
         this.petsService.getMyPets();    
         this.isLoading = false;
-        this.toastService.success('Successfully', 'Pet added to my pets');
+        this.toastService.success(this.translate.instant('Dashboard.User.My_Pets.Toasts.Add_Pet.Success.Title'), this.translate.instant('Dashboard.User.My_Pets.Toasts.Add_Pet.Success.Message'));
         this.closeDialog()      
       },
       error: (error) => {
         this.isLoading = false;
-        this.toastService.error('Error', 'Failed to add pet to my pets');
+        this.toastService.error(this.translate.instant('Dashboard.User.My_Pets.Toasts.Add_Pet.Error.Title'), this.translate.instant('Dashboard.User.My_Pets.Toasts.Add_Pet.Error.Message'),);
         this.closeDialog()      
       }
     });
@@ -148,12 +148,12 @@ export class UserPetsComponent implements OnInit {
       next: (response) => {
         this.petsService.getMyPets();
         this.isLoading = false;
-        this.toastService.success('Successfully', 'Pet deleted from my pets');
+        this.toastService.success(this.translate.instant('Dashboard.User.My_Pets.Toasts.Delete_Pet.Success.Title'), this.translate.instant('Dashboard.User.My_Pets.Toasts.Delete_Pet.Success.Message'));
         
       },
       error: (error) => {
         this.isLoading = false;
-        this.toastService.error('Error', 'Failed to delete pet from my pets');
+        this.toastService.error(this.translate.instant('Dashboard.User.My_Pets.Toasts.Delete_Pet.Error.Title'), this.translate.instant('Dashboard.User.My_Pets.Toasts.Delete_Pet.Error.Message'));
       }
     })
   }
@@ -201,13 +201,13 @@ export class UserPetsComponent implements OnInit {
       next: (response) => {
         this.petsService.getMyPets();    
         this.isLoading = false;
-        this.toastService.success('Successfully', 'Pet updated successfully');
+        this.toastService.success(this.translate.instant('Dashboard.User.My_Pets.Toasts.Update_Pet.Success.Title'), this.translate.instant('Dashboard.User.My_Pets.Toasts.Update_Pet.Success.Message'));
         this.resetForm();
       },
       error: (error) => {
         console.error(error);
         this.isLoading = false;
-        this.toastService.error('Error', 'Failed to update pet');
+        this.toastService.error(this.translate.instant('Dashboard.User.My_Pets.Toasts.Update_Pet.Error.Title'), this.translate.instant('Dashboard.User.My_Pets.Toasts.Update_Pet.Error.Message'));
         this.resetForm();
       }
     });     

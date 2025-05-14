@@ -1418,6 +1418,98 @@
         }
       }
     }
+  },
+
+  "User": {
+    "My_Pets": {
+      "Title": "My Pets",
+      "Data_Table": {
+        "Btn": "Add Pet",
+        "Columns": {
+          "Pet_Name": "Pet Name",
+          "Pet_Type": "Pet Type",
+          "Pet_Gender": "Pet Gender",
+          "Pet_Weight": "Pet Weight",
+          "Pet_Image": "Pet Image",
+          "Actions": "Actions"
+        }
+      },
+
+      "Form": {
+        "Title": {
+          "Add": "Add Pet",
+          "Edit": "Edit Pet"
+        },
+
+        "Pet_Name":{
+          "Label": "Pet Name",
+          "Required": "Name is required"
+        },
+        "Pet_Gender":{
+          "Label": "Pet Gender",
+          "Required": "Gender is required",
+          "Options": {
+            "Male": "Male",
+            "Female": "Female"
+          }
+        },
+        "Pet_Type":{
+          "Label": "Pet Type",
+          "Required": "Type is required",
+          "Options": {
+            "Dog": "Dog",
+            "Cat": "Cat"
+          }
+        },
+        "Pet_Weigth":{
+          "Label": "Pet Weigth",
+          "Required": "Weigth is required"
+        },
+        "Pet_Image": "Pet Image",
+
+        "Send": {
+          "Add":"Add",
+          "Update":"Update"
+        }
+      },
+
+      "Toasts": {
+        "Add_Pet": {
+          "Error": {
+            "Title": "Error",
+            "Message": "Failed to add pet to my pets"
+          },
+          "Success": {
+            "Title": "Success",
+            "Message": "Pet added to my pets"
+          }
+        },
+
+        "Delete_Pet": {
+          "Error": {
+            "Title": "Error",
+            "Message": "Failed to delete pet from my pets"
+          },
+          "Success": {
+            "Title": "Success",
+            "Message": "Pet deleted from my pets"
+          }
+        },
+
+        "Update_Pet": {
+          "Error": {
+            "Title": "Error",
+            "Message": "Failed to update pet"
+          },
+          "Success": {
+            "Title": "Success",
+            "Message": "Pet updated successfully"
+          }
+        }
+      }
+    }
   }
+
+  
 }
 }
