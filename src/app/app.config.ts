@@ -1,5 +1,5 @@
 // Cores
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Routes
@@ -22,6 +22,7 @@ import { PetsEffects } from './stores/pets-store/pets.effects';
 import { MessageService } from 'primeng/api';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { provideClientHydration } from '@angular/platform-browser';
+import { provideServiceWorker } from '@angular/service-worker';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,6 +55,12 @@ export const appConfig: ApplicationConfig = {
       provide: TranslateLoader,
       useFactory: HttpLoaderFactory,
       deps: [HttpClient]
-    }, provideClientHydration()
+    }, provideClientHydration(), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })
   ],
 };
