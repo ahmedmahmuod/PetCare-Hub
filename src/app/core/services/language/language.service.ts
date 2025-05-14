@@ -12,6 +12,7 @@ export class LanguageService {
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
+      // Add event listener for 'storage' event to detect language changes in localStorage
       window.addEventListener('storage', (event) => {
         if (event.key === 'language' && event.newValue) {
           this.currentLanguageSubject.next(event.newValue);
@@ -20,20 +21,20 @@ export class LanguageService {
     }
   }
 
-  // getLanguageFromLocalStorage method to get the current language from localStorage
+  // Method to get the current language from localStorage, defaults to 'en'
   private getLanguageFromLocalStorage(): string {
     return isPlatformBrowser(this.platformId) ? localStorage.getItem('language') || 'en' : 'en';
   }
 
-  // switchLanguage method to change the language
+  // Method to switch the language and update localStorage
   public switchLanguage(lang: string): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('language', lang);
     }
-    this.currentLanguageSubject.next(lang);
+    this.currentLanguageSubject.next(lang); 
   }
 
-  // getCurrentLanguage method to get the current language
+  // Method to get the current language from BehaviorSubject
   public getCurrentLanguage(): string {
     return this.currentLanguageSubject.value;
   }

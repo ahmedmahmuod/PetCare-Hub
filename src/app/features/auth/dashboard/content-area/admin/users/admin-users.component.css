@@ -39,7 +39,6 @@ textarea {
 }
 
 ::ng-deep p-selectbutton {
-  background: red !important
   width: 100% !important;
 }
 

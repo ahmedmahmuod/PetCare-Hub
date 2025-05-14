@@ -1,36 +1,50 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CartResponse, CartData, CartItem } from '../../models/cart/cart.model';
 import { environment } from '../../../../environments/environment.prod';
 import { ShippingAddress } from '../../../features/cart/checkout/checkout.component';
+import { isPlatformBrowser } from '@angular/common'; // استيراد isPlatformBrowser
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   private http = inject(HttpClient);
-
-   cartState$ = new BehaviorSubject<CartData | null>(null);
-  private appliedCoupon: string | null = localStorage.getItem('appliedCoupon');
-
+  
+  cartState$ = new BehaviorSubject<CartData | null>(null);
+  private appliedCoupon: string | null = null;
+  
   cart$ = this.cartState$.asObservable();
+  
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.appliedCoupon = localStorage.getItem('appliedCoupon');
+    }
+  }
 
   // Set and persist coupon
   setCoupon(code: string) {
     this.appliedCoupon = code;
-    localStorage.setItem('appliedCoupon', code);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('appliedCoupon', code);
+    }
   }
 
   // Get coupon from memory or storage
   getCoupon(): string | null {
-    return this.appliedCoupon || localStorage.getItem('appliedCoupon');
+    if (isPlatformBrowser(this.platformId)) {
+      return this.appliedCoupon || localStorage.getItem('appliedCoupon');
+    }
+    return null;
   }
 
   // Remove coupon from memory and storage
   clearCoupon() {
     this.appliedCoupon = null;
-    localStorage.removeItem('appliedCoupon');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('appliedCoupon');
+    }
   }
 
   // Get and update the cart state
@@ -97,4 +111,4 @@ export class CartService {
   getTotalAfterDiscount(): number {
     return this.cartState$.getValue()?.totalPriceAfterDiscount || 0;
   }
-} 
+}

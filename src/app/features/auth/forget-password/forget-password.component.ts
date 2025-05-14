@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/logs/user-loging.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/services/toast-notification/tost-notification.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-password-reset',
@@ -24,14 +25,14 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
   passwordStrength = '';
   passwordStrengthText = '';
   
-  private readonly STEP_KEY = 'password_reset_step';
-  private readonly EMAIL_KEY = 'password_reset_email';
-  private readonly CODE_KEY = 'password_reset_code';
-  private readonly USERID_KEY = 'password_reset_userId';
+  email: string | null = null;
+  code: string | null = null;
+  savedUserId: string | null = null;
 
   private router = inject(Router);
   private toastService = inject(ToastService);
   private translate = inject(TranslateService);
+  private platformId = inject(PLATFORM_ID);
 
   emailForm: FormGroup;
   verificationForm: FormGroup;
@@ -78,44 +79,37 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
   }
 
   private restoreState() {
-    const savedStep = localStorage.getItem(this.STEP_KEY);
-    const savedEmail = localStorage.getItem(this.EMAIL_KEY);
-    const savedCode = localStorage.getItem(this.CODE_KEY);
-    const savedUserId = localStorage.getItem(this.USERID_KEY);
+    if (isPlatformBrowser(this.platformId)) {
+      const storedEmail = localStorage.getItem('email');
+      const storedCode = localStorage.getItem('code');
+      const storedUserId = localStorage.getItem('userId');
 
-    if (savedStep) {
-      this.currentStep = parseInt(savedStep, 10);
-
-      if (savedEmail) {
-        this.emailForm.patchValue({ email: savedEmail });
+      if (storedEmail) {
+        this.emailForm.patchValue({ email: storedEmail });
       }
-      
-      if (savedCode && this.currentStep >= 2) {
-        const digits = savedCode.split('');
+
+      if (storedCode && this.currentStep >= 2) {
+        const digits = storedCode.split('');
         digits.forEach((digit, index) => {
           this.verificationForm.get(`digit${index + 1}`)?.setValue(digit);
         });
       }
 
-      if (savedUserId) {
-        this.userId = savedUserId;
+      if (storedUserId) {
+        this.userId = storedUserId;
       }
     }
   }
 
   private saveState() {
-    localStorage.setItem(this.STEP_KEY, this.currentStep.toString());
-
-    if (this.emailForm.valid) {
-      localStorage.setItem(this.EMAIL_KEY, this.emailForm.value.email);
-    }
-
-    if (this.isCodeValid()) {
-      localStorage.setItem(this.CODE_KEY, this.getFullCode());
-    }
-
-    if (this.userId) {
-      localStorage.setItem(this.USERID_KEY, this.userId);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('email', this.emailForm.value.email);
+      if (this.isCodeValid()) {
+        localStorage.setItem('code', this.getFullCode());
+      }
+      if (this.userId) {
+        localStorage.setItem('userId', this.userId);
+      }
     }
   }
 
@@ -140,7 +134,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
   submitCode() {
     this.submitted = true;
     if (!this.isCodeValid()) return;
@@ -275,11 +269,6 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
   }
   
   redirectToLogin() {
-    localStorage.removeItem(this.STEP_KEY);
-    localStorage.removeItem(this.EMAIL_KEY);
-    localStorage.removeItem(this.CODE_KEY);
-    localStorage.removeItem(this.USERID_KEY);
-
     this.router.navigate(['/auth/login']);
   }
 

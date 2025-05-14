@@ -21,7 +21,7 @@ export interface ShippingAddress {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, CartItemComponent, SectionSpinnerComponent, TranslateModule],
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
   private toastService = inject(ToastService);

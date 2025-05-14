@@ -21,6 +21,7 @@ import { petsReducer } from './stores/pets-store/pets.reducer';
 import { PetsEffects } from './stores/pets-store/pets.effects';
 import { MessageService } from 'primeng/api';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { provideClientHydration } from '@angular/platform-browser';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -53,6 +54,6 @@ export const appConfig: ApplicationConfig = {
       provide: TranslateLoader,
       useFactory: HttpLoaderFactory,
       deps: [HttpClient]
-    }
+    }, provideClientHydration()
   ],
 };
