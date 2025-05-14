@@ -1473,5 +1473,38 @@
       "Title": "طلباتي"
     }
     }
-  }
+  },
+
+  "Page_Titles": {
+     "Home": "PetCare | الرئيسية",
+     "Services": "PetCare | الخدمات",
+     "Service_Details": "PetCare | تفاصيل الخدمة",
+     "Adoption": "PetCare | التبني",
+     "Shelter_Details": "PetCare | تفاصيل الملجأ",
+     "Veterinary": "PetCare | الطب البيطري",
+     "Doctor_Details": "PetCare | تفاصيل الطبيب",
+     "Clinic_Details": "PetCare | تفاصيل العيادة",
+     "Blogs": "PetCare | المقالات",
+     "Shop": "PetCare | المتجر",
+     "Community": "PetCare | المجتمع",
+     "Profile": "PetCare | الملف الشخصي",
+     "Login": "PetCare | تسجيل الدخول",
+     "Register": "PetCare | إنشاء حساب",
+     "Forget_Password": "PetCare | نسيت كلمة المرور",
+     "Account_Details": "PetCare | تفاصيل الحساب",
+     "Cart": "PetCare | السلة",
+     "Checkout": "PetCare | الدفع",
+     "Favorates": "PetCare | المفضلة",
+     "My_Pets": "لوحة التحكم | حيواناتي الأليفة",
+     "My_Orders": "لوحة التحكم | طلباتي",
+     "Dashboard": "لوحة التحكم",
+     "Dash_Blogs": "لوحة التحكم | المقالات",
+     "Dash_Services": "لوحة التحكم | الخدمات",
+     "Dash_Coupons": "لوحة التحكم | كوبونات الخصم",
+     "Dash_Products": "لوحة التحكم | المنتجات",
+     "Dash_Doctors": "لوحة التحكم | الأطباء",
+     "Dash_Clinics": "لوحة التحكم | العيادات",
+     "Dash_Orders": "لوحة التحكم | الطلبات",
+     "Dash_Users": "لوحة التحكم | المستخدمين"
+ }
 }

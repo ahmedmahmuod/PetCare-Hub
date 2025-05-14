@@ -1,6 +1,6 @@
 import { LanguageService } from './core/services/language/language.service';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageToggleComponent } from "./shared/components/buttons/langBtn.component";
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -9,8 +9,9 @@ import { FooterComponent } from "./core/components/footer/footer.component";
 import { ToastModule } from 'primeng/toast';
 import { TokenService } from './shared/services/token-managment/token-management.service';
 import { UsersService } from './core/services/user/users.service';
-import { catchError, of } from 'rxjs';
+import { catchError, filter, map, mergeMap, of } from 'rxjs';
 import { LoadingComponent } from "./shared/components/spinner/initial-load.component";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ import { LoadingComponent } from "./shared/components/spinner/initial-load.compo
     RouterOutlet,
     CommonModule,
     ToastModule,
-    LoadingComponent
+    LoadingComponent,
   ],
   standalone: true,
   templateUrl: './app.component.html',
@@ -32,6 +33,8 @@ export class AppComponent implements OnInit {
   private languageService = inject(LanguageService);
   private tokenService = inject(TokenService);
   private usersService = inject(UsersService);
+  private titleService = inject(Title);
+  private activatedRoute = inject(ActivatedRoute);
 
   currentLang: string = 'en';
   dir: 'ltr' | 'rtl' = 'ltr';
@@ -94,5 +97,22 @@ export class AppComponent implements OnInit {
     } else {
       this.tokenService.setRole(null);
     }
+
+
+    // Change Dynamic Title for all pagse
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd), map(() => {
+        let route = this.activatedRoute;
+        while (route.firstChild) route = route.firstChild;
+        return route;
+      }), filter(route => route.outlet === 'primary'),mergeMap(route => route.data)).subscribe(data => {
+      const titleKey = data['title'];
+      if (titleKey) {
+        this.translate.get(titleKey).subscribe(translatedTitle => {
+          this.titleService.setTitle(translatedTitle);
+        });
+      }
+    });
   }
+  
 }

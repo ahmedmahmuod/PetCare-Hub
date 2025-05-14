@@ -1512,8 +1512,39 @@
     "My_Orders": {
       "Title": "My Orders"
     }
-  }
+  } 
+  },
 
-  
-}
+  "Page_Titles": {
+      "Home": "PetCare | Home",
+      "Services": "PetCare | Services",
+      "Service_Details": "PetCare | Service Details",
+      "Adoption": "PetCare | Adoption",
+      "Shelter_Details": "PetCare | Shelter Details",
+      "Veterinary": "PetCare | Veterinary",
+      "Doctor_Details": "PetCare | Doctor Details",
+      "Clinic_Details": "PetCare | Clinic Details",
+      "Blogs": "PetCare | Blogs",
+      "Shop": "PetCare | Shop",
+      "Community": "PetCare | Community",
+      "Profile": "PetCare | Profile",
+      "Login": "PetCare | Login",
+      "Register": "PetCare | Register",
+      "Forget_Password": "PetCare | Forget Password",
+      "Account_Details": "PetCare | Account Details",
+      "Cart": "PetCare | My Cart",
+      "Checkout": "PetCare | Checkout",
+      "Favorates": "PetCare | My Favorates",
+      "My_Pets": "Dashboard | My Pets",
+      "My_Orders": "Dashboard | My Orders",
+      "Dashboard": "Dashboard",
+      "Dash_Blogs": "Dashboard | Blogs",
+      "Dash_Services": "Dashboard | Services",
+      "Dash_Coupons": "Dashboard | Coupons",
+      "Dash_Products": "Dashboard | Products",
+      "Dash_Doctors": "Dashboard | Doctors",
+      "Dash_Clinics": "Dashboard | Clinics",
+      "Dash_Orders": "Dashboard | Orders",
+      "Dash_Users": "Dashboard | Users"
+    }
 }
