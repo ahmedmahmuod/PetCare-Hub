@@ -1,3 +1,4 @@
 <section class="flex flex-col gap-y-5 mt-10 relative">
   <app-data-table [hasActions]="false" [hasImage]="true" [data]="orders" [columns]="columns"/>
+  <app-export-exel-btn (clicked)="exportOrders()" />
 </section>

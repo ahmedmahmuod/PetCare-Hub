@@ -15,6 +15,9 @@ import { SectionSpinnerComponent } from "../../../../../../shared/components/spi
 import { BlogsService } from '../../../../../../core/services/blogs/blogs.service';
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
+import { BlogsModel } from '../../../../../../core/models/blogs/blogs.model';
 
 // Interface for table columns
 export interface Column {
@@ -26,7 +29,7 @@ export interface Column {
 @Component({
   selector: 'app-admin-blogs',
   standalone: true,
-  imports: [CommonModule, ImportsModule, DataTableComponent, CustomButtonComponent, SectionSpinnerComponent, TranslateModule],
+  imports: [CommonModule, ImportsModule, DataTableComponent, CustomButtonComponent, SectionSpinnerComponent, TranslateModule, ExportToExelButtonComponent],
   templateUrl: './admin-blogs.component.html',
   styleUrl: './admin-blogs.component.css',
 })
@@ -36,6 +39,19 @@ export class AdminBlogsComponent {
   private blogsService = inject(BlogsService);
   private toastService = inject(ToastService);
   private translate = inject(TranslateService);
+  private exportExelService = inject(ExcelExportService)
+
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.exportBlogs, 'Blogs');
+  }
+
+  exportBlogs: BlogsModel[] = [];
+
+  getBlogs(): void {
+     this.store.select(selectBlogs).pipe(take(1)).subscribe((blogs) => {
+       this.exportBlogs = blogs;
+     })
+  }
 
   // Blog list observable from the store
   blogs$ = this.store.select(selectBlogs);

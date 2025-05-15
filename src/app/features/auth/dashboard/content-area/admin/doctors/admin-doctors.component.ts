@@ -7,11 +7,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
 
 @Component({
   selector: 'app-admin-doctors',
   standalone: true,
-  imports: [ ImportsModule ,CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent],
+  imports: [ImportsModule, CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ExportToExelButtonComponent],
   templateUrl: './admin-doctors.component.html',
   styleUrl: './admin-doctors.component.css'
 })
@@ -19,6 +21,7 @@ export class AdminDoctorsComponent implements OnInit{
   private vetServices = inject(VetsService);
   private translate = inject(TranslateService);
   private toastService = inject(ToastService);
+  private exportExelService = inject(ExcelExportService)
 
   ngOnInit(): void {
     this.vetServices.loadDoctors();
@@ -26,6 +29,10 @@ export class AdminDoctorsComponent implements OnInit{
 
   get doctors() {
    return this.vetServices.allDoctors();
+  }
+
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.doctors, 'Doctors');
   }
 
   showDialog = false;

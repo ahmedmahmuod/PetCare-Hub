@@ -8,11 +8,13 @@ import { SectionSpinnerComponent } from "../../../../../../shared/components/spi
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
 import { AuthService } from '../../../../../../core/services/auth/logs/user-loging.service';
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
 
 @Component({
   selector: 'app-admin-users',
   standalone: true,
-  imports: [DataTableComponent, CustomButtonComponent, TranslateModule, SectionSpinnerComponent, ImportsModule],
+  imports: [DataTableComponent, CustomButtonComponent, TranslateModule, SectionSpinnerComponent, ImportsModule, ExportToExelButtonComponent],
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.css',
 })
@@ -21,6 +23,7 @@ export class AdminUsersComponent implements OnInit{
   private authService = inject(AuthService);
   private toastService = inject(ToastService)
   private translate = inject(TranslateService)
+  private exportExelService = inject(ExcelExportService)
   
   // Column Definitions for Table
   columns: Column[] = [
@@ -30,6 +33,10 @@ export class AdminUsersComponent implements OnInit{
     { field: 'profileImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.User_Image'), type: 'image' },
     { field: 'createdAt', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Data_Table.Rows.Join_In'), type: 'date' },
   ];
+
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.allUsers, 'Users');
+  }
 
   stateOptions: any[] = [{ label: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Form.Role.Options.Admin'), value: 'admin' },{ label: this.translate.instant('Dashboard.Admin.Sidebar_Links.Users.Form.Role.Options.User'), value: 'user' }];
   isLoading: boolean = false;

@@ -7,11 +7,13 @@ import { CouponsService } from '../../../../../../core/services/coupon/coupons.s
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
 
 @Component({
   selector: 'app-admin-coupons',
   standalone: true,
-  imports: [CustomButtonComponent, DataTableComponent, TranslateModule, ImportsModule, SectionSpinnerComponent],
+  imports: [CustomButtonComponent, DataTableComponent, TranslateModule, ImportsModule, SectionSpinnerComponent, ExportToExelButtonComponent],
   templateUrl: './admin-coupons.component.html',
   styleUrl: './admin-coupons.component.css'
 })
@@ -19,12 +21,16 @@ export class AdminCouponsComponent implements OnInit {
   private translate = inject(TranslateService);
   private couponService = inject(CouponsService);
   private toastService = inject(ToastService);
+    private exportExelService = inject(ExcelExportService)
   
   coupons = computed(() => this.couponService.allCoupons());
   isLoading: boolean = false;
   showDialog = false;
   
-  
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.coupons(), 'Coupons');
+  }
+
   ngOnInit(): void {
     this.couponService.getAllCoupons();    
   }

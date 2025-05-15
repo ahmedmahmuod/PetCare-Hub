@@ -1546,5 +1546,7 @@
       "Dash_Clinics": "Dashboard | Clinics",
       "Dash_Orders": "Dashboard | Orders",
       "Dash_Users": "Dashboard | Users"
-    }
+  },
+
+    "Export_As_Exel": "Export as Excel"
 }

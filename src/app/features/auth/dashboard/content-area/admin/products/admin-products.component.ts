@@ -9,11 +9,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [CommonModule, CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ImportsModule],
+  imports: [CommonModule, CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ImportsModule, ExportToExelButtonComponent],
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css'
 })
@@ -21,6 +23,7 @@ export class AdminProductsComponent  {
   private productsService = inject(ProductsService);
   private translate = inject(TranslateService);
   private toastService = inject(ToastService);
+  private exportExelService = inject(ExcelExportService)
 
   // Reactive computed products
   allProducts = computed<Product[]>(() => this.productsService.getProductsSignal()());
@@ -40,6 +43,9 @@ export class AdminProductsComponent  {
   smallCategories = ['food', 'accessories', 'grooming', 'medicine', 'toys'];
   discounts = Array.from({ length: 20 }, (_, i) => (i + 1) * 5);
 
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.allProducts(), 'Products');
+  }
   // Form data
   form = {
     name: '',

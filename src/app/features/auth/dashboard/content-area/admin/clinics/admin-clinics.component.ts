@@ -1,4 +1,3 @@
-import { transition } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { VetsService } from '../../../../../../core/services/veterinary/veterinary.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -8,11 +7,13 @@ import { DataTableComponent } from "../../../../../../shared/components/data-tab
 import { Column } from '../blogs/admin-blogs.component';
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
 import { ImportsModule } from '../../../../../../shared/components/data-table/imports';
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
 
 @Component({
   selector: 'app-admin-clinics',
   standalone: true,
-  imports: [CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ImportsModule],
+  imports: [CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ImportsModule, ExportToExelButtonComponent],
   templateUrl: './admin-clinics.component.html',
   styleUrl: './admin-clinics.component.css'
 })
@@ -20,6 +21,7 @@ export class AdminClinicsComponent {
   private vetServices = inject(VetsService);
   private translate = inject(TranslateService);
   private toastService = inject(ToastService);
+  private exportExelService = inject(ExcelExportService)
 
   ngOnInit(): void {
     this.vetServices.loadClinics();
@@ -27,6 +29,10 @@ export class AdminClinicsComponent {
 
   get clinics() {
    return this.vetServices.allClinics();
+  }
+
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.clinics, 'Clinics');
   }
 
   showDialog = false;

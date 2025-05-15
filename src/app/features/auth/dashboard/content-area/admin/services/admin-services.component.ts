@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal, effect } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ServicesService } from './../../../../../../core/services/services/services.service';
 import { MessageService } from 'primeng/api';
@@ -11,11 +11,13 @@ import { Column } from '../blogs/admin-blogs.component';
 import { ServiceModel } from '../../../../../../core/models/service/service.model';
 import { ToastService } from '../../../../../../shared/services/toast-notification/tost-notification.service';
 import { SectionSpinnerComponent } from "../../../../../../shared/components/spinner/spinner-loading.component";
+import { ExportToExelButtonComponent } from "../../../../../../shared/components/buttons/export-to-exel.component";
+import { ExcelExportService } from '../../../../../../shared/services/export_to_exel/export-to-exel.service';
 
 @Component({
   selector: 'app-admin-services',
   standalone: true,
-  imports: [ImportsModule, CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent],
+  imports: [ImportsModule, CustomButtonComponent, DataTableComponent, TranslateModule, SectionSpinnerComponent, ExportToExelButtonComponent],
   templateUrl: './admin-services.component.html',
   styleUrl: './admin-services.component.css',
 })
@@ -24,6 +26,7 @@ export class AdminServicesComponent implements OnInit {
   private serviceServices = inject(ServicesService);
   private translate = inject(TranslateService);
   private toastService = inject(ToastService);
+  private exportExelService = inject(ExcelExportService)
 
   constructor(private fb: FormBuilder, private messageService: MessageService) {}
   
@@ -45,6 +48,10 @@ export class AdminServicesComponent implements OnInit {
     { field: 'city', header:  this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Data_Table.Rows.Service_City'), type: 'text' },
     { field: 'serviceImage', header: this.translate.instant('Dashboard.Admin.Sidebar_Links.Services.Data_Table.Rows.Service_Image'), type: 'image' },
   ];
+
+  exportOrders(): void {
+    this.exportExelService.exportAsExcelFile(this.serviceServices.allServices(), 'Services');
+  }
 
   // Select Options
   serviceTypes = [
